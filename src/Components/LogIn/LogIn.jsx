@@ -2,15 +2,12 @@ import Snackbar from "@material-ui/core/Snackbar";
 import Services from "../../Services/userServices";
 import React from "react";
 import Button from "react-bootstrap/Button";
-import mainLogo from "../assests/mainLogo.png";
 import TextField from "@material-ui/core/TextField";
 import OutlinedInput from '@material-ui/core/OutlinedInput';
-import InputLabel from '@material-ui/core/InputLabel';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import IconButton from '@material-ui/core/IconButton';
-import Input from '@material-ui/core/Input';
+
 
 import "../LogIn/login.scss";
 const services = new Services();
@@ -127,12 +124,15 @@ export default function Login(props) {
             "Login successful" + JSON.stringify(data.data.result.accessToken)
           );
           localStorage.setItem("bookStoreToken", data.data.result.accessToken);
+          nextPath("../dashboard");
         })
         .catch((err) => {
           console.log("Registration Error" + err);
         });
     }
   };
+  
+ 
   const handleLogin = () => {
     if (patternCheckone()) {
       console.log("Error Occured");
@@ -171,7 +171,7 @@ export default function Login(props) {
   return (
     <div className="container">
       <div className="img-holder">
-        <img/>
+        <img className="image" alt="image"/>
         <span className="text">ONLINE BOOK SHOPPING</span>
       </div>
       <div className="login">
@@ -218,7 +218,6 @@ export default function Login(props) {
         <div className={toggleState === 2 ? "active-content" : "content"}>
           <TextField
             id="outlined-secondary"
-            label="Outlined secondary"
             variant="outlined"
             color="secondary"
             value={name}
@@ -230,7 +229,7 @@ export default function Login(props) {
           />
           <TextField
             id="outlined-secondary"
-            label="Outlined secondary"
+      
             variant="outlined"
             color="secondary"
             value={email}
@@ -242,7 +241,7 @@ export default function Login(props) {
           />
           <TextField
             id="outlined-secondary"
-            label="Outlined secondary"
+          
             variant="outlined"
             color="secondary"
             value={password}
@@ -255,7 +254,7 @@ export default function Login(props) {
           />
           <TextField
             id="outlined-secondary"
-            label="Outlined secondary"
+      
             variant="outlined"
             color="secondary"
             value={mobile}

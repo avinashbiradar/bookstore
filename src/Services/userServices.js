@@ -1,4 +1,4 @@
-import Axios from "./axiosService";
+import Axios from "./axiosServices";
 const baseUrl = "https://backend-bookstore.herokuapp.com/bookstore_user"
 const axios = new Axios();
 
