@@ -87,6 +87,7 @@ export default function DisplayNotes(props) {
       .addToCart(id)
       .then((data) => {
         console.log(data);
+        console.log("book is added to cart ")
       })
       .catch((err) => {
         console.log(err);

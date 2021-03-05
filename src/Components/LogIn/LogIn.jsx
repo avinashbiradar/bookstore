@@ -124,7 +124,7 @@ export default function Login(props) {
             "Login successful" + JSON.stringify(data.data.result.accessToken)
           );
           localStorage.setItem("bookStoreToken", data.data.result.accessToken);
-          nextPath("../dashboard");
+        
         })
         .catch((err) => {
           console.log("Registration Error" + err);
@@ -151,6 +151,7 @@ export default function Login(props) {
             "Login successful" + JSON.stringify(data.data.result.accessToken)
           );
           localStorage.setItem("bookStoreToken", data.data.result.accessToken);
+          nextPath("../dashboard");
         })
         .catch((err) => {
           console.log("Error", err);
