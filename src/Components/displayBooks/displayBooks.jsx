@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import Pagination from "../Pagination/Pagination";
 import "./displayBooks.scss";
 const services = new Services();
 
@@ -58,6 +59,7 @@ const useStyles = makeStyles((theme) => ({
 export default function DisplayNotes(props) {
   const classes = useStyles();
   const [books, setBooks] = React.useState([]);
+  const [sort, setSort] = React.useState({ type: "" });
   const [data, setData] = React.useState(0);
   const [postsPerPage] = React.useState(8);
   const [currentPage, setCurrentPage] = React.useState(1);
@@ -79,7 +81,34 @@ export default function DisplayNotes(props) {
       });
   };
 
-  
+  const handleChange = (event) => {
+    const name = event.target.name;
+    setSort({
+      ...sort,
+      [name]: event.target.value,
+    });
+    console.log(sort.type);
+    switch (sort.type) {
+      case "0":
+        setBooks(data);
+        break;
+      case "2":
+        setBooks(data);
+        setBooks(books.sort((a, b) => (a.price > b.price ? 1 : -1)));
+        break;
+      case "1":
+        setBooks(data);
+        setBooks(books.sort((a, b) => (a.price > b.price ? -1 : 1)));
+        break;
+      case "3":
+        setBooks(data);
+        setBooks(books.reverse());
+        break;
+      default:
+          break;
+    }
+  };
+
   const addedToBag = (e, data) => {
     e.stopPropagation();
     const id = data._id;
@@ -94,6 +123,10 @@ export default function DisplayNotes(props) {
         console.log(err);
       });
   };
+ 
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };  
 
   const indexOfLastBook = currentPage * postsPerPage;
   const indexOfFirstBook = indexOfLastBook - postsPerPage;
@@ -109,6 +142,8 @@ export default function DisplayNotes(props) {
           <FormControl variant="outlined" className={classes.formControl}>
             <Select
               className={classes.optionSelect}
+              value={sort.type}
+              onChange={handleChange}
               native 
               inputProps={{
                 name: "type",
@@ -168,6 +203,11 @@ export default function DisplayNotes(props) {
             )}
           </div>
         ))}
+        <Pagination
+          postsPerPage={postsPerPage}
+          totalPosts={books.length}
+          paginate={paginate}
+        ></Pagination>
       </div>
     </div>
   );
