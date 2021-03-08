@@ -59,7 +59,7 @@ export default function DisplayNotes(props) {
   const classes = useStyles();
   const [books, setBooks] = React.useState([]);
   const [data, setData] = React.useState(0);
-  const [postsPerPage] = React.useState(10);
+  const [postsPerPage] = React.useState(8);
   const [currentPage, setCurrentPage] = React.useState(1);
 
   React.useEffect(() => {
@@ -79,6 +79,7 @@ export default function DisplayNotes(props) {
       });
   };
 
+  
   const addedToBag = (e, data) => {
     e.stopPropagation();
     const id = data._id;
@@ -86,8 +87,8 @@ export default function DisplayNotes(props) {
     services
       .addToCart(id)
       .then((data) => {
+        console.log("add to cart function working ");
         console.log(data);
-        console.log("book is added to cart ")
       })
       .catch((err) => {
         console.log(err);
@@ -108,7 +109,7 @@ export default function DisplayNotes(props) {
           <FormControl variant="outlined" className={classes.formControl}>
             <Select
               className={classes.optionSelect}
-              native   
+              native 
               inputProps={{
                 name: "type",
               }}
@@ -126,7 +127,7 @@ export default function DisplayNotes(props) {
           <div className="bookContainer">
             {props.cartBooks.map((cart) => {
               if (cart.product_id._id === data._id) {
-                data.isCart = true;
+                 data.isCart = true;
               }
             })}
             <div className="imageContainer">

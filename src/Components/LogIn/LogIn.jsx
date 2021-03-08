@@ -7,7 +7,7 @@ import OutlinedInput from '@material-ui/core/OutlinedInput';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import IconButton from '@material-ui/core/IconButton';
-
+import { connect } from 'react-redux';
 
 import "../LogIn/login.scss";
 const services = new Services();
@@ -170,6 +170,7 @@ export default function Login(props) {
   };
 
   return (
+    <div>
     <div className="container">
       <div className="img-holder">
         <img className="image" alt="image"/>
@@ -279,6 +280,7 @@ export default function Login(props) {
           message={<span id="message-id">{snackbarmsg}</span>}
         />
       </div>
+    </div>
     </div>
   );
 }
