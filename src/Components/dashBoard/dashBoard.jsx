@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Dashboard(props) {
   const classes = useStyles();
-  const [show, setShow] = React.useState(false);
+  const [ setShow] = React.useState(false);
   const [cartBooks, setCartBooks] = React.useState([]);
   const [orderPlaced, setOrderPlaced] = React.useState([]);
   React.useEffect(() => {

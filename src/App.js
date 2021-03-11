@@ -2,7 +2,6 @@
 import './App.css';
 import {BrowserRouter,Route,Switch} from 'react-router-dom'
 import Login from "./Components/LogIn/LogIn"
-import SignUp from "./Components/SignUp/signUp"
 import Dashboard from "./Components/dashBoard/dashBoard"
 import Cart from "./Components/cart/cart"
 function App() {
@@ -11,7 +10,6 @@ function App() {
     <BrowserRouter >
     <Switch>
     <Route path="/dashboard" component={Dashboard} ></Route>
-    <Route path="/SignUp" component={SignUp} exact/>
      <Route path="/Login" component={Login} exact/>
      <Route path="/cart" component={Cart} exact/>
    </Switch>

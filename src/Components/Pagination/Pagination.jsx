@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Pagination({ postsPerPage, totalPosts, paginate }) {
   const classes = useStyles();
 
-  const handleChange = (event, value) => {
+  const handleChange = (value) => {
     paginate(value);
   };
 

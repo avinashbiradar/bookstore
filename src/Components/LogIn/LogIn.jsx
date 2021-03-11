@@ -170,8 +170,7 @@ export default function Login(props) {
   };
 
   return (
-    <div>
-    <div className="container">
+    <div className="container-login">
       <div className="img-holder">
         <img className="image" alt="image"/>
         <span className="text">ONLINE BOOK SHOPPING</span>
@@ -185,17 +184,23 @@ export default function Login(props) {
         </button>
 
         <div className={toggleState === 1 ? "active-content" : "content"}>
+        
         <div>
+        <div>
+                <div className="email">
         <OutlinedInput
+            id="outlined-email-input"
+            name="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             error={emailFlag}
             helperText={emailError}
-            fullWidth
           />
-         
           </div>
+          <div className="password">
           <OutlinedInput 
+          id="outlined-pass-input"
+          name="password"
           type={values.showPassword ? 'text' : 'password'}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -205,18 +210,23 @@ export default function Login(props) {
               <IconButton
                 onClick={handleClickShowPassword}
                 onMouseDown={handleMouseDownPassword}
-                edge="end"
               >
                 {values.showPassword ? <Visibility /> : <VisibilityOff />}
               </IconButton>
           }
          
         />
-         
+        </div>
           <Button className="btn" onClick={handleLogin}>
             Login
           </Button>
         </div>
+        </div>
+        <div>
+        <h1>hiiiiiiiiii</h1>
+        </div>
+        </div>
+
         <div className={toggleState === 2 ? "active-content" : "content"}>
           <TextField
             id="outlined-secondary"
@@ -275,12 +285,11 @@ export default function Login(props) {
         <Snackbar
           anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
           open={snackbaropen}
-          autoHideDuration={3000}
+          autoHideDuration={6000}
           onClose={snackbarClose}
           message={<span id="message-id">{snackbarmsg}</span>}
         />
       </div>
-    </div>
     </div>
   );
 }

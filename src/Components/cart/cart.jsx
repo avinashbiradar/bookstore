@@ -11,6 +11,8 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import TextField from "@material-ui/core/TextField";
+import { useState } from "react";
+
 import "./cart.scss";
 
 const services = new Services();
@@ -62,7 +64,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Cart(props) {
   const classes = useStyles();
-  const [books, setBooks] = React.useState();
   const [detailForm, setDetailForm] = React.useState(false);
   const [summaryField, setSummaryField] = React.useState(false);
   const [value, setValue] = React.useState("Home");
@@ -82,7 +83,7 @@ export default function Cart(props) {
   const [state, setState] = React.useState();
   const [stateFlag, setStateFlag] = React.useState(false);
   const [stateError, setStateError] = React.useState("");
-
+  const [count, setCount] = useState(1);
   const makeInitial = () => {
     setNameFlag(false);
     setNameError("");
@@ -168,10 +169,44 @@ export default function Cart(props) {
     })
   }
 
+  const AddCartQuantity = (data) => {
+    // e.stopPropagation();
+    console.log("ID", data._id)
+    console.log("quantity", count)
+
+    let quantityToBuy= {
+      "quantityToBuy": count
+  }
+    services.addQuantity(quantityToBuy,data._id)
+    .then((data)=> {  
+      console.log(data)
+      console.log("Successfully added quantity "+data);
+    //  props.allCartItem();
+    })
+    .catch((err) => {
+      console.log("Error while adding the quantity"+err)
+    })
+  }
+
 
   const handleChange = (event) => {
     setValue(event.target.value);
   };
+
+  // Create handleIncrement event handler
+  const handleIncrement = (data) => {
+    setCount(prevCount => prevCount + 1);
+    AddCartQuantity(data)
+
+  };
+
+  //Create handleDecrement event handler
+  const handleDecrement = (data) => {
+    setCount(prevCount => prevCount - 1);
+    AddCartQuantity(data)
+  };
+
+
 
   const CartBooks = () => {
     return (
@@ -190,13 +225,10 @@ export default function Cart(props) {
                 Rs. {data.product_id.price}
               </Typography>
               <div className="countItem">
-                <IconButton className={classes.countButton}>-</IconButton>
-                <InputBase
-                  className={classes.countInput}
-                  value={data.product_id.quantity}
-                />
-                <IconButton className={classes.countButton}>+</IconButton>
-                <Button onClick={(e) => {removeItem(e,data)} }>Remove</Button>
+                <IconButton onClick={(e)=>{handleDecrement(data)}} className={classes.countButton}>-</IconButton>
+                <h4>{count}</h4>
+                <IconButton onClick={(e)=>{handleIncrement(data)}} className={classes.countButton}>+</IconButton>
+                <Button onClick={(e) => {removeItem(e,data)}}>Remove</Button>
               </div>
             </div>
           </div>
@@ -219,7 +251,7 @@ export default function Cart(props) {
                 {data.product_id.author}
               </Typography>
               <Typography className={classes.bookPrize}>
-                Rs. {data.product_id.price * data.product_id.quantity}
+                Rs. {data.product_id.price * data.quantityToBuy}
               </Typography>
             </div>
           </div>
@@ -234,7 +266,7 @@ export default function Cart(props) {
       let same = {
         product_id: data.product_id._id,
         product_name: data.product_id.bookName,
-        product_quantity: data.product_id.quantity,
+        product_quantity: data.quantityToBuy,
         product_price: data.product_id.price,
       };
       order.push(same);

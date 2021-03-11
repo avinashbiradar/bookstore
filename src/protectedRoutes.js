@@ -20,7 +20,7 @@ export default function ProtectedRoutes({component: Component, ...rest}){
             }
             else{
                 return <Redirect to = {
-                {    pathname: "/login",
+                {    pathname: "/Login",
                     state: {
                         from: props.location
                     }}
