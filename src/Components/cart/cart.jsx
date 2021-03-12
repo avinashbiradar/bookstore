@@ -84,6 +84,10 @@ export default function Cart(props) {
   const [stateFlag, setStateFlag] = React.useState(false);
   const [stateError, setStateError] = React.useState("");
   const [count, setCount] = useState(1);
+
+  React.useEffect(() => {
+  }, []);
+
   const makeInitial = () => {
     setNameFlag(false);
     setNameError("");
@@ -158,7 +162,7 @@ export default function Cart(props) {
   };
 
   const removeItem = (e,data) => {
-    e.stopPropagation();
+    // e.stopPropagation();
     services.deleteCartItem(data._id)
     .then((data)=> {
       console.log("Successfully deleted"+data);
@@ -169,8 +173,8 @@ export default function Cart(props) {
     })
   }
 
-  const AddCartQuantity = (data) => {
-    // e.stopPropagation();
+  const AddCartQuantity = ( data) => {
+    //  e.stopPropagation();
     console.log("ID", data._id)
     console.log("quantity", count)
 
@@ -251,7 +255,7 @@ export default function Cart(props) {
                 {data.product_id.author}
               </Typography>
               <Typography className={classes.bookPrize}>
-                Rs. {data.product_id.price * data.quantityToBuy}
+                Rs. {data.product_id.price * count}
               </Typography>
             </div>
           </div>

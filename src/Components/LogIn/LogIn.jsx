@@ -7,12 +7,16 @@ import OutlinedInput from '@material-ui/core/OutlinedInput';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import IconButton from '@material-ui/core/IconButton';
-import { connect } from 'react-redux';
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 import "../LogIn/login.scss";
 const services = new Services();
 
 export default function Login(props) {
+  const counter = useSelector(state => state);
+  const dispatch = useDispatch();
   const [toggleState, setToggleState] = React.useState(1);
   const [name, setName] = React.useState();
   const [nameFlag, setNameFlag] = React.useState();
@@ -28,6 +32,7 @@ export default function Login(props) {
   const [mobileError, setMobileError] = React.useState("");
   const [snackbaropen, setSnackbaropen] = React.useState(false);
   const [snackbarmsg, setSnackbarmsg] = React.useState("");
+  const [loggedin , setLoggedin]=React.useState("");
   const [values, setValues] = React.useState({
     password: '',
     showPassword: false,
@@ -124,7 +129,7 @@ export default function Login(props) {
             "Login successful" + JSON.stringify(data.data.result.accessToken)
           );
           localStorage.setItem("bookStoreToken", data.data.result.accessToken);
-        
+          
         })
         .catch((err) => {
           console.log("Registration Error" + err);
@@ -151,7 +156,8 @@ export default function Login(props) {
             "Login successful" + JSON.stringify(data.data.result.accessToken)
           );
           localStorage.setItem("bookStoreToken", data.data.result.accessToken);
-          nextPath("../dashboard");
+          setLoggedin(true)
+           nextPath("../dashboard");
         })
         .catch((err) => {
           console.log("Error", err);
@@ -159,6 +165,9 @@ export default function Login(props) {
           setSnackbarmsg("Error");
         });
     }
+    // if(loggedin==true){
+    //   <Redirect to='/dashboard' />
+    //  }
   };
 
   const handleClickShowPassword = () => {
@@ -169,6 +178,7 @@ export default function Login(props) {
     event.preventDefault();
   };
 
+ 
   return (
     <div className="container-login">
       <div className="img-holder">
