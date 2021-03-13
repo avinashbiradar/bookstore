@@ -111,7 +111,7 @@ export default function Login(props) {
           console.log(
             "Login successful" + JSON.stringify(data.data.result.accessToken)
           );
-          localStorage.setItem("bookStoreToken", data.data.result.accessToken);
+          localStorage.setItem("StoreToken", data.data.result.accessToken);
           nextPath("../admindashboard");
         })
         .catch((err) => {

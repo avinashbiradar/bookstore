@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default class axiosServices {
-  Post = (url,data, isHeaderRequired = false) => {
+  Post = (url,data, isHeaderRequired = false, ) => {
         return axios.post(url, data, isHeaderRequired)
     };
 
@@ -16,4 +16,6 @@ export default class axiosServices {
   Put = (url,data, isHeaderRequired = false) => {
     return axios.put(url,data, isHeaderRequired);
   };
+
+  
 }
