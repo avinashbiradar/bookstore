@@ -11,4 +11,11 @@ export default class userServices {
         return axios.Post(`${baseUrl}/login`, data);
     }
 
+    AdminSignUp = (data) => {
+        return axios.Post(`${baseUrl}/admin/registration`, data);
+    };
+
+    AdminSignIn = (data) => {
+        return axios.Post(`${baseUrl}/admin/login`, data);
+    }
 }

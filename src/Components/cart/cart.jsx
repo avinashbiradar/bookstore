@@ -162,7 +162,7 @@ export default function Cart(props) {
   };
 
   const removeItem = (e,data) => {
-    // e.stopPropagation();
+     e.stopPropagation();
     services.deleteCartItem(data._id)
     .then((data)=> {
       console.log("Successfully deleted"+data);

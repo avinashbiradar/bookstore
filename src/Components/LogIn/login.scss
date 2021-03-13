@@ -47,7 +47,7 @@
   align-items: center;
   flex-direction: column;
   // top: 100px;
-  right: 170px;
+  right: 150px;
 }
 .text {
   position: relative;
@@ -98,6 +98,12 @@ button {
   color: rgb(255, 255, 255);
   font-size: 15px;
 }
+//  .buttons{
+//    display: flex;
+//    width: 150px;
+//    justify-items: flex-end;
+//    flex-direction: row;
+//  }
 @media (max-width: 800px) {
   .img-holder {
     display: none;

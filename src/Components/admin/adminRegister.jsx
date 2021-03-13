@@ -5,15 +5,15 @@ import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import Services from "../../Services/userServices";
 const services = new Services();
-
 const useStyles = makeStyles((theme) => ({
+ 
   signUpMain: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
     borderRadius: "10px",
     width: "350px",
-    [theme.breakpoints.down("xs")]: {
+        [theme.breakpoints.down("xs")]: {
       width: "100%",
     },
   },
@@ -61,17 +61,19 @@ export default function SignUp(props) {
   const [name, setName] = React.useState();
   const [nameFlag, setNameFlag] = React.useState();
   const [nameError, setNameError] = React.useState("");
-  const [email, setEmail] = React.useState("");
+  const [email, setEmail] = React.useState();
   const [emailFlag, setEmailFlag] = React.useState(false);
   const [emailError, setEmailError] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const [password, setPassword] = React.useState();
   const [passwordFlag, setPasswordFlag] = React.useState(false);
   const [passwordError, setPasswordError] = React.useState("");
   const [mobile, setMobile] = React.useState();
   const [mobileFlag, setMobileFlag] = React.useState(false);
   const [mobileError, setMobileError] = React.useState("");
 
-  
+  const nextPath = (path) => {
+    props.history.push(path);
+  };
 
   const makeInitial = () => {
     setNameFlag(false);
@@ -126,9 +128,10 @@ export default function SignUp(props) {
         phone: mobile,
       };
       services
-        .SignUp(data)
+        .AdminSignUp(data)
         .then((data) => {
-          console.log("registration successful" + data)
+          console.log("registration successful" + data);
+          nextPath("../adminlogin");
         })
         .catch((err) => {
           console.log("Registration Error" + err);
@@ -140,17 +143,14 @@ export default function SignUp(props) {
     <>
       <Dialog open={true} className={classes.mainDialog}>
         <div className={classes.signUpMain}>
-          <div className={classes.Title}>Book Store</div>
+          <div className={classes.Title}>Book Store Admin</div>
           <div className={classes.SignUpBody}>
             <div className={classes.header}>
+              <Button onClick={() => nextPath("../loginadmin")}> Login </Button>
               Sign Up
             </div>
             <div className={classes.inputField}>
               <TextField
-                id="outlined-secondary"
-                label="Outlined secondary"
-                variant="outlined"
-                color="secondary"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 error={nameFlag}
@@ -162,10 +162,6 @@ export default function SignUp(props) {
             </div>
             <div className={classes.inputField}>
               <TextField
-                id="outlined-secondary"
-                label="Outlined secondary"
-                variant="outlined"
-                color="secondary"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 error={emailFlag}
@@ -177,10 +173,6 @@ export default function SignUp(props) {
             </div>
             <div className={classes.inputField}>
               <TextField
-                id="outlined-secondary"
-                label="Outlined secondary"
-                variant="outlined"
-                color="secondary"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 error={passwordFlag}
@@ -193,10 +185,6 @@ export default function SignUp(props) {
             </div>
             <div className={classes.inputField}>
               <TextField
-                id="outlined-secondary"
-                label="Outlined secondary"
-                variant="outlined"
-                color="secondary"
                 value={mobile}
                 onChange={(e) => setMobile(e.target.value)}
                 error={mobileFlag}
@@ -213,7 +201,7 @@ export default function SignUp(props) {
               onClick={submit}
               variant="contained"
             >
-              Sign Up
+             Admin Sign Up
             </Button>
           </div>
         </div>

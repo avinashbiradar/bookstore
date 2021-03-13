@@ -9,7 +9,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import IconButton from '@material-ui/core/IconButton';
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { Redirect } from "react-router-dom";
+
 
 import "../LogIn/login.scss";
 const services = new Services();
@@ -24,15 +24,20 @@ export default function Login(props) {
   const [email, setEmail] = React.useState("");
   const [emailFlag, setEmailFlag] = React.useState(false);
   const [emailError, setEmailError] = React.useState("");
+  const [email1, setEmail1] = React.useState("");
+  const [emailFlag1, setEmailFlag1] = React.useState(false);
+  const [emailError1, setEmailError1] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [passwordFlag, setPasswordFlag] = React.useState(false);
   const [passwordError, setPasswordError] = React.useState("");
+  const [password1, setPassword1] = React.useState("");
+  const [passwordFlag1, setPasswordFlag1] = React.useState(false);
+  const [passwordError1, setPasswordError1] = React.useState("");
   const [mobile, setMobile] = React.useState();
   const [mobileFlag, setMobileFlag] = React.useState(false);
   const [mobileError, setMobileError] = React.useState("");
   const [snackbaropen, setSnackbaropen] = React.useState(false);
-  const [snackbarmsg, setSnackbarmsg] = React.useState("");
-  const [loggedin , setLoggedin]=React.useState("");
+  const [snackbarmsg, setSnackbarmsg] = React.useState(""); 
   const [values, setValues] = React.useState({
     password: '',
     showPassword: false,
@@ -53,21 +58,28 @@ export default function Login(props) {
     setNameError("");
     setMobileFlag(false);
     setMobileError("");
+    
   };
+  const makeInitialone = () => {
+    setEmailFlag1(false);
+    setEmailError1("");
+    setPasswordFlag1(false);
+    setPasswordError1("");
+  }
 
   const patternCheckone = () => {
-    makeInitial();
+    makeInitialone();
     const emailPatternone = /[a-zA-Z0-9._]+[@]{1}[a-zA-Z120-9]*[.]{1}[a-zA-Z]*$/;
     const passwordPatternone = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$/;
     let isErrorone = false;
-    if (!emailPatternone.test(email)) {
-      setEmailFlag(true);
-      setEmailError("Email is Not Proper");
+    if (!emailPatternone.test(email1)) {
+      setEmailFlag1(true);
+      setEmailError1("Email is Not Proper");
       isErrorone = true;
     }
-    if (!passwordPatternone.test(password)) {
-      setPasswordFlag(true);
-      setPasswordError("Please Enter Valid Password");
+    if (!passwordPatternone.test(password1)) {
+      setPasswordFlag1(true);
+      setPasswordError1("Please Enter Valid Password");
       isErrorone = true;
     }
    
@@ -143,8 +155,8 @@ export default function Login(props) {
       console.log("Error Occured");
     } else {
       let data = {
-        email: email,
-        password: password,
+        email: email1,
+        password: password1,
       };
       services
         .SignIn(data)
@@ -156,7 +168,6 @@ export default function Login(props) {
             "Login successful" + JSON.stringify(data.data.result.accessToken)
           );
           localStorage.setItem("bookStoreToken", data.data.result.accessToken);
-          setLoggedin(true)
            nextPath("../dashboard");
         })
         .catch((err) => {
@@ -165,9 +176,6 @@ export default function Login(props) {
           setSnackbarmsg("Error");
         });
     }
-    // if(loggedin==true){
-    //   <Redirect to='/dashboard' />
-    //  }
   };
 
   const handleClickShowPassword = () => {
@@ -194,28 +202,36 @@ export default function Login(props) {
         </button>
 
         <div className={toggleState === 1 ? "active-content" : "content"}>
-        
+        <br/>
         <div>
         <div>
                 <div className="email">
-        <OutlinedInput
+        <TextField
             id="outlined-email-input"
+            variant="outlined"
             name="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            error={emailFlag}
-            helperText={emailError}
+            value={email1}
+            onChange={(e) => setEmail1(e.target.value)}
+            error={emailFlag1}
+            helperText={emailError1}
+              
+            label="Email"
+            fullWidth
           />
           </div>
+          <br/>
           <div className="password">
-          <OutlinedInput 
+          <TextField
           id="outlined-pass-input"
           name="password"
+          variant="outlined"
+          label="Password"
           type={values.showPassword ? 'text' : 'password'}
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          error={passwordFlag}
-          helperText={passwordError}
+          value={password1}
+          fullWidth
+          onChange={(e) => setPassword1(e.target.value)}
+          error={passwordFlag1}
+          helperText={passwordError1}
           endAdornment={
               <IconButton
                 onClick={handleClickShowPassword}
@@ -232,8 +248,7 @@ export default function Login(props) {
           </Button>
         </div>
         </div>
-        <div>
-        <h1>hiiiiiiiiii</h1>
+        <div className="buttons">
         </div>
         </div>
 
@@ -249,6 +264,7 @@ export default function Login(props) {
             
             label="Full Name"
           />
+          <br/>
           <TextField
             id="outlined-secondary"
       
@@ -261,6 +277,7 @@ export default function Login(props) {
             
             label="Email"
           />
+          <br/>
           <TextField
             id="outlined-secondary"
           
@@ -274,6 +291,7 @@ export default function Login(props) {
             label="Password"
             type="password"
           />
+          <br/>
           <TextField
             id="outlined-secondary"
       
@@ -287,7 +305,6 @@ export default function Login(props) {
             label="Mobile"
             type="number"
           />
-          <br />
           <Button className="btn" onClick={handleSignup}>
             Signup
           </Button>

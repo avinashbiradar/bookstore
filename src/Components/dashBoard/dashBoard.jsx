@@ -42,6 +42,7 @@ export default function Dashboard(props) {
         console.log("get cart items working ")
         console.log(data.data.result);
         setCartBooks(data.data.result);
+
       })
       .catch((err) => {
         console.log(err);
@@ -64,6 +65,7 @@ export default function Dashboard(props) {
           allCartItem={allCartItem}
           nextPath={nextPath}
           cartBooks={cartBooks}
+          // cart={allCartItem()}
           setOrderPlaced={setOrderPlaced}
         />
       </ProtectedRoutes>

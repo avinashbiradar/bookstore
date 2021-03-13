@@ -1,3 +1,5 @@
+// import { Add_To_Cart } from "../constants/constants";
+
 import Add_Token from '../actions/actions';
 
 function rootReducer(state="", action) {
@@ -13,3 +15,19 @@ function rootReducer(state="", action) {
 }
 
 export default rootReducer;
+
+// const initialState={
+//   cardData:[]
+// }
+// export default function cartItems(state=initialState,action){
+//   switch (action.type) {
+//          case "Add_To_Cart":
+//           return {
+//             ...state,
+//               cardData:action.data
+//             }
+//           break;
+//    default:
+//      return state;
+//  }
+// }
