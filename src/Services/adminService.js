@@ -12,4 +12,14 @@ export default class AdminServices {
         },
       });
   };
+
+  deleteItem = (id) => {
+    console.log(id)
+    const user = localStorage.getItem("StoreToken")
+    return axios.Delete(`${baseUrl}/admin/delete/book/${id}`,{
+        headers: {
+          "x-access-token": `${user}`,
+        },
+      });
+  }
 }

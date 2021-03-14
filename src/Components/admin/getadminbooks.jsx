@@ -1,34 +1,22 @@
 import React from "react";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
-import Button from "@material-ui/core/Button";
-import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import "../admin/getadminbooks.scss";
-import { makeStyles } from '@material-ui/core/styles';
 import Services from "../../Services/productServices";
+import ServicesOne from "../../Services/adminService";
 const services = new Services();
-const useStyles = makeStyles((theme) => ({
-  root: {
-    '& > *': {
-      margin: theme.spacing(1),
-    },
-    extendedIcon: {
-      marginRight: theme.spacing(1),
-    },
-  },
-}));
-export default function TableExample(props) {
-  const classes = useStyles();
+const servicesone = new ServicesOne();
+
+export default function BooksTable(props) {
   const [books, setBooks] = React.useState([]);
-  const [sort, setSort] = React.useState({ type: "" });
   const [data, setData] = React.useState(0);
   const [postsPerPage] = React.useState(11);
   const [currentPage, setCurrentPage] = React.useState(1);
   React.useEffect(() => {
     getAllBooks();
-  }, []);
+  },[]);
 
   const getAllBooks = () => {
     services
@@ -46,6 +34,19 @@ export default function TableExample(props) {
   const indexOfLastBook = currentPage * postsPerPage;
   const indexOfFirstBook = indexOfLastBook - postsPerPage;
   const currentBooks = books.slice(indexOfFirstBook, indexOfLastBook);
+
+  const DeleteItem = (e,data) => {
+     e.stopPropagation();
+    console.log(data._id)
+   servicesone.deleteItem(data._id)
+   .then((data)=> {
+     console.log("Successfully deleted"+data);
+     props.getAllBooks();
+   })
+   .catch((err) => {
+     console.log("Error while removing"+err)
+   })
+ }
 
   return (
     <div className="booktable">
@@ -72,11 +73,12 @@ export default function TableExample(props) {
               <Td> Rs. {data.quantity}</Td>
               <Td>{data.price}</Td>
               <Td>{data.discountPrice}</Td>
+              <Td>{data._id}</Td>
               <td>
-                <EditIcon className={classes.margin} />
+                <EditIcon/>
               </td>
               <td>
-                 <DeleteIcon/>
+                 <DeleteIcon onClick={(e) => {DeleteItem(e,data)}} />
               </td>
             </Tr>
           </Tbody>
