@@ -7,6 +7,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import DisplayBookTable from "../admin/getadminbooks"
 import "../admin/admindashboard.scss";
 import AppBar from "../AppBar/AppBar";
 const services = new Services();
@@ -142,6 +143,8 @@ export default function AdminDashboard(props) {
           </DialogActions>
         </Dialog>
       </div>
+      <div><DisplayBookTable/></div>
+      
     </div>
   );
 }

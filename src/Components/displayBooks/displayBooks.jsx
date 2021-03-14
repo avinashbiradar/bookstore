@@ -1,12 +1,12 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Services from "../../Services/productServices";
 import bookImg from "../assests/Image11.png";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Pagination from "../Pagination/Pagination";
+import Services from "../../Services/productServices";
 import "./displayBooks.scss";
 const services = new Services();
 
@@ -61,7 +61,7 @@ export default function DisplayNotes(props) {
   const [books, setBooks] = React.useState([]);
   const [sort, setSort] = React.useState({ type: "" });
   const [data, setData] = React.useState(0);
-  const [postsPerPage] = React.useState(8);
+  const [postsPerPage] = React.useState(11);
   const [currentPage, setCurrentPage] = React.useState(1);
 
   React.useEffect(() => {
