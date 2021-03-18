@@ -1,12 +1,28 @@
 // import { Add_To_Cart } from "../constants/constants";
 
 import Add_Token from '../actions/actions';
-
-function rootReducer(state="", action) {
+import Open_Dialog from '../actions/actions'
+export default  (state={dialog:false,bookDetails:null}, action) => {
+  console.log(" in the reducers ",action)
     switch (action.type) {
-     case Add_Token:
+     case 'Add_Token':
       return {
-        state:{token:action.Id},
+        state:{token:"token here"},
+      }
+      case 'Open_Dialog':{
+        console.log("Inside open dialog")
+        return{
+          dialog:true,
+          bookDetails:action.payload,
+        //  ...state,dialog:true
+        }
+      }
+      case 'Close_Dialog':{
+        console.log("Inside close dialog")
+        return{
+          dialog:false,
+        //  ...state,dialog:true
+        }
       }
       default:
       return state;
@@ -14,7 +30,7 @@ function rootReducer(state="", action) {
 
 }
 
-export default rootReducer;
+
 
 // const initialState={
 //   cardData:[]

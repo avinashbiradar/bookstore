@@ -7,16 +7,12 @@ import OutlinedInput from '@material-ui/core/OutlinedInput';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import IconButton from '@material-ui/core/IconButton';
+import "../LogIn/login.scss";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-
-
-import "../LogIn/login.scss";
 const services = new Services();
 
 export default function Login(props) {
-  const counter = useSelector(state => state);
-  const dispatch = useDispatch();
   const [toggleState, setToggleState] = React.useState(1);
   const [name, setName] = React.useState();
   const [nameFlag, setNameFlag] = React.useState();
@@ -42,6 +38,8 @@ export default function Login(props) {
     password: '',
     showPassword: false,
   });
+  const counter = useSelector(state => state);
+  const dispatch = useDispatch();
 
   const snackbarClose = () => {
     setSnackbaropen(false);
@@ -141,7 +139,10 @@ export default function Login(props) {
             "Login successful" + JSON.stringify(data.data.result.accessToken)
           );
           localStorage.setItem("bookStoreToken", data.data.result.accessToken);
-          
+          dispatch({
+            type: "Add_Token",
+            token: localStorage.getItem('bookStoreToken')
+          })
         })
         .catch((err) => {
           console.log("Registration Error" + err);
@@ -312,7 +313,7 @@ export default function Login(props) {
         <Snackbar
           anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
           open={snackbaropen}
-          autoHideDuration={6000}
+          autoHideDuration={3000}
           onClose={snackbarClose}
           message={<span id="message-id">{snackbarmsg}</span>}
         />

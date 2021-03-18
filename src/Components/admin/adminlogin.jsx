@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
+import Snackbar from "@material-ui/core/Snackbar";
 import Services from "../../Services/userServices";
 const services = new Services();
 let dialogControl = true;
@@ -66,9 +67,15 @@ export default function Login(props) {
   const [password2, setPassword2] = React.useState();
   const [passwordFlag2, setPasswordFlag2] = React.useState(false);
   const [passwordError2, setPasswordError2] = React.useState("");
+  const [snackbaropen, setSnackbaropen] = React.useState(false);
+  const [snackbarmsg, setSnackbarmsg] = React.useState(""); 
 
   const nextPath = (path) => {
     props.history.push(path);
+  };
+
+  const snackbarClose = () => {
+    setSnackbaropen(false);
   };
 
   const makeInitial = () => {
@@ -112,10 +119,14 @@ export default function Login(props) {
             "Login successful" + JSON.stringify(data.data.result.accessToken)
           );
           localStorage.setItem("StoreToken", data.data.result.accessToken);
-          nextPath("../admindashboard");
+          nextPath("../adminbooks");
+          setSnackbaropen(true);
+          setSnackbarmsg("Logged In");
         })
         .catch((err) => {
           console.log("Login Error" + err);
+          setSnackbaropen(true);
+          setSnackbarmsg("Error");
         });
     }
   };
@@ -160,6 +171,13 @@ export default function Login(props) {
           >
             Login
           </Button>
+          <Snackbar
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          open={snackbaropen}
+          autoHideDuration={6000}
+          onClose={snackbarClose}
+          message={<span id="message-id">{snackbarmsg}</span>}
+        />
         </div>
       </div>
     );

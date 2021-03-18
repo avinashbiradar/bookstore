@@ -11,7 +11,15 @@ describe('Login Component', () => {
     it('renders a email input', () => {
         expect(shallow( <Login/> ).find('#outlined-email-input').length).toEqual(1)
       })
-      it('renders a password input', () => {
+     it('renders a password input', () => {
         expect(shallow( <Login/> ).find('#outlined-pass-input').length).toEqual(1)
       })
+})
+
+describe('counter testing ',()=>{
+  test('render the title ', () => {
+    const wrapper = shallow(<Login/>);
+    expect(wrapper.find('span').text()).toContain("ONLINE BOOK SHOPPING");
+  })
+  
 })

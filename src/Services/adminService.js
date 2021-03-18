@@ -22,4 +22,14 @@ export default class AdminServices {
         },
       });
   }
+  UpdateBookInfo = (data,book_id) => {
+    const user = localStorage.getItem("StoreToken")
+    console.log("data in update book info " , data);
+    console.log("data in update book info ",book_id);
+    return axios.Put(`${baseUrl}/admin/update/book/${book_id}`,data,{
+        headers: {
+          "x-access-token": `${user}`,
+        },
+      });
+  };
 }

@@ -7,9 +7,10 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import DisplayBookTable from "../admin/getadminbooks"
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import "../admin/admindashboard.scss";
-import AppBar from "../AppBar/AppBar";
+
 const services = new Services();
 
 export default function AdminDashboard(props) {
@@ -20,12 +21,37 @@ export default function AdminDashboard(props) {
   const [quantity, setQuantity] = React.useState("");
   const [price, setPrice] = React.useState("");
   const [discountPrice, setDiscountPrice] = React.useState("");
+  
+  
+  const counter = useSelector(state => state);
+  console.log("counter",counter.bookDetails)
+ 
+
+//this is bookdata from redux store 
+  React.useEffect(() => {
+   setBookName(counter.bookDetails!==null?counter.bookDetails.bookName:" ")
+   setAuthor(counter.bookDetails!==null?counter.bookDetails.author:" ")
+   setDescription(counter.bookDetails!==null?counter.bookDetails.description:" ")
+   setQuantity(counter.bookDetails!==null?counter.bookDetails.quantity:" ")
+   setPrice(counter.bookDetails!==null?counter.bookDetails.price:" ")
+   setDiscountPrice(counter.bookDetails!==null?counter.bookDetails.discountPrice:" ")
+  },[counter.bookDetails]);
+  
+  const dispatch = useDispatch();
+
   const handleClickOpen = () => {
     setOpen(true);
+    dispatch({
+            type: "Open_Dialog",
+            payload:null
+          })
   };
 
   const handleClose = () => {
     setOpen(false);
+    dispatch({
+            type: "Close_Dialog",
+          })
   };
   const addNewBook = () => {
     //  e.stopPropagation();
@@ -54,21 +80,42 @@ export default function AdminDashboard(props) {
       });
   };
 
+  const UpdateBook= () => {
+    //  e.stopPropagation();
+     console.log("ID",counter.bookDetails._id)
+
+    let Details = {
+      "bookName": bookName,
+      "author": author,
+      "description": description,
+      "quantity": quantity,
+      "price": price,
+      "discountPrice": discountPrice,
+    };
+   console.log(" book details ", Details)
+    services.UpdateBookInfo(Details,counter.bookDetails._id)
+    .then((data)=> {  
+      console.log("Successfully updated book "+data);
+    })
+    .catch((err) => {
+      console.log("Error while updating the book "+err)
+    })
+  }
+
   return (
     <div>
-      <AppBar />
       <div className="addbutton">
         <Button variant="contained" color="primary" onClick={handleClickOpen}>
           Add Book
         </Button>
 
         <Dialog
-          open={open}
+          open={counter.dialog}
           onClose={handleClose}
           aria-labelledby="form-dialog-title"
         >
           <DialogTitle id="form-dialog-title">
-            <h3>Add a new book to the Bookstore</h3>
+           {counter.bookDetails?<h3> update book </h3>:<h3>Add a new book to the Bookstore</h3>}
           </DialogTitle>
           <DialogContent>
             <div className="inputs">
@@ -134,16 +181,13 @@ export default function AdminDashboard(props) {
             </div>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} color="primary">
+            <Button onClick={handleClose} color="primary" >
               Cancel
             </Button>
-            <Button onClick={addNewBook} color="primary">
-              Add Book
-            </Button>
+            {counter.bookDetails?<Button onClick={UpdateBook} color="primary">save changes</Button>: <Button onClick={addNewBook} color="primary">Add Book</Button> }
           </DialogActions>
         </Dialog>
       </div>
-      <div><DisplayBookTable/></div>
       
     </div>
   );
