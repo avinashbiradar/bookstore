@@ -85,8 +85,6 @@ export default function Cart(props) {
   const [stateError, setStateError] = React.useState("");
   const [count, setCount] = useState(1);
 
-  React.useEffect(() => {
-  }, []);
 
   const makeInitial = () => {
     setNameFlag(false);

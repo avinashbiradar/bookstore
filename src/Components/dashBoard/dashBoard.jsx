@@ -27,6 +27,8 @@ export default function Dashboard(props) {
   const [ setShow] = React.useState(false);
   const [cartBooks, setCartBooks] = React.useState([]);
   const [orderPlaced, setOrderPlaced] = React.useState([]);
+
+
   React.useEffect(() => {
     allCartItem();
   }, []); 
@@ -35,6 +37,7 @@ export default function Dashboard(props) {
     e.stopPropagation();
     props.history.push(path);
   };
+
   const allCartItem = () => {
     services
       .getCartItem()
@@ -58,14 +61,13 @@ export default function Dashboard(props) {
     
     <Switch>
       <Route path="/dashboard" exact>
-        <Books cartBooks={cartBooks} />
+        <Books cartBooks={cartBooks} allCartItem={allCartItem} />
       </Route>
       <ProtectedRoutes path="/dashboard/cart" exact>
         <Cart
           allCartItem={allCartItem}
           nextPath={nextPath}
           cartBooks={cartBooks}
-          // cart={allCartItem()}
           setOrderPlaced={setOrderPlaced}
         />
       </ProtectedRoutes>

@@ -21,6 +21,7 @@ export default  (state={dialog:false,bookDetails:null}, action) => {
         console.log("Inside close dialog")
         return{
           dialog:false,
+          bookDetails:action.payload,
         //  ...state,dialog:true
         }
       }

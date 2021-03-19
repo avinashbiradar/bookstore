@@ -102,8 +102,8 @@ const handleShow = () => setShow(true);
               <Td>{data.bookName}</Td>
               <Td>{data.author}</Td>
               <Td>{data.description}</Td>
-              <Td> Rs. {data.quantity}</Td>
-              <Td>{data.price}</Td>
+              <Td> {data.quantity} </Td>
+              <Td> Rs.{data.price}</Td>
               <Td>{data.discountPrice}</Td>
               <td>
               <EditIcon onClick={(e) => {openDialog(e,data)}} />

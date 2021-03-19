@@ -61,7 +61,7 @@ export default function DisplayNotes(props) {
   const [books, setBooks] = React.useState([]);
   const [sort, setSort] = React.useState({ type: "" });
   const [data, setData] = React.useState(0);
-  const [postsPerPage] = React.useState(11);
+  const [postsPerPage] = React.useState(4);
   const [currentPage, setCurrentPage] = React.useState(1);
 
   React.useEffect(() => {
@@ -72,6 +72,7 @@ export default function DisplayNotes(props) {
     services
       .getBooks()
       .then((data) => {
+        console.log("in the get all books ",data)
         setBooks(data.data.result);
         setData(data.data.result);
         books.map((data) => (data.isCart = false));
@@ -118,6 +119,8 @@ export default function DisplayNotes(props) {
       .then((data) => {
         console.log("add to cart function working ");
         console.log(data);
+         getAllBooks();
+        props.allCartItem();
       })
       .catch((err) => {
         console.log(err);

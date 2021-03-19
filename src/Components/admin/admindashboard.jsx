@@ -14,7 +14,7 @@ import "../admin/admindashboard.scss";
 const services = new Services();
 
 export default function AdminDashboard(props) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState();
   const [bookName, setBookName] = React.useState("");
   const [author, setAuthor] = React.useState("");
   const [description, setDescription] = React.useState("");
@@ -29,12 +29,12 @@ export default function AdminDashboard(props) {
 
 //this is bookdata from redux store 
   React.useEffect(() => {
-   setBookName(counter.bookDetails!==null?counter.bookDetails.bookName:" ")
-   setAuthor(counter.bookDetails!==null?counter.bookDetails.author:" ")
-   setDescription(counter.bookDetails!==null?counter.bookDetails.description:" ")
-   setQuantity(counter.bookDetails!==null?counter.bookDetails.quantity:" ")
-   setPrice(counter.bookDetails!==null?counter.bookDetails.price:" ")
-   setDiscountPrice(counter.bookDetails!==null?counter.bookDetails.discountPrice:" ")
+   setBookName(counter.bookDetails!==null?counter.bookDetails.bookName:"")
+   setAuthor(counter.bookDetails!==null?counter.bookDetails.author:"")
+   setDescription(counter.bookDetails!==null?counter.bookDetails.description:"")
+   setQuantity(counter.bookDetails!==null?counter.bookDetails.quantity:"" )
+   setPrice(counter.bookDetails!==null?counter.bookDetails.price:"")
+   setDiscountPrice(counter.bookDetails!==null?counter.bookDetails.discountPrice:"")
   },[counter.bookDetails]);
   
   const dispatch = useDispatch();
@@ -51,6 +51,7 @@ export default function AdminDashboard(props) {
     setOpen(false);
     dispatch({
             type: "Close_Dialog",
+            payload:null
           })
   };
   const addNewBook = () => {
@@ -115,7 +116,7 @@ export default function AdminDashboard(props) {
           aria-labelledby="form-dialog-title"
         >
           <DialogTitle id="form-dialog-title">
-           {counter.bookDetails?<h3> update book </h3>:<h3>Add a new book to the Bookstore</h3>}
+           {counter.bookDetails?<h3> update book to the Bookstore </h3>:<h3>Add a new book to the Bookstore</h3>}
           </DialogTitle>
           <DialogContent>
             <div className="inputs">

@@ -1,6 +1,7 @@
 import React from "react";
-import Paginations from '@material-ui/lab/Pagination';
+import Paginations from "@material-ui/lab/Pagination";
 import { makeStyles } from "@material-ui/core/styles";
+// import './pagination.css'
 
 const useStyles = makeStyles((theme) => ({
   paginateIcon: {
@@ -12,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Pagination({ postsPerPage, totalPosts, paginate }) {
   const classes = useStyles();
 
-  const handleChange = (value) => {
+  const handleChange = (event, value) => {
     paginate(value);
   };
 

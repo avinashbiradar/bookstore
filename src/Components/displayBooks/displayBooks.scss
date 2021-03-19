@@ -18,8 +18,11 @@
   .allBooks {
     display: flex;
     flex-flow: wrap;
-    justify-content: flex-start;
-    width: 100%;
+    // justify-content: flex-start;
+    // width: 100%;
+    // justify-content: center;
+
+    width: 105%
   }
   .bookContainer {
     border: solid lightgray 1px;
@@ -27,7 +30,7 @@
     border-radius: 8px;
     margin: 15px;
     height: 380px;
-    width: 200px;
+    width: 240px;
   }
   .bookSize {
     font-size: 12px;
@@ -81,6 +84,11 @@
     width: 100%;
     display: flex;
     justify-content: center;
+  }
+
+  .makeStyles-search-6{
+    position: relative;
+    left: 120px;
   }
   
   @media only screen and (max-width: 500px) {
