@@ -4,6 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import Snackbar from "@material-ui/core/Snackbar";
+
 import Services from "../../Services/userServices";
 const services = new Services();
 let dialogControl = true;
@@ -61,10 +62,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login(props) {
   const classes = useStyles();
-  const [email2, setEmail2] = React.useState();
+  const [email2, setEmail2] = React.useState(" ");
   const [emailFlag2, setEmailFlag2] = React.useState(false);
   const [emailError2, setEmailError2] = React.useState("");
-  const [password2, setPassword2] = React.useState();
+  const [password2, setPassword2] = React.useState(" ");
   const [passwordFlag2, setPasswordFlag2] = React.useState(false);
   const [passwordError2, setPasswordError2] = React.useState("");
   const [snackbaropen, setSnackbaropen] = React.useState(false);
@@ -138,17 +139,18 @@ export default function Login(props) {
         <div className={classes.SignUpBody}>
           <div className={classes.header}>
             Login
-            <Button onClick={() => nextPath("../signupadmin")}> Sign Up </Button>
+            <Button onClick={() => nextPath("../adminsign")}> Sign Up </Button>
           </div>
           <div className={classes.inputField}>
             <TextField
               value={email2}
-              onChange={(e) => setEmail2(e.target.value)}
+               onChange={(e) => setEmail2(e.target.value)}
               error={emailFlag2}
               helperText={emailError2}
               fullWidth
               className={classes.input}
               label="Email"
+              name="email"
             />
           </div>
           <div className={classes.inputField}>
@@ -161,6 +163,7 @@ export default function Login(props) {
               className={classes.input} 
               label="Password"
               type="password"
+              name="password"
             />
           </div>
           <Button

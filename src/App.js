@@ -9,6 +9,7 @@ import PrivateRoute from './Components/privateroute/privateroute';
 import AdminBooks from './Components/admin/getadminbooks'
 import AdminLogin from './Components/admin/adminlogin'
 import AdminSignUp from "./Components/admin/adminRegister"
+import wishlist from "./Components/wishlist/wishlist"
 function App() {
   return (
     <div className="App">
@@ -20,6 +21,7 @@ function App() {
      <Route path="/loginadmin" component={AdminLogin} exact/>
      <Route path="/adminbooks" component={AdminBooks} exact/>
      <Route path="/adminsign" component={AdminSignUp} exact/>
+     <Route path="/wishlist" component={wishlist} exact/>
    </Switch>
    </BrowserRouter >
   </div>

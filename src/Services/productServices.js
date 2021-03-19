@@ -7,9 +7,26 @@ export default class productServices {
     return axios.Get(`${baseUrl}/get/book`);
   };
 
+  getWishListBooks = () => {
+    const user = localStorage.getItem("bookStoreToken")
+    return axios.Get(`${baseUrl}/get_wishlist_items`,{
+        headers: {
+          "x-access-token": `${user}`,
+        },
+      });
+  };
+
   addToCart = (id) => {
     const user = localStorage.getItem("bookStoreToken")
     return axios.Post(`${baseUrl}/add_cart_item/${id}`,false,{
+        headers: {
+          "x-access-token": `${user}`,
+        },
+      });
+  };
+  addToWishList = (id) => {
+    const user = localStorage.getItem("bookStoreToken")
+    return axios.Post(`${baseUrl}/add_wish_list/${id}`,false,{
         headers: {
           "x-access-token": `${user}`,
         },

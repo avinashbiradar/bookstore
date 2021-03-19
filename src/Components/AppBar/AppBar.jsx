@@ -8,6 +8,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import SearchIcon from "@material-ui/icons/SearchOutlined";
 import IconButton from "@material-ui/core/IconButton";
+import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import { withStyles } from "@material-ui/core/styles";
  import logo from "../assests/education.svg";
 import Badge from "@material-ui/core/Badge";
@@ -101,10 +102,23 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "14px",
     color: "white",
   },
+  profileButton:{
+    fontSize: "35px",
+    color: "white",
+  },
 }));
 
 export default function Appbar(props) {
   const classes = useStyles();
+
+  // const nextPath = (path) => {
+  //   props.history.push(path);
+  // };
+  
+  const HandleLogout = () => {
+     localStorage.clear();
+    props.nextPath("../login")
+  };
 
   return (
     <React.Fragment>
@@ -132,7 +146,10 @@ export default function Appbar(props) {
           </div>
           <div className={classes.rightOptions}>
             <SearchIcon className={classes.buttonSearch} />
-
+            <PermIdentityIcon
+             onClick={HandleLogout}
+            className={classes.profileButton}
+            />
             <IconButton
               className={classes.cartButton}
               onClick={(e) => props.nextPath(e, "../dashboard/cart")}

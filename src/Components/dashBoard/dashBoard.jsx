@@ -34,7 +34,7 @@ export default function Dashboard(props) {
   }, []); 
 
   const nextPath = (e, path) => {
-    e.stopPropagation();
+    // e.stopPropagation();
     props.history.push(path);
   };
 

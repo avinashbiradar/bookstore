@@ -6,6 +6,7 @@ import TextField from "@material-ui/core/TextField";
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import SnackbarComponent from "../snackbarComponent/snackbar"
 import IconButton from '@material-ui/core/IconButton';
 import "../LogIn/login.scss";
 import { useSelector } from "react-redux";
@@ -150,7 +151,11 @@ export default function Login(props) {
     }
   };
   
- 
+  const Adminlogin = () => {
+    nextPath("../loginadmin");
+  }
+
+
   const handleLogin = () => {
     if (patternCheckone()) {
       console.log("Error Occured");
@@ -247,9 +252,14 @@ export default function Login(props) {
           <Button className="btn" onClick={handleLogin}>
             Login
           </Button>
+          
         </div>
         </div>
+        <br/>
         <div className="buttons">
+        <Button className="btn" onClick={Adminlogin}>
+        Login as Admin
+        </Button>
         </div>
         </div>
 
@@ -310,13 +320,11 @@ export default function Login(props) {
             Signup
           </Button>
         </div>
-        <Snackbar
-          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-          open={snackbaropen}
-          autoHideDuration={3000}
-          onClose={snackbarClose}
-          message={<span id="message-id">{snackbarmsg}</span>}
+        <SnackbarComponent
+        open={snackbaropen}
+        message={snackbarmsg}
         />
+       
       </div>
     </div>
   );

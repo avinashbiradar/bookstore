@@ -126,7 +126,24 @@ export default function DisplayNotes(props) {
         console.log(err);
       });
   };
- 
+
+  const addedToWishList = (e, data) => {
+    e.stopPropagation();
+    console.log(data)
+    const id = data._id;
+    data.isCart = true;
+    services
+      .addToWishList(id)
+      .then((data) => {
+        console.log("add to wishlist function working ");
+        console.log(data);
+         getAllBooks();
+        props.allCartItem();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   };  
@@ -199,7 +216,7 @@ export default function DisplayNotes(props) {
                 >
                   Add To Bag
                 </Button>
-                <Button variant="outlined" className={classes.wishListButton}>
+                <Button variant="outlined" className={classes.wishListButton} onClick={(e) => addedToWishList(e, data)}>
                   WishList
                 </Button>
               </div>
