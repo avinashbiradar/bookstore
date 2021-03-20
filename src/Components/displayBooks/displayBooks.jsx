@@ -155,7 +155,7 @@ export default function DisplayNotes(props) {
   return (
     <div className="displayBook">
       <span className="topContent">
-        <div>
+        <div >
           Books <font className="bookSize"> ({books.length} items) </font>{" "}
         </div>
         <div>

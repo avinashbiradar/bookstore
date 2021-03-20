@@ -33,6 +33,15 @@
   margin: 15px;
   height: 60vh;
 }
+// .header{
+//   position: relative;
+//   top: 500px;
+// }
+.booksize {
+  font-size:15px;
+  font-weight:500;
+}
+
 .wishBookImage {
   display: flex;
   flex-direction: column;
@@ -63,6 +72,7 @@
   .deleteicon{
     display: flex;
     position: relative;
+    
   }
   
   @media only screen and (max-width: 900px) {

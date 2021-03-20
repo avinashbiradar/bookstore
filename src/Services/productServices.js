@@ -50,6 +50,16 @@ export default class productServices {
         },
       });
   }
+
+  deleteWishList = (id) => {
+    const user = localStorage.getItem("bookStoreToken")
+    return axios.Delete(`${baseUrl}/remove_wishlist_item/${id}`,{
+        headers: {
+          "x-access-token": `${user}`,
+        },
+      });
+  }
+
   addOrder = (data) => {
     const user = localStorage.getItem("bookStoreToken")
     console.log(data);
