@@ -8,6 +8,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import SnackbarComponent from "../snackbarComponent/snackbar"
 import IconButton from '@material-ui/core/IconButton';
+import Validation from '../validations/validations'
 import "../LogIn/login.scss";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -42,9 +43,9 @@ export default function Login(props) {
   const counter = useSelector(state => state);
   const dispatch = useDispatch();
 
-  const snackbarClose = () => {
-    setSnackbaropen(false);
-  };
+  // const snackbarClose = () => {
+  //   setSnackbaropen(false);
+  // };
   const nextPath = (path) => {
     props.history.push(path);
   };
@@ -66,7 +67,7 @@ export default function Login(props) {
     setPasswordError1("");
   }
 
-  const patternCheckone = () => {
+  const patternCheckone = (email) => {
     makeInitialone();
     const emailPatternone = /[a-zA-Z0-9._]+[@]{1}[a-zA-Z120-9]*[.]{1}[a-zA-Z]*$/;
     const passwordPatternone = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$/;

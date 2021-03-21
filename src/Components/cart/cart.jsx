@@ -224,8 +224,8 @@ export default function Cart(props) {
                 {data.product_id.author}
               </Typography>
               <Typography className={classes.bookPrize}>
-                Rs. {data.product_id.price}
-              </Typography>
+              {data.product_id.quantity}
+            </Typography>
               <div className="countItem">
                 <IconButton onClick={(e)=>{handleDecrement(data)}} className={classes.countButton}>-</IconButton>
                 <h4>{count}</h4>

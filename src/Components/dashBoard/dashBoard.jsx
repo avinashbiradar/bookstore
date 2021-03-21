@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-
 export default function Dashboard(props) {
   const classes = useStyles();
   const [ setShow] = React.useState(false);
@@ -34,7 +33,7 @@ export default function Dashboard(props) {
   }, []); 
 
   const nextPath = (e, path) => {
-    // e.stopPropagation();
+    //  e.stopPropagation();
     props.history.push(path);
   };
 

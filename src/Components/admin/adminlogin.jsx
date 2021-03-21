@@ -4,7 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import Snackbar from "@material-ui/core/Snackbar";
-
+import SnackbarComponent from "../snackbarComponent/snackbar"
 import Services from "../../Services/userServices";
 const services = new Services();
 let dialogControl = true;
@@ -174,13 +174,11 @@ export default function Login(props) {
           >
             Login
           </Button>
-          <Snackbar
-          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          <SnackbarComponent
           open={snackbaropen}
-          autoHideDuration={6000}
-          onClose={snackbarClose}
-          message={<span id="message-id">{snackbarmsg}</span>}
-        />
+          message={snackbarmsg}
+          />
+         
         </div>
       </div>
     );

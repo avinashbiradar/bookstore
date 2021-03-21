@@ -12,6 +12,11 @@ import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import { withStyles } from "@material-ui/core/styles";
  import logo from "../assests/education.svg";
 import Badge from "@material-ui/core/Badge";
+import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import Fade from '@material-ui/core/Fade';
+
 
 const StyledBadge = withStyles((theme) => ({
   badge: {
@@ -110,6 +115,16 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Appbar(props) {
   const classes = useStyles();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   // const nextPath = (path) => {
   //   props.history.push(path);
@@ -146,10 +161,21 @@ export default function Appbar(props) {
           </div>
           <div className={classes.rightOptions}>
             <SearchIcon className={classes.buttonSearch} />
-            <PermIdentityIcon
-             onClick={HandleLogout}
-            className={classes.profileButton}
-            />
+            <PermIdentityIcon     className={classes.profileButton} aria-controls="fade-menu" aria-haspopup="true" onClick={handleClick}>
+            </PermIdentityIcon>
+          <Menu
+            id="fade-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={open}
+            onClose={handleClose}
+            TransitionComponent={Fade}
+          >
+            <MenuItem>Hey Avinash!!!</MenuItem>
+            <MenuItem  onClick={(e) => props.nextPath(e, "../wishlist")} > WishList </MenuItem>
+            <MenuItem  onClick={(e) => props.nextPath(e, "../loginadmin")} > Admin Login </MenuItem>
+            <MenuItem onClick={HandleLogout}>Logout</MenuItem>
+          </Menu>
             <IconButton
               className={classes.cartButton}
               onClick={(e) => props.nextPath(e, "../dashboard/cart")}

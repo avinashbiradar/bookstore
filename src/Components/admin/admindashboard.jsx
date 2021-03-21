@@ -7,6 +7,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import SnackbarComponent from "../snackbarComponent/snackbar"
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import "../admin/admindashboard.scss";
@@ -21,7 +22,8 @@ export default function AdminDashboard(props) {
   const [quantity, setQuantity] = React.useState("");
   const [price, setPrice] = React.useState("");
   const [discountPrice, setDiscountPrice] = React.useState("");
-  
+  const [snackbaropen, setSnackbaropen] = React.useState(false);
+  const [snackbarmsg, setSnackbarmsg] = React.useState(""); 
   
   const counter = useSelector(state => state);
   console.log("counter",counter.bookDetails)
@@ -71,13 +73,17 @@ export default function AdminDashboard(props) {
         console.log(Details)
         console.log(data);
         console.log("Successfully added book " + data);
+        setSnackbaropen(true);
+        setSnackbarmsg("Book Added Successfully");
         console.log(
           "Login successful" + JSON.stringify(data.data.result.accessToken)
         );
-        localStorage.setItem("StoreToken", data.data.result.accessToken);
+        localStorage.setItem("StoreToken", data.data.result.accessToken)
       })
       .catch((err) => {
         console.log("Error while adding the book" + err);
+        setSnackbaropen(true);
+        setSnackbarmsg("Error");
       });
   };
 
@@ -97,9 +103,13 @@ export default function AdminDashboard(props) {
     services.UpdateBookInfo(Details,counter.bookDetails._id)
     .then((data)=> {  
       console.log("Successfully updated book "+data);
+      setSnackbaropen(true);
+      setSnackbarmsg("Book updated Successfully");
     })
     .catch((err) => {
       console.log("Error while updating the book "+err)
+      setSnackbaropen(true);
+      setSnackbarmsg("Error");
     })
   }
 
@@ -189,7 +199,10 @@ export default function AdminDashboard(props) {
           </DialogActions>
         </Dialog>
       </div>
-      
+      <SnackbarComponent
+      open={snackbaropen}
+      message={snackbarmsg}
+      />
     </div>
   );
 }

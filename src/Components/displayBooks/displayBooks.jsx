@@ -10,6 +10,8 @@ import Services from "../../Services/productServices";
 import "./displayBooks.scss";
 const services = new Services();
 
+
+
 const useStyles = makeStyles((theme) => ({
   bookName: {
     fontSize: "13px",
@@ -63,10 +65,12 @@ export default function DisplayNotes(props) {
   const [data, setData] = React.useState(0);
   const [postsPerPage] = React.useState(4);
   const [currentPage, setCurrentPage] = React.useState(1);
+ 
 
   React.useEffect(() => {
     getAllBooks();
   }, []);
+
 
   const getAllBooks = () => {
     services
@@ -219,7 +223,7 @@ export default function DisplayNotes(props) {
                 <Button variant="outlined" className={classes.wishListButton} onClick={(e) => addedToWishList(e, data)}>
                   WishList
                 </Button>
-              </div>
+            </div>
             )}
           </div>
         ))}

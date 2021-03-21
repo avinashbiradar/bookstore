@@ -1,14 +1,10 @@
 import React from "react";
 import bookImg from "../assests/Image11.png";
-// import Services from "../../Services/BookService";
-// const services = new Services();
 import DeleteIcon from "@material-ui/icons/Delete";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
-import Card from "@material-ui/core/Card";
 import AppBar from "../AppBar/AppBar";
 import Services from "../../Services/productServices";
-import Button from "@material-ui/core/Button";
 import "../wishlist/wishlist.scss";
 const services = new Services();
 const useStyles = makeStyles((theme) => ({
@@ -67,6 +63,7 @@ export default function CartBooks(props) {
     getWishList();
   }, []);
 
+  
   const getWishList = () => {
     services
       .getWishListBooks()
@@ -101,7 +98,7 @@ export default function CartBooks(props) {
 
   return (
     <div className="wishBody">
-      <AppBar />
+      <AppBar/>
       <div className="wishContainer">
       <div className="header">
         WishList Books{" "}

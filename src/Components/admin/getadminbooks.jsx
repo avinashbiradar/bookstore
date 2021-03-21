@@ -3,16 +3,10 @@ import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import TextField from "@material-ui/core/TextField";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Button from "@material-ui/core/Button";
 import "../admin/getadminbooks.scss";
 import AppBar from "../AppBar/AppBar";
 import AddBook from "../admin/admindashboard"
+import SnackbarComponent from "../snackbarComponent/snackbar"
 import Services from "../../Services/productServices";
 import ServicesOne from "../../Services/adminService";
 import { useSelector } from "react-redux";
@@ -27,6 +21,8 @@ export default function BooksTable(props) {
   const [postsPerPage] = React.useState(11);
   const [currentPage, setCurrentPage] = React.useState(1);
   const [show, setShow] = React.useState(false);
+  const [snackbaropen, setSnackbaropen] = React.useState(false);
+  const [snackbarmsg, setSnackbarmsg] = React.useState(""); 
 
 const handleShow = () => setShow(true);
   React.useEffect(() => {
@@ -61,10 +57,14 @@ const handleShow = () => setShow(true);
     console.log(data)
    servicesone.deleteItem(data._id)
    .then((data)=> {
+    setSnackbaropen(true);
+    setSnackbarmsg("Book deleted Successfully");
      console.log("Successfully deleted"+data);
    })
    .catch((err) => {
      console.log("Error while removing"+err)
+     setSnackbaropen(true);
+     setSnackbarmsg("Error");
    })
  }
 
@@ -115,6 +115,10 @@ const handleShow = () => setShow(true);
           </Tbody>
         ))}
       </Table>
+      <SnackbarComponent
+      open={snackbaropen}
+      message={snackbarmsg}
+      />
     </div>
   );
 }
