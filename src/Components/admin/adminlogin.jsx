@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   },
   inputField: {
     margin: "5px 0 5px 0",
-    width: "90%",
+    width: "100%",
   },
   input: {
     color: "#A03037",
@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
   regButton: {
     marginTop: "20px",
     background: "#A03037",
-    width: "90%",
+    width: "100%",
   },
 }));
 
@@ -135,11 +135,11 @@ export default function Login(props) {
   const LoginBody = () => {
     return (
       <div className={classes.loginMain}>
-        <div className={classes.Title}>Book Store</div>
+        <div className={classes.Title}>Book Store Admin </div>
         <div className={classes.SignUpBody}>
           <div className={classes.header}>
             Login
-            <Button onClick={() => nextPath("../adminsign")}> Sign Up </Button>
+            <Button onClick={() => nextPath("../adminsignup")}> Sign Up </Button>
           </div>
           <div className={classes.inputField}>
             <TextField
@@ -172,8 +172,16 @@ export default function Login(props) {
             onClick={submit}
             variant="contained"
           >
-            Login
+           Admin Login
           </Button>
+          <Button
+          fullWidth
+          className={classes.regButton}
+          onClick={() => nextPath("../login")}
+          variant="contained"
+        >
+         Bookstore Login
+        </Button>
           <SnackbarComponent
           open={snackbaropen}
           message={snackbarmsg}

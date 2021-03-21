@@ -118,6 +118,7 @@ export default function Appbar(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
+ 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -134,6 +135,8 @@ export default function Appbar(props) {
      localStorage.clear();
     props.nextPath("../login")
   };
+  
+
 
   return (
     <React.Fragment>
@@ -149,21 +152,24 @@ export default function Appbar(props) {
                 Bookstore
               </Typography>
             </div>
-            <div className={classes.search}>
+         { props.user ? <div className={classes.search} >
               <div className={classes.searchIcon}>
                 <SearchIcon />
               </div>
               <InputBase
+                search={props.search}
+                onChange={(e) => props.issearch(e.target.value)}
                 placeholder="Search…"
                 classes={{ input: classes.inputInput }}
               />
             </div>
+          :''}
           </div>
-          <div className={classes.rightOptions}>
+          { props.user ?  <div className={classes.rightOptions}>
             <SearchIcon className={classes.buttonSearch} />
             <PermIdentityIcon     className={classes.profileButton} aria-controls="fade-menu" aria-haspopup="true" onClick={handleClick}>
             </PermIdentityIcon>
-          <Menu
+            <Menu
             id="fade-menu"
             anchorEl={anchorEl}
             keepMounted
@@ -176,6 +182,7 @@ export default function Appbar(props) {
             <MenuItem  onClick={(e) => props.nextPath(e, "../loginadmin")} > Admin Login </MenuItem>
             <MenuItem onClick={HandleLogout}>Logout</MenuItem>
           </Menu>
+         
             <IconButton
               className={classes.cartButton}
               onClick={(e) => props.nextPath(e, "../dashboard/cart")}
@@ -184,7 +191,8 @@ export default function Appbar(props) {
                 <ShoppingCartOutlinedIcon />
               </StyledBadge>
             </IconButton>
-          </div>
+            </div>
+            :''}
         </Toolbar>
       </AppBar>
     </React.Fragment>

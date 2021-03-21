@@ -26,7 +26,8 @@ export default function Dashboard(props) {
   const [ setShow] = React.useState(false);
   const [cartBooks, setCartBooks] = React.useState([]);
   const [orderPlaced, setOrderPlaced] = React.useState([]);
-
+  const [isuser , setisuser] = React.useState(true);
+  const [search , issearch]=React.useState(" ");
 
   React.useEffect(() => {
     allCartItem();
@@ -50,12 +51,22 @@ export default function Dashboard(props) {
         console.log(err);
       });
   };
+
+  const SearchBooks= () =>{
+    return(
+       <div></div>
+    )
+ }
+
   return (
     <div className={classes.dashboardMain}>
     <AppBar
-    totalCartItem={cartBooks.length}
+     totalCartItem={cartBooks.length}
       nextPath={nextPath}
       setShow={setShow}
+      user={isuser}
+      issearch={issearch}
+      search={search}
     />
     
     <Switch>

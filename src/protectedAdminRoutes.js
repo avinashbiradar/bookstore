@@ -3,7 +3,7 @@ import {Route, Redirect} from "react-router-dom";
 let authenticated = false;
 
 const  isAuthenticated = () => {
-    if(localStorage.getItem("bookStoreToken") === null){
+    if(localStorage.getItem("StoreToken") === null){
       authenticated = false;
     }
     else{
@@ -20,7 +20,7 @@ export default function ProtectedRoutes({component: Component, ...rest}){
             }
             else{
                 return <Redirect to = {
-                {    pathname: "/Login",
+                {    pathname: "/loginadmin",
                     state: {
                         from: props.location,
                         
@@ -32,5 +32,3 @@ export default function ProtectedRoutes({component: Component, ...rest}){
         
     )
 }
-
-

@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
   inputField: {
     margin: "5px 0 5px 0",
-    width: "90%",
+    width: "100%",
   },
   input: {
     color: "#A03037",
@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
   regButton: {
     marginTop: "20px",
     background: "#A03037",
-    width: "90%",
+    width: "100%",
   },
 }));
 

@@ -23,6 +23,7 @@ export default function BooksTable(props) {
   const [show, setShow] = React.useState(false);
   const [snackbaropen, setSnackbaropen] = React.useState(false);
   const [snackbarmsg, setSnackbarmsg] = React.useState(""); 
+  const [isuser , setisuser] = React.useState(true);
 
 const handleShow = () => setShow(true);
   React.useEffect(() => {
@@ -77,7 +78,9 @@ const handleShow = () => setShow(true);
   return (
     <div className="booktable">
     <div>
-    <AppBar/>
+   <AppBar
+    user={false}
+   />
     </div>
     <div className="addbooks">
     <AddBook/>
