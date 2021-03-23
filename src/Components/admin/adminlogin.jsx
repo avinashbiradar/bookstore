@@ -4,8 +4,10 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import Snackbar from "@material-ui/core/Snackbar";
-import SnackbarComponent from "../snackbarComponent/snackbar"
+import SnackbarComponent from "../snackbarComponent/snackbar";
 import Services from "../../Services/userServices";
+import { isemailValid, ispasswordValid } from "../validations/validations";
+
 const services = new Services();
 let dialogControl = true;
 
@@ -17,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "10px",
     width: "350px",
     [theme.breakpoints.down("xs")]: {
-      width: '100%'
+      width: "100%",
     },
   },
   Title: {
@@ -31,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
   },
   SignUpBody: {
     padding: "30px",
-   
   },
   header: {
     display: "flex",
@@ -69,7 +70,7 @@ export default function Login(props) {
   const [passwordFlag2, setPasswordFlag2] = React.useState(false);
   const [passwordError2, setPasswordError2] = React.useState("");
   const [snackbaropen, setSnackbaropen] = React.useState(false);
-  const [snackbarmsg, setSnackbarmsg] = React.useState(""); 
+  const [snackbarmsg, setSnackbarmsg] = React.useState("");
 
   const nextPath = (path) => {
     props.history.push(path);
@@ -103,6 +104,27 @@ export default function Login(props) {
     }
     return isError;
   };
+
+  // const makeInitial = () => {
+  //   setEmailFlag2(false);
+  //   setEmailError2("");
+  //   setPasswordFlag2(false);
+  //   setPasswordError2("");
+  // };
+  // let isError = false;
+  // const patternCheck = () => {
+  //   makeInitial();
+  //   if (isemailValid(email2) && ispasswordValid(password2)) {
+  //     return true;
+  //   } else {
+  //     setPasswordFlag2(true);
+  //     setPasswordError2("Please Enter Valid Password");
+  //     setEmailFlag2(true);
+  //     setEmailError2("Email is Not Proper");
+  //     isError = true;
+  //     return false;
+  //   }
+  // };
 
   const submit = () => {
     if (patternCheck()) {
@@ -139,12 +161,15 @@ export default function Login(props) {
         <div className={classes.SignUpBody}>
           <div className={classes.header}>
             Login
-            <Button onClick={() => nextPath("../adminsignup")}> Sign Up </Button>
+            <Button onClick={() => nextPath("../adminsignup")}>
+              {" "}
+              Sign Up{" "}
+            </Button>
           </div>
           <div className={classes.inputField}>
             <TextField
               value={email2}
-               onChange={(e) => setEmail2(e.target.value)}
+              onChange={(e) => setEmail2(e.target.value)}
               error={emailFlag2}
               helperText={emailError2}
               fullWidth
@@ -160,7 +185,7 @@ export default function Login(props) {
               error={passwordFlag2}
               helperText={passwordError2}
               fullWidth
-              className={classes.input} 
+              className={classes.input}
               label="Password"
               type="password"
               name="password"
@@ -172,21 +197,17 @@ export default function Login(props) {
             onClick={submit}
             variant="contained"
           >
-           Admin Login
+            Admin Login
           </Button>
           <Button
-          fullWidth
-          className={classes.regButton}
-          onClick={() => nextPath("../login")}
-          variant="contained"
-        >
-         Bookstore Login
-        </Button>
-          <SnackbarComponent
-          open={snackbaropen}
-          message={snackbarmsg}
-          />
-         
+            fullWidth
+            className={classes.regButton}
+            onClick={() => nextPath("../login")}
+            variant="contained"
+          >
+            Bookstore Login
+          </Button>
+          <SnackbarComponent open={snackbaropen} message={snackbarmsg} />
         </div>
       </div>
     );
@@ -194,9 +215,13 @@ export default function Login(props) {
 
   return (
     <>
-     {dialogControl ? <Dialog open={true}>
-        <LoginBody />
-      </Dialog> : ''}
+      {dialogControl ? (
+        <Dialog open={true}>
+          <LoginBody />
+        </Dialog>
+      ) : (
+        ""
+      )}
     </>
   );
 }

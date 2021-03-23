@@ -125,6 +125,7 @@ export default function Appbar(props) {
 
   const handleClose = () => {
     setAnchorEl(null);
+    console.log(props.search)
   };
 
   // const nextPath = (path) => {
@@ -192,7 +193,9 @@ export default function Appbar(props) {
               </StyledBadge>
             </IconButton>
             </div>
-            :''}
+            : 
+           " "
+          }
         </Toolbar>
       </AppBar>
     </React.Fragment>

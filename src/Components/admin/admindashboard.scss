@@ -3,3 +3,29 @@
     justify-content: flex-start;
     padding: 100px;
 }
+
+.AllBooks{
+    display: flex;
+    flex-flow: wrap;
+    align-items: flex-start;
+}
+.BookBlock:hover .BookOption{
+    display: block;
+}
+
+.inputBlock{
+    display: flex;
+    flex-direction: column;
+}
+.optionContainer{
+    height: 30px;
+}
+
+.BookOption{
+    display: none;
+    cursor: pointer;
+}
+.logoutbtn{
+    display: flex;
+    
+}

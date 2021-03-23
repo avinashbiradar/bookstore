@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
 import Services from "../../Services/adminService";
+import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -8,13 +9,24 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import SnackbarComponent from "../snackbarComponent/snackbar"
+import Validations, { isStringValid } from  "../validations/validations"
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import "../admin/admindashboard.scss";
-
+//  const validation = new Validations();
 const services = new Services();
+const useStyles = makeStyles((theme) => ({
+  input: {
+    color: "#A03037",
+    inputField: {
+      margin: "5px 0 5px 0",
+      width: "100%",
+    },
+  },
+}));
 
 export default function AdminDashboard(props) {
+  const classes = useStyles();
   const [open, setOpen] = React.useState();
   const [bookName, setBookName] = React.useState("");
   const [author, setAuthor] = React.useState("");
@@ -24,7 +36,8 @@ export default function AdminDashboard(props) {
   const [discountPrice, setDiscountPrice] = React.useState("");
   const [snackbaropen, setSnackbaropen] = React.useState(false);
   const [snackbarmsg, setSnackbarmsg] = React.useState(""); 
-  
+  const [bookFlag, setBookFlag] = React.useState(false);
+  const [bookError, setBookError] = React.useState(" ");
   const counter = useSelector(state => state);
   console.log("counter",counter.bookDetails)
  
@@ -56,7 +69,35 @@ export default function AdminDashboard(props) {
             payload:null
           })
   };
+
+  const makeInitial = () => {
+            setBookFlag(false)
+            setBookError("")
+          };
+ 
+const patternCheck = () => {
+  makeInitial ();
+  let isError = false;
+ if (isStringValid(bookName)) {
+   console.log("BookName is correct")
+    return true ;
+}
+else 
+{
+  setBookFlag(true);
+  setBookError("Bookname is Not Proper");
+  isError = true;
+  console.log("BookName is  not correct")
+   return false
+}
+
+}
   const addNewBook = () => {
+    if (patternCheck()) {
+      console.log("Error Occured");
+    } else {
+      console.log("Success");
+    }
     //  e.stopPropagation();
     let Details = {
       "bookName": bookName,
@@ -113,12 +154,25 @@ export default function AdminDashboard(props) {
     })
   }
 
+
+  const HandleLogoutAdmin = () => {
+    localStorage.clear();
+ };
+ 
+
   return (
     <div>
       <div className="addbutton">
+      <div className="addbuttonone">
         <Button variant="contained" color="primary" onClick={handleClickOpen}>
           Add Book
         </Button>
+      
+        <Button variant="contained" color="primary" onClick={HandleLogoutAdmin}>
+        LogOut Admin 
+        </Button>
+        </div>
+        
 
         <Dialog
           open={counter.dialog}
@@ -131,7 +185,7 @@ export default function AdminDashboard(props) {
           <DialogContent>
             <div className="inputs">
               <DialogContentText>
-                <div>
+                <div className={classes.inputField} >
                   {" "}
                   <TextField
                     id="standard-basic"
@@ -139,6 +193,9 @@ export default function AdminDashboard(props) {
                     label="bookName"
                     value={bookName}
                     onChange={(e) => setBookName(e.target.value)}
+                     error={setBookFlag}
+                     helperText={setBookError}
+                     className={classes.input}
                   />
                 </div>
                 <div>
@@ -148,6 +205,7 @@ export default function AdminDashboard(props) {
                     label="author"
                     value={author}
                     onChange={(e) => setAuthor(e.target.value)}
+                    
                   />
                 </div>
                 <div>
@@ -198,6 +256,7 @@ export default function AdminDashboard(props) {
             {counter.bookDetails?<Button onClick={UpdateBook} color="primary">save changes</Button>: <Button onClick={addNewBook} color="primary">Add Book</Button> }
           </DialogActions>
         </Dialog>
+       
       </div>
       <SnackbarComponent
       open={snackbaropen}
