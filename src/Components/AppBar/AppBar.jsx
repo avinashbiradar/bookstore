@@ -146,7 +146,7 @@ export default function Appbar(props) {
         <Toolbar className={classes.toolBar}>
           <div className={classes.leftOptions}>
             <div className={classes.title}>
-            <img className={classes.titleLogo} src={logo} />
+            <img className={classes.titleLogo} src={logo}   onClick={(e) => props.nextPath(e, "../dashboard")} />
               <Typography className={classes.titleName} variant="h6" 
               onClick={(e) => props.nextPath(e, "../dashboard")}
               >
@@ -155,7 +155,7 @@ export default function Appbar(props) {
             </div>
          { props.user ? <div className={classes.search} >
               <div className={classes.searchIcon}>
-                <SearchIcon />
+               <SearchIcon/>
               </div>
               <InputBase
                 search={props.search}

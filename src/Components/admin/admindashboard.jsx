@@ -9,7 +9,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import SnackbarComponent from "../snackbarComponent/snackbar"
-import Validations, { isStringValid } from  "../validations/validations"
+import { isStringValid } from  "../validations/validations"
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import "../admin/admindashboard.scss";
@@ -193,8 +193,8 @@ else
                     label="bookName"
                     value={bookName}
                     onChange={(e) => setBookName(e.target.value)}
-                     error={setBookFlag}
-                     helperText={setBookError}
+                     error={bookError}
+                     helperText={bookError}
                      className={classes.input}
                   />
                 </div>

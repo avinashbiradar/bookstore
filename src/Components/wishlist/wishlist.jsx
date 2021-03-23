@@ -63,14 +63,21 @@ export default function CartBooks(props) {
     getWishList();
   }, []);
 
-  
   const getWishList = () => {
     services
       .getWishListBooks()
       .then((data) => {
         console.log("get wishlist ", data.data.result);
-        setBooks(data.data.result);
         setData(data.data.result);
+        const dataArray = data.data.result;
+        const datashow = [];
+        dataArray.map((data) => {
+          if (data.product_id !== null) {
+            datashow.push(data);
+          }
+        });
+        console.log(datashow);
+        setBooks(datashow);
         books.map((data) => (data.isCart = false));
       })
       .catch((err) => {
@@ -85,7 +92,7 @@ export default function CartBooks(props) {
       .deleteWishList(data.product_id._id)
       .then((data) => {
         console.log("Successfully deleted" + data);
-        getWishList()
+        getWishList();
       })
       .catch((err) => {
         console.log("Error while removing" + err);
@@ -98,12 +105,12 @@ export default function CartBooks(props) {
 
   return (
     <div className="wishBody">
-      <AppBar/>
+      <AppBar />
       <div className="wishContainer">
-      <div className="header">
-        WishList Books{" "}
-        <font className="booksize"> ({books.length} items) </font>{" "}
-      </div>
+        <div className="header">
+          WishList Books{" "}
+          <font className="booksize"> ({books.length} items) </font>{" "}
+        </div>
         {currentBooks.map((data) => (
           <div className="wishItem">
             <div className="wishBookItem">
