@@ -37,12 +37,12 @@ export default function AdminDashboard(props) {
   const [snackbaropen, setSnackbaropen] = React.useState(false);
   const [snackbarmsg, setSnackbarmsg] = React.useState(""); 
   const [bookFlag, setBookFlag] = React.useState(false);
-  const [bookError, setBookError] = React.useState(" ");
-  const [authorError, setAuthorError] = React.useState(" ");
+  const [bookError, setBookError] = React.useState("");
+  const [authorError, setAuthorError] = React.useState("");
   const [priceError, setPriceError] = React.useState("");
   const [descriptionError, setdescriptionError] = React.useState("");
   const [quantityError, setquantityError] = React.useState("");
-  const [discountPriceError, setdiscountPriceError] = React.useState(" ");
+  const [discountPriceError, setdiscountPriceError] = React.useState("");
   const counter = useSelector(state => state);
   console.log("counter",counter.bookDetails)
  

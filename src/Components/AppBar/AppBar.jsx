@@ -8,15 +8,14 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import SearchIcon from "@material-ui/icons/SearchOutlined";
 import IconButton from "@material-ui/core/IconButton";
-import PermIdentityIcon from '@material-ui/icons/PermIdentity';
+import PermIdentityIcon from "@material-ui/icons/PermIdentity";
 import { withStyles } from "@material-ui/core/styles";
- import logo from "../assests/education.svg";
+import logo from "../assests/education.svg";
 import Badge from "@material-ui/core/Badge";
-import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import Fade from '@material-ui/core/Fade';
-
+import Button from "@material-ui/core/Button";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import Fade from "@material-ui/core/Fade";
 
 const StyledBadge = withStyles((theme) => ({
   badge: {
@@ -71,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
   },
   titleName: {
     marginRight: "20px",
-    cursor: 'pointer',
+    cursor: "pointer",
   },
   searchIcon: {
     padding: theme.spacing(0, 2),
@@ -102,19 +101,18 @@ const useStyles = makeStyles((theme) => ({
       width: "20ch",
     },
   },
- 
+
   cartButton: {
     fontSize: "14px",
     color: "white",
   },
-  profileButton:{
+  profileButton: {
     fontSize: "35px",
     color: "white",
   },
-  searchMenu:{
-      width:"500px",
-      height:"200px"
-
+  searchMenu: {
+    width: "500px",
+    height: "200px",
   },
 }));
 
@@ -125,34 +123,52 @@ export default function Appbar(props) {
   const open = Boolean(anchorEl);
   const searchOpen = Boolean(anchorE2);
 
- 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
-    console.log(props.search)
   };
 
   // const nextPath = (path) => {
   //   props.history.push(path);
   // };
-  
-  const HandleLogout = () => {
-     localStorage.clear();
-    props.nextPath("../login")
-  };
-const searchMenuOpen =(event)=> {
-setAnchorE2(event.currentTarget);
 
-}
+  const HandleLogout = () => {
+    localStorage.clear();
+    props.nextPath("../login");
+  };
+  const searchMenuOpen = (event) => {
+    setAnchorE2(event.currentTarget);
+  };
   const searchMenuClose = () => {
     setAnchorE2(null);
-  }
-  
+  };
 
+  const SearchBooks = () => {
+    return (
+      <Menu className="BookSearchMenu">
+        {props.searchedArray.map((data) => (
+          <div className="cartBookItem">
+            <Menu className="infoContainer">
+              <MenuItem className={classes.bookName}>
+                {data.product_id.bookName}
+              </MenuItem>
+              <Typography className={classes.bookAuthor}>
+                {data.product_id.author}
+              </Typography>
+              <Typography className={classes.bookPrize}>
+                {data.product_id.quantity}
+              </Typography>
+            </Menu>
+          </div>
+        ))}
+      </Menu>
+    );
+  };
 
+  console.log("props", props.search);
   return (
     <React.Fragment>
       <CssBaseline />
@@ -160,60 +176,81 @@ setAnchorE2(event.currentTarget);
         <Toolbar className={classes.toolBar}>
           <div className={classes.leftOptions}>
             <div className={classes.title}>
-            <img className={classes.titleLogo} src={logo}   onClick={(e) => props.nextPath(e, "../dashboard")} />
-              <Typography className={classes.titleName} variant="h6" 
-              onClick={(e) => props.nextPath(e, "../dashboard")}
+              <img
+                className={classes.titleLogo}
+                src={logo}
+                onClick={(e) => props.nextPath(e, "../dashboard")}
+              />
+              <Typography
+                className={classes.titleName}
+                variant="h6"
+                onClick={(e) => props.nextPath(e, "../dashboard")}
               >
                 Bookstore
               </Typography>
             </div>
-         { props.user ? <div className={classes.search} >
-              <div className={classes.searchIcon}>
-               <SearchIcon/>
+            {props.user ? (
+              <div className={classes.search}>
+                <div className={classes.searchIcon}>
+                  <SearchIcon />
+                </div>
+                <InputBase
+                  search={props.search}
+                  onClick={searchMenuOpen}
+                  onChange={(e) => props.issearch(e.target.value)}
+                  placeholder="Search…"
+                  classes={{ input: classes.inputInput }}
+                />
               </div>
-              <InputBase
-                search={props.search}
-                onClick= {() => {
-                  props.setSearchClicked(true);
-                }}
-                onChange={(e) => props.issearch(e.target.value)}
-                placeholder="Search…"
-                classes={{ input: classes.inputInput }}
-              />
-             
-            </div>
-          :''}
+            ) : (
+              ""
+            )}
+            {props.books ? SearchBooks(props.search) : null}
           </div>
-          { props.user ?  <div className={classes.rightOptions}>
-            <SearchIcon className={classes.buttonSearch} />
-            <PermIdentityIcon     className={classes.profileButton} aria-controls="fade-menu" aria-haspopup="true" onClick={handleClick}>
-            </PermIdentityIcon>
-            <Menu
-            id="fade-menu"
-            anchorEl={anchorEl}
-            keepMounted
-            open={open}
-            onClose={handleClose}
-            TransitionComponent={Fade}
-          >
-            <MenuItem>Hey Avinash!!!</MenuItem>
-            <MenuItem  onClick={(e) => props.nextPath(e, "../wishlist")} > WishList </MenuItem>
-            <MenuItem  onClick={(e) => props.nextPath(e, "../loginadmin")} > Admin Login </MenuItem>
-            <MenuItem onClick={HandleLogout}>Logout</MenuItem>
-          </Menu>
-         
-            <IconButton
-              className={classes.cartButton}
-              onClick={(e) => props.nextPath(e, "../dashboard/cart")}
-            >
-              <StyledBadge  badgeContent={props.totalCartItem}  className={classes.badge}>
-                <ShoppingCartOutlinedIcon />
-              </StyledBadge>
-            </IconButton>
+          {props.user ? (
+            <div className={classes.rightOptions}>
+              <SearchIcon className={classes.buttonSearch} />
+              <PermIdentityIcon
+                className={classes.profileButton}
+                aria-controls="fade-menu"
+                aria-haspopup="true"
+                onClick={handleClick}
+              ></PermIdentityIcon>
+              <Menu
+                id="fade-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={open}
+                onClose={handleClose}
+                TransitionComponent={Fade}
+              >
+                <MenuItem>Hey Avinash!!!</MenuItem>
+                <MenuItem onClick={(e) => props.nextPath(e, "../wishlist")}>
+                  {" "}
+                  WishList{" "}
+                </MenuItem>
+                <MenuItem onClick={(e) => props.nextPath(e, "../loginadmin")}>
+                  {" "}
+                  Admin Login{" "}
+                </MenuItem>
+                <MenuItem onClick={HandleLogout}>Logout</MenuItem>
+              </Menu>
+
+              <IconButton
+                className={classes.cartButton}
+                onClick={(e) => props.nextPath(e, "../dashboard/cart")}
+              >
+                <StyledBadge
+                  badgeContent={props.totalCartItem}
+                  className={classes.badge}
+                >
+                  <ShoppingCartOutlinedIcon />
+                </StyledBadge>
+              </IconButton>
             </div>
-            : 
-           " "
-          }
+          ) : (
+            " "
+          )}
         </Toolbar>
       </AppBar>
     </React.Fragment>

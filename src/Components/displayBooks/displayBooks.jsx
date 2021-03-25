@@ -71,14 +71,6 @@ export default function DisplayNotes(props) {
     getAllBooks();
   }, []);
 
-  const SearchBooks= () => {
-    return(
-       <div className='BookSearchMenu'>
-     {console.log("All books ",books)}
-       </div>
-    )
- }
-
   const getAllBooks = () => {
     services
       .getBooks()
@@ -166,7 +158,6 @@ export default function DisplayNotes(props) {
 
   return (
     <div className="displayBook">
-    <SearchBooks />
       <span className="topContent">
         <div >
           Books <font className="bookSize"> ({books.length} items) </font>{" "}

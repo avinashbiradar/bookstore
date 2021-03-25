@@ -54,30 +54,20 @@ export default function Dashboard(props) {
         console.log(err);
       });
   };
+  const bookSearchArray=[]
+  const searchBookByName=(searchdata)=>{
+        issearch(searchdata)
+        books.map((data) =>{
+          if(data.bookName.includes(searchdata)){
+          console.log("recieves bookNmae" , data.bookName)
+          bookSearchArray.push(searchdata)
+        }
+        })
+  }
 
-//   const SearchBooks= () => {
-//     return(
-//        <div className='BookSearchMenu'>
-//      {  props.books.filter((data)=> data.bookName.includes(search)).map((data) => (
-//           <div className="cartBookItem">
-//             <div className="infoContainer">
-//               <Typography className={classes.bookName}>
-//                 {data.product_id.bookName}
-//               </Typography>
-//               <Typography className={classes.bookAuthor}>
-//                 {data.product_id.author}
-//               </Typography>
-//               <Typography className={classes.bookPrize}>
-//               {data.product_id.quantity}
-//             </Typography>
-//             </div>
-//           </div>
-//         ))}
-//        </div>
-//     )
-//  }
-
+ console.log("search ",search)
   return (
+
     <div className={classes.dashboardMain}>
     <AppBar
      totalCartItem={cartBooks.length}
@@ -85,8 +75,9 @@ export default function Dashboard(props) {
       nextPath={nextPath}
       setShow={setShow}
       user={isuser}
-      issearch={issearch}
+      issearch={searchBookByName}
       search={search}
+      searchedArray={bookSearchArray}
 
     />
     <Switch>
