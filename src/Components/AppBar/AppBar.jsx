@@ -111,12 +111,19 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "35px",
     color: "white",
   },
+  searchMenu:{
+      width:"500px",
+      height:"200px"
+
+  },
 }));
 
 export default function Appbar(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorE2, setAnchorE2] = React.useState(null);
   const open = Boolean(anchorEl);
+  const searchOpen = Boolean(anchorE2);
 
  
   const handleClick = (event) => {
@@ -136,6 +143,13 @@ export default function Appbar(props) {
      localStorage.clear();
     props.nextPath("../login")
   };
+const searchMenuOpen =(event)=> {
+setAnchorE2(event.currentTarget);
+
+}
+  const searchMenuClose = () => {
+    setAnchorE2(null);
+  }
   
 
 
@@ -159,10 +173,14 @@ export default function Appbar(props) {
               </div>
               <InputBase
                 search={props.search}
+                onClick= {() => {
+                  props.setSearchClicked(true);
+                }}
                 onChange={(e) => props.issearch(e.target.value)}
                 placeholder="Search…"
                 classes={{ input: classes.inputInput }}
               />
+             
             </div>
           :''}
           </div>

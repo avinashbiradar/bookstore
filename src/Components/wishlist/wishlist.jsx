@@ -98,6 +98,7 @@ export default function CartBooks(props) {
         console.log("Error while removing" + err);
       });
   };
+  
 
   const indexOfLastBook = currentPage * postsPerPage;
   const indexOfFirstBook = indexOfLastBook - postsPerPage;
@@ -105,7 +106,8 @@ export default function CartBooks(props) {
 
   return (
     <div className="wishBody">
-      <AppBar />
+      <AppBar
+      />
       <div className="wishContainer">
         <div className="header">
           WishList Books{" "}

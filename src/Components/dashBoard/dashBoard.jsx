@@ -7,6 +7,7 @@ import Cart from "../cart/cart";
 import Services from "../../Services/productServices";
 import { Switch, Route } from "react-router-dom";
 import ProtectedRoutes from "../../protectedRoutes.js";
+import Typography from "@material-ui/core/Typography";
 import PlacedOrder from "../orderPlaced/orderPlaced";
 const services = new Services();
 const useStyles = makeStyles((theme) => ({
@@ -28,6 +29,8 @@ export default function Dashboard(props) {
   const [orderPlaced, setOrderPlaced] = React.useState([]);
   const [isuser , setisuser] = React.useState(true);
   const [search , issearch]=React.useState(" ");
+  const [searchClicked, setSearchClicked] = React.useState(false);
+  const [books , setBooks] =React.useState("");
 
   React.useEffect(() => {
     allCartItem();
@@ -52,26 +55,43 @@ export default function Dashboard(props) {
       });
   };
 
-  const SearchBooks= () =>{
-    return(
-       <div></div>
-    )
- }
+//   const SearchBooks= () => {
+//     return(
+//        <div className='BookSearchMenu'>
+//      {  props.books.filter((data)=> data.bookName.includes(search)).map((data) => (
+//           <div className="cartBookItem">
+//             <div className="infoContainer">
+//               <Typography className={classes.bookName}>
+//                 {data.product_id.bookName}
+//               </Typography>
+//               <Typography className={classes.bookAuthor}>
+//                 {data.product_id.author}
+//               </Typography>
+//               <Typography className={classes.bookPrize}>
+//               {data.product_id.quantity}
+//             </Typography>
+//             </div>
+//           </div>
+//         ))}
+//        </div>
+//     )
+//  }
 
   return (
     <div className={classes.dashboardMain}>
     <AppBar
      totalCartItem={cartBooks.length}
+     setSearchClicked={setSearchClicked}
       nextPath={nextPath}
       setShow={setShow}
       user={isuser}
       issearch={issearch}
       search={search}
+
     />
-    
     <Switch>
       <Route path="/dashboard" exact>
-        <Books cartBooks={cartBooks} allCartItem={allCartItem} />
+        <Books cartBooks={cartBooks} allCartItem={allCartItem}  setBooks={setBooks} />
       </Route>
       <ProtectedRoutes path="/dashboard/cart" exact>
         <Cart
@@ -79,6 +99,7 @@ export default function Dashboard(props) {
           nextPath={nextPath}
           cartBooks={cartBooks}
           setOrderPlaced={setOrderPlaced}
+         
         />
       </ProtectedRoutes>
         <ProtectedRoutes path="/dashboard/orderPlaced" exact>
@@ -89,3 +110,21 @@ export default function Dashboard(props) {
   </div>
   );
 }
+
+
+// {
+//   books.filter((data)=> data.bookName.includes(search)).map((data) => (
+//     <div className="cartBookItem">
+//       <div className="infoContainer">
+//         <Typography className={classes.bookName}>
+//           {data.product_id.bookName}
+//         </Typography>
+//         <Typography className={classes.bookAuthor}>
+//           {data.product_id.author}
+//         </Typography>
+//         <Typography className={classes.bookPrize}>
+//         {data.product_id.quantity}
+//       </Typography>
+//       </div>
+//     </div>
+//   ))}

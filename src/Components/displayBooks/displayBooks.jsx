@@ -71,6 +71,13 @@ export default function DisplayNotes(props) {
     getAllBooks();
   }, []);
 
+  const SearchBooks= () => {
+    return(
+       <div className='BookSearchMenu'>
+     {console.log("All books ",books)}
+       </div>
+    )
+ }
 
   const getAllBooks = () => {
     services
@@ -78,6 +85,7 @@ export default function DisplayNotes(props) {
       .then((data) => {
         console.log("in the get all books ",data)
         setBooks(data.data.result);
+        props.setBooks(data.data.result)
         setData(data.data.result);
         books.map((data) => (data.isCart = false));
       })
@@ -158,6 +166,7 @@ export default function DisplayNotes(props) {
 
   return (
     <div className="displayBook">
+    <SearchBooks />
       <span className="topContent">
         <div >
           Books <font className="bookSize"> ({books.length} items) </font>{" "}

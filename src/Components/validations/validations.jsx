@@ -1,52 +1,71 @@
-// import React from "react";
-
-// export default function Validations() {
-//     const [bookFlag, setBookFlag] = React.useState(false);
-//     const [bookError, setBookError] = React.useState(" ");
-    
-//     const makeInitial = () => {
-//         setBookFlag(false)
-//         setBookError("")
-//       };
-
-//       const patternCheck = (bookName) => {
-//         makeInitial();
-//         const BooknamePattern = /^[A-Z]{1}[a-z ]{3,}$/;
-//         let isError = false;
-//         if (!BooknamePattern.test(bookName)) {
-//             setBookFlag(true);
-//             setBookError("Bookname is Not Proper");
-//             isError = true;
-//           }
-//           return isError;
-//       };
-
-// }
-
 const emailPattern = /[a-zA-Z0-9._]+[@]{1}[a-zA-Z120-9]*[.]{1}[a-zA-Z]*$/;
- const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$/;
+const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$/;
 const BooknamePattern = /^[A-Z]{1}[a-z ]{3,}$/;
+const DescriptionPattern = /^[A-Z a-z ]{3,}$/;
+const DiscountedPrice = /^[0-9]{2}$/;
+module.exports = {
 
-module.exports={
-  isStringValid(bookName){
-      if(bookName.trim().length===0){
-          return false;
-      }
-      let regex =new RegExp(BooknamePattern);
-      return regex.test(bookName)
+  isStringValid(bookName) {
+    if (bookName.trim().length === 0) {
+      return false;
+    }
+    let regex = new RegExp(BooknamePattern);
+    return regex.test(bookName);
   },
-   isemailValid(email){
-    if(email.trim().length===0){
-        return false;
+
+  isAuthorValid(author) {
+    if (author.trim().length === 0) {
+      return false;
     }
-    let regex =new RegExp(emailPattern);
-    return regex.test(email)
-   },
-   ispasswordValid(password){
-    if(password.trim().length===0){
-        return false;
+    let regex = new RegExp(BooknamePattern);
+    return regex.test(author);
+  },
+
+  isDescriptionValid(description) {
+    if (description.trim().length === 0) {
+      return false;
     }
-    let regex =new RegExp(passwordPattern);
-    return regex.test(password)
-   }
-}
+    let regex = new RegExp(DescriptionPattern);
+    return regex.test(description);
+  },
+   
+  isPriceValid(price) {
+    if (price.trim().length === 0) {
+      return false;
+    }
+    let regex = new RegExp(DiscountedPrice);
+    return regex.test(price);
+  },
+
+  isQuantityValid(quantity) {
+    if (quantity.trim().length === 0) {
+      return false;
+    }
+    let regex = new RegExp(DiscountedPrice);
+    return regex.test(quantity);
+  },
+
+  isDiscountedPriceValid(discountPrice) {
+    if (discountPrice.trim().length === 0) {
+      return false;
+    }
+    let regex = new RegExp(DiscountedPrice);
+    return regex.test(discountPrice);
+  },
+
+  isemailValid(email) {
+    if (email.trim().length === 0) {
+      return false;
+    }
+    let regex = new RegExp(emailPattern);
+    return regex.test(email);
+  },
+
+  ispasswordValid(password) {
+    if (password.trim().length === 0) {
+      return false;
+    }
+    let regex = new RegExp(passwordPattern);
+    return regex.test(password);
+  },
+};

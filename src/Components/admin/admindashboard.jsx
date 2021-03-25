@@ -9,7 +9,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import SnackbarComponent from "../snackbarComponent/snackbar"
-import { isStringValid } from  "../validations/validations"
+import { isStringValid ,isAuthorValid , isDiscountedPriceValid ,isPriceValid ,isQuantityValid ,isDescriptionValid} from  "../validations/validations"
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import "../admin/admindashboard.scss";
@@ -38,6 +38,11 @@ export default function AdminDashboard(props) {
   const [snackbarmsg, setSnackbarmsg] = React.useState(""); 
   const [bookFlag, setBookFlag] = React.useState(false);
   const [bookError, setBookError] = React.useState(" ");
+  const [authorError, setAuthorError] = React.useState(" ");
+  const [priceError, setPriceError] = React.useState("");
+  const [descriptionError, setdescriptionError] = React.useState("");
+  const [quantityError, setquantityError] = React.useState("");
+  const [discountPriceError, setdiscountPriceError] = React.useState(" ");
   const counter = useSelector(state => state);
   console.log("counter",counter.bookDetails)
  
@@ -70,26 +75,25 @@ export default function AdminDashboard(props) {
           })
   };
 
-  const makeInitial = () => {
-            setBookFlag(false)
-            setBookError("")
-          };
+
  
 const patternCheck = () => {
-  makeInitial ();
   let isError = false;
- if (isStringValid(bookName)) {
-   console.log("BookName is correct")
+ if (isStringValid(bookName)&&isAuthorValid(author)&&isDiscountedPriceValid(discountPrice)&&isPriceValid(price)&&isQuantityValid(quantity)&&isDescriptionValid(description)){
     return true ;
 }
 else 
 {
-  setBookFlag(true);
-  setBookError("Bookname is Not Proper");
+  setBookError("Bookname is Not Proper Ex:Tenet");
+  setAuthorError("author name  is Not Proper Ex:Nolan" );
+  setdiscountPriceError(" discounted price should be 2 or 3 digits ")
+  setPriceError(" Price should be numeric")
+  setquantityError("Quantity should be numeric")
+  setdescriptionError("Description should be proper")
   isError = true;
-  console.log("BookName is  not correct")
    return false
 }
+
 
 }
   const addNewBook = () => {
@@ -186,7 +190,7 @@ else
             <div className="inputs">
               <DialogContentText>
                 <div className={classes.inputField} >
-                  {" "}
+                 
                   <TextField
                     id="standard-basic"
                     fullWidth
@@ -195,7 +199,6 @@ else
                     onChange={(e) => setBookName(e.target.value)}
                      error={bookError}
                      helperText={bookError}
-                     className={classes.input}
                   />
                 </div>
                 <div>
@@ -204,6 +207,8 @@ else
                     fullWidth
                     label="author"
                     value={author}
+                    error={authorError}
+                    helperText={authorError}
                     onChange={(e) => setAuthor(e.target.value)}
                     
                   />
@@ -214,35 +219,41 @@ else
                     fullWidth
                     label="description"
                     value={description}
+                    error={descriptionError}
+                    helperText={descriptionError}
                     onChange={(e) => setDescription(e.target.value)}
                   />
                 </div>
                 <div>
-                  {" "}
                   <TextField 
                   id="standard-basic"
-                   fullWidth label="quantity"
+                   fullWidth
+                  label="quantity"
                    value={quantity}
+                   error={quantityError}
+                   helperText={quantityError}
                    onChange={(e) => setQuantity(e.target.value)}
                    />
                 </div>
                 <div>
-                  {" "}
                   <TextField
                    id="standard-basic" 
                    fullWidth 
                    label="price"
                    value={price}
+                   error={priceError}
+                   helperText={priceError}
                    onChange={(e) => setPrice(e.target.value)}
                    />
                 </div>
                 <div>
-                  {" "}
                   <TextField
                     id="standard-basic"
                     fullWidth
                     label="discountPrice"
                     value={discountPrice}
+                    error={discountPriceError}
+                    helperText={discountPriceError}
                    onChange={(e) => setDiscountPrice(e.target.value)}
                   />
                 </div>
