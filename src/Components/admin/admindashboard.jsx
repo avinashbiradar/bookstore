@@ -79,13 +79,12 @@ export default function AdminDashboard(props) {
  
 const patternCheck = () => {
   let isError = false;
- if (isStringValid(bookName)&&isAuthorValid(author)&&isDiscountedPriceValid(discountPrice)&&isPriceValid(price)&&isQuantityValid(quantity)&&isDescriptionValid(description)){
+ if (isStringValid(bookName)&&isDiscountedPriceValid(discountPrice)&&isPriceValid(price)&&isQuantityValid(quantity)&&isDescriptionValid(description)){
     return true ;
 }
 else 
 {
   setBookError("Bookname is Not Proper Ex:Tenet");
-  setAuthorError("author name  is Not Proper Ex:Nolan" );
   setdiscountPriceError(" discounted price should be 2 or 3 digits ")
   setPriceError(" Price should be numeric")
   setquantityError("Quantity should be numeric")
@@ -93,8 +92,13 @@ else
   isError = true;
    return false
 }
-
-
+if(isAuthorValid(author)){
+  return true ;
+}
+else
+setAuthorError("author name  is Not Proper Ex:Nolan" );
+isError = true;
+return false
 }
   const addNewBook = () => {
     if (patternCheck()) {

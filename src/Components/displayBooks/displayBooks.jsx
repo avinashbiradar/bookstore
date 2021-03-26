@@ -76,7 +76,15 @@ export default function DisplayNotes(props) {
       .getBooks()
       .then((data) => {
         console.log("in the get all books ",data)
-        setBooks(data.data.result);
+        const dataArray = data.data.result;
+        const datashow = [];
+        dataArray.map((data) => {
+          if (data.product_id!== null) {
+            datashow.push(data);
+          }
+        });
+        console.log(datashow);
+        setBooks(datashow);
         props.setBooks(data.data.result)
         setData(data.data.result);
         books.map((data) => (data.isCart = false));
@@ -155,7 +163,6 @@ export default function DisplayNotes(props) {
   const indexOfLastBook = currentPage * postsPerPage;
   const indexOfFirstBook = indexOfLastBook - postsPerPage;
   const currentBooks = props.searchedArray!==null?props.searchedArray:books.slice(indexOfFirstBook, indexOfLastBook);
-  console.log("Array recieved",props.searchedArray)
   return (
     <div className="displayBook">
       <span className="topContent">
@@ -186,7 +193,7 @@ export default function DisplayNotes(props) {
         {currentBooks.map((data) => (
           <div className="bookContainer">
             {props.cartBooks.map((cart) => {
-              if (cart.product_id._id === data._id) {
+              if (cart.product_id._id=== data._id) {
                  data.isCart = true;
               }
             })}
@@ -209,7 +216,7 @@ export default function DisplayNotes(props) {
               </Typography>
             </div>
 
-            {data.isCart ? (
+            {data.isCart? (
               <Button variant="contained" className={classes.addedBagButton}>
                 Added To Bag
               </Button>

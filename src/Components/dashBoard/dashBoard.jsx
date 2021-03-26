@@ -48,8 +48,17 @@ export default function Dashboard(props) {
       .then((data) => {
         console.log("get cart items working ")
         console.log(data.data.result);
-        setCartBooks(data.data.result);
+       
 
+        const dataArray = data.data.result;
+        const datashow = [];
+        dataArray.map((data) => {
+          if (data.product_id !== null) {
+            datashow.push(data);
+          }
+        });
+        console.log(datashow);
+        setCartBooks(datashow);
       })
       .catch((err) => {
         console.log(err);
