@@ -154,8 +154,8 @@ export default function DisplayNotes(props) {
 
   const indexOfLastBook = currentPage * postsPerPage;
   const indexOfFirstBook = indexOfLastBook - postsPerPage;
-  const currentBooks = books.slice(indexOfFirstBook, indexOfLastBook);
-
+  const currentBooks = props.searchedArray!==null?props.searchedArray:books.slice(indexOfFirstBook, indexOfLastBook);
+  console.log("Array recieved",props.searchedArray)
   return (
     <div className="displayBook">
       <span className="topContent">
@@ -181,6 +181,7 @@ export default function DisplayNotes(props) {
           </FormControl>
         </div>
       </span>
+
       <div className="allBooks">
         {currentBooks.map((data) => (
           <div className="bookContainer">
@@ -189,6 +190,7 @@ export default function DisplayNotes(props) {
                  data.isCart = true;
               }
             })}
+            
             <div className="imageContainer">
               <img className="bookImage" src={bookImg} alt="" />
             </div>

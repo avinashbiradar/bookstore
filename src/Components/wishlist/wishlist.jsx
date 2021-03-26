@@ -105,9 +105,10 @@ export default function CartBooks(props) {
   const currentBooks = books.slice(indexOfFirstBook, indexOfLastBook);
 
   return (
-    <div className="wishBody">
+    <div>
       <AppBar
       />
+      <div className="wishBody">
       <div className="wishContainer">
         <div className="header">
           WishList Books{" "}
@@ -145,6 +146,7 @@ export default function CartBooks(props) {
           </div>
         ))}
       </div>
+    </div>
     </div>
   );
 }

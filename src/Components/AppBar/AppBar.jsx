@@ -110,10 +110,12 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "35px",
     color: "white",
   },
-  searchMenu: {
+  SearchMenu: {
     width: "500px",
     height: "200px",
+    top:"20%"
   },
+  
 }));
 
 export default function Appbar(props) {
@@ -148,23 +150,19 @@ export default function Appbar(props) {
 
   const SearchBooks = () => {
     return (
-      <Menu className="BookSearchMenu">
-        {props.searchedArray.map((data) => (
-          <div className="cartBookItem">
-            <Menu className="infoContainer">
-              <MenuItem className={classes.bookName}>
-                {data.product_id.bookName}
-              </MenuItem>
-              <Typography className={classes.bookAuthor}>
-                {data.product_id.author}
-              </Typography>
-              <Typography className={classes.bookPrize}>
-                {data.product_id.quantity}
-              </Typography>
-            </Menu>
-          </div>
-        ))}
-      </Menu>
+      <div className="BookSearchMenu">
+      {props.searchedArray.map((data) => (
+        <MenuItem className={classes.bookName}>
+          {data.product_id.bookName}
+        <Typography className={classes.bookAuthor}>
+          {data.product_id.author}
+        </Typography>
+        <Typography className={classes.bookPrize}>
+          {data.product_id.quantity}
+        </Typography>
+        </MenuItem>
+  ))}
+      </div>
     );
   };
 
@@ -196,16 +194,16 @@ export default function Appbar(props) {
                 </div>
                 <InputBase
                   search={props.search}
-                  onClick={searchMenuOpen}
+                  // onClick={SearchBooks}
                   onChange={(e) => props.issearch(e.target.value)}
                   placeholder="Search…"
                   classes={{ input: classes.inputInput }}
+    
                 />
               </div>
             ) : (
               ""
             )}
-            {props.books ? SearchBooks(props.search) : null}
           </div>
           {props.user ? (
             <div className={classes.rightOptions}>

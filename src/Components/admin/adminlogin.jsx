@@ -80,52 +80,51 @@ export default function Login(props) {
     setSnackbaropen(false);
   };
 
-  const makeInitial = () => {
-    setEmailFlag2(false);
-    setEmailError2("");
-    setPasswordFlag2(false);
-    setPasswordError2("");
-  };
-
-  const patternCheck = () => {
-    makeInitial();
-    const emailPattern = /[a-zA-Z0-9._]+[@]{1}[a-zA-Z120-9]*[.]{1}[a-zA-Z]*$/;
-    const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$/;
-    let isError = false;
-    if (!emailPattern.test(email2)) {
-      setEmailFlag2(true);
-      setEmailError2("Email is Not Proper");
-      isError = true;
-    }
-    if (!passwordPattern.test(password2)) {
-      setPasswordFlag2(true);
-      setPasswordError2("Please Enter Valid Password");
-      isError = true;
-    }
-    return isError;
-  };
-
   // const makeInitial = () => {
   //   setEmailFlag2(false);
   //   setEmailError2("");
   //   setPasswordFlag2(false);
   //   setPasswordError2("");
   // };
-  // let isError = false;
+
   // const patternCheck = () => {
   //   makeInitial();
-  //   if (isemailValid(email2) && ispasswordValid(password2)) {
-  //     return true;
-  //   } else {
-  //     setPasswordFlag2(true);
-  //     setPasswordError2("Please Enter Valid Password");
+  //   const emailPattern = /[a-zA-Z0-9._]+[@]{1}[a-zA-Z120-9]*[.]{1}[a-zA-Z]*$/;
+  //   const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$/;
+  //   let isError = false;
+  //   if (!emailPattern.test(email2)) {
   //     setEmailFlag2(true);
   //     setEmailError2("Email is Not Proper");
   //     isError = true;
-  //     return false;
   //   }
+  //   if (!passwordPattern.test(password2)) {
+  //     setPasswordFlag2(true);
+  //     setPasswordError2("Please Enter Valid Password");
+  //     isError = true;
+  //   }
+  //   return isError;
   // };
 
+
+
+  const patternCheck = () => {
+    let isError = false;
+    
+   if ( isemailValid(email2)&&ispasswordValid(password2)){
+    setEmailError2("");
+    setPasswordError2("");
+      return false ;
+  }
+  else 
+  {
+    setEmailError2("Email is Not Proper");
+    setPasswordError2("Please Enter Valid Password");
+    isError = true;
+     return true
+  }
+  }
+
+  
   const submit = () => {
     if (patternCheck()) {
       console.log("Error Occured");
@@ -170,7 +169,7 @@ export default function Login(props) {
             <TextField
               value={email2}
               onChange={(e) => setEmail2(e.target.value)}
-              error={emailFlag2}
+              error={emailError2}
               helperText={emailError2}
               fullWidth
               className={classes.input}
@@ -182,7 +181,7 @@ export default function Login(props) {
             <TextField
               value={password2}
               onChange={(e) => setPassword2(e.target.value)}
-              error={passwordFlag2}
+              error={passwordError2}
               helperText={passwordError2}
               fullWidth
               className={classes.input}

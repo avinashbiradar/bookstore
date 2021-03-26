@@ -31,6 +31,7 @@ export default function Dashboard(props) {
   const [search , issearch]=React.useState(" ");
   const [searchClicked, setSearchClicked] = React.useState(false);
   const [books , setBooks] =React.useState("");
+  const[searchBook , setsearchBook]=React.useState(null)
 
   React.useEffect(() => {
     allCartItem();
@@ -54,18 +55,21 @@ export default function Dashboard(props) {
         console.log(err);
       });
   };
-  const bookSearchArray=[]
+ 
   const searchBookByName=(searchdata)=>{
+    const bookSearchArray=[]
         issearch(searchdata)
         books.map((data) =>{
           if(data.bookName.includes(searchdata)){
-          console.log("recieves bookNmae" , data.bookName)
-          bookSearchArray.push(searchdata)
+          console.log("recieves bookName" , data.bookName)
+          bookSearchArray.push(data)
         }
         })
+        setsearchBook(bookSearchArray)
+        console.log("Map",bookSearchArray)
   }
+  
 
- console.log("search ",search)
   return (
 
     <div className={classes.dashboardMain}>
@@ -77,14 +81,14 @@ export default function Dashboard(props) {
       user={isuser}
       issearch={searchBookByName}
       search={search}
-      searchedArray={bookSearchArray}
+      searchedArray={searchBook}
 
     />
     <Switch>
       <Route path="/dashboard" exact>
-        <Books cartBooks={cartBooks} allCartItem={allCartItem}  setBooks={setBooks} />
+        <Books  search={search} searchedArray={searchBook}  cartBooks={cartBooks} allCartItem={allCartItem}  setBooks={setBooks} />
       </Route>
-      <ProtectedRoutes path="/dashboard/cart" exact>
+       <ProtectedRoutes path="/dashboard/cart" exact>
         <Cart
           allCartItem={allCartItem}
           nextPath={nextPath}
