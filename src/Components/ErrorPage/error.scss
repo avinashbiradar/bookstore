@@ -1,0 +1,24 @@
+.content-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: brown;
+}
+
+ .image-content  {
+     text-align: left;
+    display: flex;
+    flex-direction: column;
+    font-family: emoji;
+    font-size: xx-large;
+    margin: 10px;
+    position: relative;
+    color: brown;
+}
+.link-content{
+    position: relative;
+    top: 100px;
+    font-size: larger;
+
+}

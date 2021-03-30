@@ -38,7 +38,7 @@ export default function Dashboard(props) {
   }, []); 
 
   const nextPath = (e, path) => {
-    //  e.stopPropagation();
+      // e.stopPropagation();
     props.history.push(path);
   };
 
@@ -116,19 +116,3 @@ export default function Dashboard(props) {
 }
 
 
-// {
-//   books.filter((data)=> data.bookName.includes(search)).map((data) => (
-//     <div className="cartBookItem">
-//       <div className="infoContainer">
-//         <Typography className={classes.bookName}>
-//           {data.product_id.bookName}
-//         </Typography>
-//         <Typography className={classes.bookAuthor}>
-//           {data.product_id.author}
-//         </Typography>
-//         <Typography className={classes.bookPrize}>
-//         {data.product_id.quantity}
-//       </Typography>
-//       </div>
-//     </div>
-//   ))}

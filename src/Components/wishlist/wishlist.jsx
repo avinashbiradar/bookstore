@@ -135,15 +135,16 @@ export default function CartBooks(props) {
                   Rs.{data.product_id.price}
                 </Typography>
               </div>
-              <div className="deleteicon">
-                <DeleteIcon
-                  onClick={(e) => {
-                    removeFromWishList(e, data);
-                  }}
-                />
-              </div>
+            
             </div>
+            <div className="deleteicon">
+            <DeleteIcon
+              onClick={(e) => {
+                removeFromWishList(e, data);
+              }}
+            />
           </div>
+          </div> 
         ))}
       </div>
     </div>

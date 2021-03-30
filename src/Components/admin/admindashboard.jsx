@@ -8,13 +8,22 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import SnackbarComponent from "../snackbarComponent/snackbar"
-import { isStringValid ,isAuthorValid , isDiscountedPriceValid ,isPriceValid ,isQuantityValid ,isDescriptionValid} from  "../validations/validations"
+import SnackbarComponent from "../snackbarComponent/snackbar";
+import { useHistory } from "react-router-dom";
+import {
+  isStringValid,
+  isAuthorValid,
+  isDiscountedPriceValid,
+  isPriceValid,
+  isQuantityValid,
+  isDescriptionValid,
+} from "../validations/validations";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import "../admin/admindashboard.scss";
 //  const validation = new Validations();
 const services = new Services();
+
 const useStyles = makeStyles((theme) => ({
   input: {
     color: "#A03037",
@@ -35,7 +44,7 @@ export default function AdminDashboard(props) {
   const [price, setPrice] = React.useState("");
   const [discountPrice, setDiscountPrice] = React.useState("");
   const [snackbaropen, setSnackbaropen] = React.useState(false);
-  const [snackbarmsg, setSnackbarmsg] = React.useState(""); 
+  const [snackbarmsg, setSnackbarmsg] = React.useState("");
   const [bookFlag, setBookFlag] = React.useState(false);
   const [bookError, setBookError] = React.useState("");
   const [authorError, setAuthorError] = React.useState("");
@@ -43,63 +52,76 @@ export default function AdminDashboard(props) {
   const [descriptionError, setdescriptionError] = React.useState("");
   const [quantityError, setquantityError] = React.useState("");
   const [discountPriceError, setdiscountPriceError] = React.useState("");
-  const counter = useSelector(state => state);
-  console.log("counter",counter.bookDetails)
- 
-
-//this is bookdata from redux store 
+  const counter = useSelector((state) => state);
+  console.log("counter", counter.bookDetails);
+  //this is bookdata from redux store
   React.useEffect(() => {
-   setBookName(counter.bookDetails!==null?counter.bookDetails.bookName:"")
-   setAuthor(counter.bookDetails!==null?counter.bookDetails.author:"")
-   setDescription(counter.bookDetails!==null?counter.bookDetails.description:"")
-   setQuantity(counter.bookDetails!==null?counter.bookDetails.quantity:"" )
-   setPrice(counter.bookDetails!==null?counter.bookDetails.price:"")
-   setDiscountPrice(counter.bookDetails!==null?counter.bookDetails.discountPrice:"")
-  },[counter.bookDetails]);
-  
+    setBookName(
+      counter.bookDetails !== null ? counter.bookDetails.bookName : ""
+    );
+    setAuthor(counter.bookDetails !== null ? counter.bookDetails.author : "");
+    setDescription(
+      counter.bookDetails !== null ? counter.bookDetails.description : ""
+    );
+    setQuantity(
+      counter.bookDetails !== null ? counter.bookDetails.quantity : ""
+    );
+    setPrice(counter.bookDetails !== null ? counter.bookDetails.price : "");
+    setDiscountPrice(
+      counter.bookDetails !== null ? counter.bookDetails.discountPrice : ""
+    );
+  }, [counter.bookDetails]);
+
   const dispatch = useDispatch();
 
   const handleClickOpen = () => {
     setOpen(true);
     dispatch({
-            type: "Open_Dialog",
-            payload:null
-          })
+      type: "Open_Dialog",
+      payload: null,
+    });
   };
 
   const handleClose = () => {
     setOpen(false);
     dispatch({
-            type: "Close_Dialog",
-            payload:null
-          })
+      type: "Close_Dialog",
+      payload: null,
+    });
   };
 
+  const patternCheck = () => {
+    let isError = false;
+    if (
+      isStringValid(bookName) &&
+      isAuthorValid(author)&&
+      isDiscountedPriceValid(discountPrice) &&
+      isPriceValid(price) &&
+      isQuantityValid(quantity) &&
+      isDescriptionValid(description)
+      
+    ) 
+    {
+      setBookError("");
+      setAuthorError("")
+      setdiscountPriceError("");
+      setPriceError("");
+      setquantityError("");
+      setdescriptionError("");
+      return false;
+    } else {
+      setBookError("Bookname is Not Proper Ex:Tenet");
+      setAuthorError("Starts with a capital letter ")
+      setdiscountPriceError(" discounted price should be 2 or 3 digits ");
+      setPriceError(" Price should be numeric");
+      setquantityError("Quantity should be numeric between 1 to 10 ");
+      setdescriptionError("Description should be proper");
+      isError = true;
+      return true;
+    }
+   
+  };
 
- 
-const patternCheck = () => {
-  let isError = false;
- if (isStringValid(bookName)&&isDiscountedPriceValid(discountPrice)&&isPriceValid(price)&&isQuantityValid(quantity)&&isDescriptionValid(description)){
-    return true ;
-}
-else 
-{
-  setBookError("Bookname is Not Proper Ex:Tenet");
-  setdiscountPriceError(" discounted price should be 2 or 3 digits ")
-  setPriceError(" Price should be numeric")
-  setquantityError("Quantity should be numeric")
-  setdescriptionError("Description should be proper")
-  isError = true;
-   return false
-}
-if(isAuthorValid(author)){
-  return true ;
-}
-else
-setAuthorError("author name  is Not Proper Ex:Nolan" );
-isError = true;
-return false
-}
   const addNewBook = () => {
     if (patternCheck()) {
       console.log("Error Occured");
@@ -108,18 +130,18 @@ return false
     }
     //  e.stopPropagation();
     let Details = {
-      "bookName": bookName,
-      "author": author,
-      "description": description,
-      "quantity": quantity,
-      "price": price,
-      "discountPrice": discountPrice,
+      bookName: bookName,
+      author: author,
+      description: description,
+      quantity: quantity,
+      price: price,
+      discountPrice: discountPrice,
     };
-    
+
     services
       .addNewBookToSystem(Details)
       .then((data) => {
-        console.log(Details)
+        console.log(Details);
         console.log(data);
         console.log("Successfully added book " + data);
         setSnackbaropen(true);
@@ -127,7 +149,7 @@ return false
         console.log(
           "Login successful" + JSON.stringify(data.data.result.accessToken)
         );
-        localStorage.setItem("StoreToken", data.data.result.accessToken)
+        localStorage.setItem("StoreToken", data.data.result.accessToken);
       })
       .catch((err) => {
         console.log("Error while adding the book" + err);
@@ -136,73 +158,77 @@ return false
       });
   };
 
-  const UpdateBook= () => {
+  const UpdateBook = () => {
     //  e.stopPropagation();
-     console.log("ID",counter.bookDetails._id)
+    console.log("ID", counter.bookDetails._id);
 
     let Details = {
-      "bookName": bookName,
-      "author": author,
-      "description": description,
-      "quantity": quantity,
-      "price": price,
-      "discountPrice": discountPrice,
+      bookName: bookName,
+      author: author,
+      description: description,
+      quantity: quantity,
+      price: price,
+      discountPrice: discountPrice,
     };
-   console.log(" book details ", Details)
-    services.UpdateBookInfo(Details,counter.bookDetails._id)
-    .then((data)=> {  
-      console.log("Successfully updated book "+data);
-      setSnackbaropen(true);
-      setSnackbarmsg("Book updated Successfully");
-    })
-    .catch((err) => {
-      console.log("Error while updating the book "+err)
-      setSnackbaropen(true);
-      setSnackbarmsg("Error");
-    })
-  }
-
+    console.log(" book details ", Details);
+    services
+      .UpdateBookInfo(Details, counter.bookDetails._id)
+      .then((data) => {
+        console.log("Successfully updated book " + data);
+        setSnackbaropen(true);
+        setSnackbarmsg("Book updated Successfully");
+      })
+      .catch((err) => {
+        console.log("Error while updating the book " + err);
+        setSnackbaropen(true);
+        setSnackbarmsg("Error");
+      });
+  };
 
   const HandleLogoutAdmin = () => {
     localStorage.clear();
- };
- 
+  };
 
   return (
     <div>
       <div className="addbutton">
       <div className="addbuttonone">
-        <Button variant="contained" color="primary" onClick={handleClickOpen}>
-          Add Book
-        </Button>
-      
-        <Button variant="contained" color="primary" onClick={HandleLogoutAdmin}>
-        LogOut Admin 
-        </Button>
-        </div>
-        
-
+      <Button variant="contained" color="primary" onClick={handleClickOpen}>
+        Add Book
+      </Button>
+  
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={HandleLogoutAdmin}
+      >
+        LogOut Admin
+      </Button>
+    </div>
         <Dialog
           open={counter.dialog}
           onClose={handleClose}
           aria-labelledby="form-dialog-title"
         >
           <DialogTitle id="form-dialog-title">
-           {counter.bookDetails?<h3> update book to the Bookstore </h3>:<h3>Add a new book to the Bookstore</h3>}
+            {counter.bookDetails ? (
+              <h3> update book to the Bookstore </h3>
+            ) : (
+              <h3>Add a new book to the Bookstore</h3>
+            )}
           </DialogTitle>
           <DialogContent>
             <div className="inputs">
               <DialogContentText>
-                <div className={classes.inputField} >
-                 
+                <div className={classes.inputField}>
                   <TextField
                     id="standard-basic"
                     fullWidth
                     label="bookName"
                     value={bookName}
                     onChange={(e) => setBookName(e.target.value)}
-                     error={bookError}
-                     helperText={bookError}
+                    error={bookError}
+                    helperText={bookError}
                   />
                 </div>
                 <div>
@@ -214,7 +240,6 @@ return false
                     error={authorError}
                     helperText={authorError}
                     onChange={(e) => setAuthor(e.target.value)}
-                    
                   />
                 </div>
                 <div>
@@ -229,26 +254,26 @@ return false
                   />
                 </div>
                 <div>
-                  <TextField 
-                  id="standard-basic"
-                   fullWidth
-                  label="quantity"
-                   value={quantity}
-                   error={quantityError}
-                   helperText={quantityError}
-                   onChange={(e) => setQuantity(e.target.value)}
-                   />
+                  <TextField
+                    id="standard-basic"
+                    fullWidth
+                    label="quantity"
+                    value={quantity}
+                    error={quantityError}
+                    helperText={quantityError}
+                    onChange={(e) => setQuantity(e.target.value)}
+                  />
                 </div>
                 <div>
                   <TextField
-                   id="standard-basic" 
-                   fullWidth 
-                   label="price"
-                   value={price}
-                   error={priceError}
-                   helperText={priceError}
-                   onChange={(e) => setPrice(e.target.value)}
-                   />
+                    id="standard-basic"
+                    fullWidth
+                    label="price"
+                    value={price}
+                    error={priceError}
+                    helperText={priceError}
+                    onChange={(e) => setPrice(e.target.value)}
+                  />
                 </div>
                 <div>
                   <TextField
@@ -258,25 +283,29 @@ return false
                     value={discountPrice}
                     error={discountPriceError}
                     helperText={discountPriceError}
-                   onChange={(e) => setDiscountPrice(e.target.value)}
+                    onChange={(e) => setDiscountPrice(e.target.value)}
                   />
                 </div>
               </DialogContentText>
             </div>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} color="primary" >
+            <Button onClick={handleClose} color="primary">
               Cancel
             </Button>
-            {counter.bookDetails?<Button onClick={UpdateBook} color="primary">save changes</Button>: <Button onClick={addNewBook} color="primary">Add Book</Button> }
+            {counter.bookDetails ? (
+              <Button onClick={UpdateBook} color="primary">
+                save changes
+              </Button>
+            ) : (
+              <Button onClick={addNewBook} color="primary">
+                Add Book
+              </Button>
+            )}
           </DialogActions>
         </Dialog>
-       
       </div>
-      <SnackbarComponent
-      open={snackbaropen}
-      message={snackbarmsg}
-      />
+      <SnackbarComponent open={snackbaropen} message={snackbarmsg} />
     </div>
   );
 }

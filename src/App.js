@@ -12,7 +12,9 @@ import AdminBooks from './Components/admin/getadminbooks'
 import AdminLogin from './Components/admin/adminlogin'
 import AdminSignUp from "./Components/admin/adminRegister"
 import wishlist from "./Components/wishlist/wishlist"
+import NotFound from "./Components/ErrorPage/error"
 function App() {
+
   return (
     <div className="App">
     <BrowserRouter >
@@ -24,7 +26,7 @@ function App() {
      <AuthAdminRoute path="/loginadmin" component={AdminLogin} exact/>
      <PrivateAdminRoute path="/adminbooks" component={AdminBooks} exact/>
      <AuthAdminRoute path="/adminsignup" component={AdminSignUp} exact/>
-    
+     <Route component={NotFound} />
    </Switch>
    </BrowserRouter >
   </div>

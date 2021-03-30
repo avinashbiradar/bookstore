@@ -113,17 +113,15 @@ const useStyles = makeStyles((theme) => ({
   SearchMenu: {
     width: "500px",
     height: "200px",
-    top:"20%"
+    top: "20%",
   },
-  
 }));
 
 export default function Appbar(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [anchorE2, setAnchorE2] = React.useState(null);
+
   const open = Boolean(anchorEl);
-  const searchOpen = Boolean(anchorE2);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -133,37 +131,9 @@ export default function Appbar(props) {
     setAnchorEl(null);
   };
 
-  // const nextPath = (path) => {
-  //   props.history.push(path);
-  // };
-
   const HandleLogout = () => {
     localStorage.clear();
     props.nextPath("../login");
-  };
-  const searchMenuOpen = (event) => {
-    setAnchorE2(event.currentTarget);
-  };
-  const searchMenuClose = () => {
-    setAnchorE2(null);
-  };
-
-  const SearchBooks = () => {
-    return (
-      <div className="BookSearchMenu">
-      {props.searchedArray.map((data) => (
-        <MenuItem className={classes.bookName}>
-          {data.product_id.bookName}
-        <Typography className={classes.bookAuthor}>
-          {data.product_id.author}
-        </Typography>
-        <Typography className={classes.bookPrize}>
-          {data.product_id.quantity}
-        </Typography>
-        </MenuItem>
-  ))}
-      </div>
-    );
   };
 
   console.log("props", props.search);
@@ -198,7 +168,6 @@ export default function Appbar(props) {
                   onChange={(e) => props.issearch(e.target.value)}
                   placeholder="Search…"
                   classes={{ input: classes.inputInput }}
-    
                 />
               </div>
             ) : (
