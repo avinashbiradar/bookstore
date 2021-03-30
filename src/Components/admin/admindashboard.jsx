@@ -90,44 +90,59 @@ export default function AdminDashboard(props) {
     });
   };
 
-  const patternCheck = () => {
+  const patternCheckBookName = () => {
     let isError = false;
-    if (
-      isStringValid(bookName) &&
-      isAuthorValid(author)&&
-      isDiscountedPriceValid(discountPrice) &&
-      isPriceValid(price) &&
-      isQuantityValid(quantity) &&
-      isDescriptionValid(description)
+    // if (
+    //   // isStringValid(bookName) &&
+    //   isAuthorValid(author)&&
+    //   isDiscountedPriceValid(discountPrice) &&
+    //   isPriceValid(price) &&
+    //   isQuantityValid(quantity) &&
+    //   isDescriptionValid(description)
       
-    ) 
-    {
+    // ) 
+    // {
+    //   // setBookError("");
+    //   setAuthorError("")
+    //   setdiscountPriceError("");
+    //   setPriceError("");
+    //   setquantityError("");
+    //   setdescriptionError("");
+    //   return false;
+    // } else {
+    //   // setBookError("Bookname is Not Proper Ex:Tenet");
+    //   setAuthorError("Starts with a capital letter ")
+    //   setdiscountPriceError(" discounted price should be 2 or 3 digits ");
+    //   setPriceError(" Price should be numeric");
+    //   setquantityError("Quantity should be numeric between 1 to 10 ");
+    //   setdescriptionError("Description should be proper");
+    //   isError = true;
+    //   return true;
+    // }
+    if( isStringValid(bookName)){
       setBookError("");
-      setAuthorError("")
-      setdiscountPriceError("");
-      setPriceError("");
-      setquantityError("");
-      setdescriptionError("");
       return false;
-    } else {
+    }else{
       setBookError("Bookname is Not Proper Ex:Tenet");
-      setAuthorError("Starts with a capital letter ")
-      setdiscountPriceError(" discounted price should be 2 or 3 digits ");
-      setPriceError(" Price should be numeric");
-      setquantityError("Quantity should be numeric between 1 to 10 ");
-      setdescriptionError("Description should be proper");
       isError = true;
       return true;
     }
-   
   };
+  const patternCheckAuthor= () => {
+    let isError = false;
+    if( isAuthorValid(author)){
+      setAuthorError("")
+      return false;
+    }else{
+      setAuthorError("Starts with a capital letter ")
+      isError = true;
+      return true;
+    }
+  }
 
   const addNewBook = () => {
-    if (patternCheck()) {
-      console.log("Error Occured");
-    } else {
-      console.log("Success");
-    }
+    patternCheckBookName() 
+    patternCheckAuthor()
     //  e.stopPropagation();
     let Details = {
       bookName: bookName,
