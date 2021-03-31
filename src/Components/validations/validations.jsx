@@ -1,6 +1,8 @@
 const emailPattern = /[a-zA-Z0-9._]+[@]{1}[a-zA-Z120-9]*[.]{1}[a-zA-Z]*$/;
+const namePattern = /^[A-Z]{1}[a-z ]{3,}$/;
+const mobilePattern = /^[6-9]{1}[0-9]{9}$/;
 const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$/;
-const BooknamePattern = /^[A-Z]{1}[a-z ]{3,}$/;
+const BooknamePattern = /^[A-Z][a-z ]{3,}$/;
 const DescriptionPattern = /^[A-Z a-z ]{3,}$/;
 const DiscountedPrice = /^[0-9]{2}$/;
 module.exports = {
@@ -67,5 +69,13 @@ module.exports = {
     }
     let regex = new RegExp(passwordPattern);
     return regex.test(password);
+  },
+  isNameValid(name) {
+    let regex = new RegExp(namePattern);
+    return regex.test(name);
+  },
+  isMobileValid(mobile) {
+    let regex = new RegExp(mobilePattern);
+    return regex.test(mobile);
   },
 };

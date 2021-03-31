@@ -3,12 +3,17 @@ import Services from "../../Services/userServices";
 import React from "react";
 import Button from "react-bootstrap/Button";
 import TextField from "@material-ui/core/TextField";
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import SnackbarComponent from "../snackbarComponent/snackbar"
-import IconButton from '@material-ui/core/IconButton';
-import Validation from '../validations/validations'
+import OutlinedInput from "@material-ui/core/OutlinedInput";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import SnackbarComponent from "../snackbarComponent/snackbar";
+import IconButton from "@material-ui/core/IconButton";
+import {
+  isemailValid,
+  ispasswordValid,
+  isNameValid,
+  isMobileValid,
+} from "../validations/validations";
 import "../LogIn/login.scss";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -35,154 +40,132 @@ export default function Login(props) {
   const [mobileFlag, setMobileFlag] = React.useState(false);
   const [mobileError, setMobileError] = React.useState("");
   const [snackbaropen, setSnackbaropen] = React.useState(false);
-  const [snackbarmsg, setSnackbarmsg] = React.useState(""); 
+  const [snackbarmsg, setSnackbarmsg] = React.useState("");
   const [values, setValues] = React.useState({
-    password: '',
+    password: "",
     showPassword: false,
   });
-  const counter = useSelector(state => state);
-  const dispatch = useDispatch();
+  // const counter = useSelector((state) => state);
+  // const dispatch = useDispatch();
 
-  // const snackbarClose = () => {
-  //   setSnackbaropen(false);
-  // };
   const nextPath = (path) => {
     props.history.push(path);
-  };
-  const makeInitial = () => {
-    setEmailFlag(false);
-    setEmailError("");
-    setPasswordFlag(false);
-    setPasswordError("");
-    setNameFlag(false);
-    setNameError("");
-    setMobileFlag(false);
-    setMobileError("");
-    
-  };
-  const makeInitialone = () => {
-    setEmailFlag1(false);
-    setEmailError1("");
-    setPasswordFlag1(false);
-    setPasswordError1("");
-  }
-
-  const patternCheckone = (email) => {
-    makeInitialone();
-    const emailPatternone = /[a-zA-Z0-9._]+[@]{1}[a-zA-Z120-9]*[.]{1}[a-zA-Z]*$/;
-    const passwordPatternone = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$/;
-    let isErrorone = false;
-    if (!emailPatternone.test(email1)) {
-      setEmailFlag1(true);
-      setEmailError1("Email is Not Proper");
-      isErrorone = true;
-    }
-    if (!passwordPatternone.test(password1)) {
-      setPasswordFlag1(true);
-      setPasswordError1("Please Enter Valid Password");
-      isErrorone = true;
-    }
-   
-    return isErrorone;
-  };
-  const patternCheck = () => {
-    makeInitial();
-    const namePattern = /^[A-Z]{1}[a-z ]{3,}$/;
-    const emailPattern = /[a-zA-Z0-9._]+[@]{1}[a-zA-Z120-9]*[.]{1}[a-zA-Z]*$/;
-    const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$/;
-    const mobilePattern = /^[6-9]{1}[0-9]{9}$/;
-    let isError = false;
-    if (!namePattern.test(name)) {
-      setNameFlag(true);
-      setNameError("Name is Not Proper");
-      isError = true;
-    }
-    if (!emailPattern.test(email)) {
-      setEmailFlag(true);
-      setEmailError("Email is Not Proper");
-      isError = true;
-    }
-    if (!passwordPattern.test(password)) {
-      setPasswordFlag(true);
-      setPasswordError("Please Enter Valid Password");
-      isError = true;
-    }
-    if (!mobilePattern.test(mobile)) {
-      setMobileFlag(true);
-      setMobileError("Mobile Number is Not Proper");
-      isError = true;
-    }
-    return isError;
   };
 
   const toggle = (index) => {
     console.log(index);
     setToggleState(index);
   };
+  const EmailCheck = () => {
+    let isError = false;
 
-
-  const handleSignup = () => {
-    if (patternCheck()) {
-      console.log("Error Occured");
+    if (isemailValid(email, email1)) {
+      setEmailError1("");
+      setEmailError("");
+      return false;
     } else {
-      console.log("Success");
-      const data = {
-        fullName: name,
-        email: email,
-        password: password,
-        phone: mobile,
-      };
-      services
-        .SignUp(data)
-        .then((data) => {
-          console.log("registration successful" + data);
-          nextPath("../Login");
-          console.log(
-            "Login successful" + JSON.stringify(data.data.result.accessToken)
-          );
-          localStorage.setItem("bookStoreToken", data.data.result.accessToken);
-          dispatch({
-            type: "Add_Token",
-            token: localStorage.getItem('bookStoreToken')
-          })
-        })
-        .catch((err) => {
-          console.log("Registration Error" + err);
-        });
+      setEmailError1("Email is Not Proper");
+      setEmailError("Email is Not Proper");
+      isError = true;
+      return true;
     }
   };
-  
+  const PasswordCheck = () => {
+    let isError = false;
+    if (ispasswordValid(password, password1)) {
+      setPasswordError1("");
+      setPasswordError("");
+      return false;
+    } else {
+      setPasswordError1("Please Enter Valid Password");
+      setPasswordError("Please Enter Valid Password");
+      isError = true;
+      return true;
+    }
+  };
+  const patternCheckName = () => {
+    let isError = false;
+
+    if (isNameValid(name)) {
+      setNameError("");
+      return false;
+    } else {
+      setNameError("Name is Not Proper");
+      isError = true;
+      return true;
+    }
+  };
+  const patternCheckMobileNumber = () => {
+    let isError = false;
+
+    if (isMobileValid(mobile)) {
+      setMobileError("");
+      return false;
+    } else {
+      setMobileError("Mobile Number is Not Proper");
+      isError = true;
+      return true;
+    }
+  };
+
+  const handleSignup = () => {
+    EmailCheck();
+    patternCheckName();
+    PasswordCheck();
+    patternCheckMobileNumber();
+    const data = {
+      fullName: name,
+      email: email,
+      password: password,
+      phone: mobile,
+    };
+    services
+      .SignUp(data)
+      .then((data) => {
+        console.log("registration successful" + data);
+        nextPath("../Login");
+        console.log(
+          "Login successful" + JSON.stringify(data.data.result.accessToken)
+        );
+        localStorage.setItem("bookStoreToken", data.data.result.accessToken);
+        // dispatch({
+        //   type: "Add_Token",
+        //   token: localStorage.getItem("bookStoreToken"),
+        // });
+      })
+      .catch((err) => {
+        console.log("Registration Error" + err);
+      });
+  };
+
   const Adminlogin = () => {
     nextPath("../loginadmin");
-  }
-
+  };
 
   const handleLogin = () => {
-    if (patternCheckone()) {
-      console.log("Error Occured");
-    } else {
-      let data = {
-        email: email1,
-        password: password1,
-      };
-      services
-        .SignIn(data)
-        .then((data) => {
-          console.log(data);
-          setSnackbaropen(true);
-          setSnackbarmsg("Logged In");
-          console.log(
-            "Login successful" + JSON.stringify(data.data.result.accessToken)
-          );
-          localStorage.setItem("bookStoreToken", data.data.result.accessToken);
-           nextPath("../dashboard");
-        })
-        .catch((err) => {
-          console.log("Error", err);
-          setSnackbaropen(true);
-          setSnackbarmsg("Error");
-        });
-    }
+    EmailCheck();
+    PasswordCheck();
+    let data = {
+      email: email1,
+      password: password1,
+    };
+    services
+      .SignIn(data)
+      .then((data) => {
+        console.log(data);
+        setSnackbaropen(true);
+        setSnackbarmsg("Logged In");
+        console.log(
+          "Login successful" + JSON.stringify(data.data.result.accessToken)
+        );
+        localStorage.setItem("bookStoreToken", data.data.result.accessToken);
+        nextPath("../dashboard");
+      })
+      .catch((err) => {
+        console.log("Error", err);
+        setSnackbaropen(true);
+        setSnackbarmsg("Error");
+      });
   };
 
   const handleClickShowPassword = () => {
@@ -193,127 +176,116 @@ export default function Login(props) {
     event.preventDefault();
   };
 
- 
   return (
     <div className="container-login">
       <div className="img-holder">
-        <img className="image" alt="image"/>
+        <img className="image" alt="image" />
         <span className="text">ONLINE BOOK SHOPPING</span>
       </div>
       <div className="login">
-        <button className="lgn" onClick={() => toggle(1)}>
+        <button className="lgn" text="Test" onClick={() => toggle(1)}>
           LOGIN
         </button>
-        <button className="sgn" onClick={() => toggle(2)}>
+        <button className="sgn" text="Test" onClick={() => toggle(2)}>
           SIGN UP
         </button>
 
         <div className={toggleState === 1 ? "active-content" : "content"}>
-        <br/>
-        <div>
-        <div>
-                <div className="email">
-        <TextField
-            id="outlined-email-input"
-            variant="outlined"
-            name="email"
-            value={email1}
-            onChange={(e) => setEmail1(e.target.value)}
-            error={emailFlag1}
-            helperText={emailError1}
-              
-            label="Email"
-            fullWidth
-          />
+          <br />
+          <div>
+            <div>
+              <div className="email">
+                <TextField
+                  id="outlined-email-input"
+                  variant="outlined"
+                  name="email"
+                  value={email1}
+                  onChange={(e) => setEmail1(e.target.value)}
+                  error={emailError1}
+                  helperText={emailError1}
+                  label="Email"
+                  fullWidth
+                />
+              </div>
+              <br />
+              <div className="password">
+                <TextField
+                  id="outlined-pass-input"
+                  name="password"
+                  variant="outlined"
+                  label="Password"
+                  type={values.showPassword ? "text" : "password"}
+                  value={password1}
+                  fullWidth
+                  onChange={(e) => setPassword1(e.target.value)}
+                  error={passwordError1}
+                  helperText={passwordError1}
+                  endAdornment={
+                    <IconButton
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  }
+                />
+              </div>
+              <Button className="btn"  text="test" onClick={handleLogin}>
+                Login
+              </Button>
+            </div>
           </div>
-          <br/>
-          <div className="password">
-          <TextField
-          id="outlined-pass-input"
-          name="password"
-          variant="outlined"
-          label="Password"
-          type={values.showPassword ? 'text' : 'password'}
-          value={password1}
-          fullWidth
-          onChange={(e) => setPassword1(e.target.value)}
-          error={passwordFlag1}
-          helperText={passwordError1}
-          endAdornment={
-              <IconButton
-                onClick={handleClickShowPassword}
-                onMouseDown={handleMouseDownPassword}
-              >
-                {values.showPassword ? <Visibility /> : <VisibilityOff />}
-              </IconButton>
-          }
-         
-        />
-        </div>
-          <Button className="btn" onClick={handleLogin}>
-            Login
-          </Button>
-          
-        </div>
-        </div>
-        <br/>
-        <div className="buttons">
-        <Button className="btn" onClick={Adminlogin}>
-        Login as Admin
-        </Button>
-        </div>
+          <br />
+          <div className="buttons">
+            <Button className="btn" onClick={Adminlogin}>
+              Login as Admin
+            </Button>
+          </div>
         </div>
 
         <div className={toggleState === 2 ? "active-content" : "content"}>
           <TextField
-            id="outlined-secondary"
+            id="outlined-secondary-name"
             variant="outlined"
             color="secondary"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            error={nameFlag}
+            error={nameError}
             helperText={nameError}
-            
             label="Full Name"
           />
-          <br/>
+          <br />
           <TextField
-            id="outlined-secondary"
-      
+            id="outlined-secondary-email"
             variant="outlined"
             color="secondary"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            error={emailFlag}
+            error={emailError}
             helperText={emailError}
-            
             label="Email"
           />
-          <br/>
+          <br />
           <TextField
-            id="outlined-secondary"
-          
+            id="outlined-secondary-password"
             variant="outlined"
             color="secondary"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            error={passwordFlag}
+            error={passwordError}
             helperText={passwordError}
-          
             label="Password"
             type="password"
           />
-          <br/>
+          <br />
           <TextField
-            id="outlined-secondary"
-      
+            id="outlined-secondary-mobile"
             variant="outlined"
             color="secondary"
             value={mobile}
             onChange={(e) => setMobile(e.target.value)}
-            error={mobileFlag}
+            error={mobileError}
             helperText={mobileError}
-           
             label="Mobile"
             type="number"
           />
@@ -321,13 +293,8 @@ export default function Login(props) {
             Signup
           </Button>
         </div>
-        <SnackbarComponent
-        open={snackbaropen}
-        message={snackbarmsg}
-        />
-       
+        <SnackbarComponent open={snackbaropen} message={snackbarmsg} />
       </div>
     </div>
   );
 }
-

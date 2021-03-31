@@ -9,7 +9,6 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import SnackbarComponent from "../snackbarComponent/snackbar";
-import { useHistory } from "react-router-dom";
 import {
   isStringValid,
   isAuthorValid,
@@ -21,7 +20,6 @@ import {
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import "../admin/admindashboard.scss";
-//  const validation = new Validations();
 const services = new Services();
 
 const useStyles = makeStyles((theme) => ({
@@ -92,33 +90,7 @@ export default function AdminDashboard(props) {
 
   const patternCheckBookName = () => {
     let isError = false;
-    // if (
-    //   // isStringValid(bookName) &&
-    //   isAuthorValid(author)&&
-    //   isDiscountedPriceValid(discountPrice) &&
-    //   isPriceValid(price) &&
-    //   isQuantityValid(quantity) &&
-    //   isDescriptionValid(description)
-      
-    // ) 
-    // {
-    //   // setBookError("");
-    //   setAuthorError("")
-    //   setdiscountPriceError("");
-    //   setPriceError("");
-    //   setquantityError("");
-    //   setdescriptionError("");
-    //   return false;
-    // } else {
-    //   // setBookError("Bookname is Not Proper Ex:Tenet");
-    //   setAuthorError("Starts with a capital letter ")
-    //   setdiscountPriceError(" discounted price should be 2 or 3 digits ");
-    //   setPriceError(" Price should be numeric");
-    //   setquantityError("Quantity should be numeric between 1 to 10 ");
-    //   setdescriptionError("Description should be proper");
-    //   isError = true;
-    //   return true;
-    // }
+   
     if( isStringValid(bookName)){
       setBookError("");
       return false;
@@ -129,12 +101,56 @@ export default function AdminDashboard(props) {
     }
   };
   const patternCheckAuthor= () => {
-    let isError = false;
+    let isError = false;  
     if( isAuthorValid(author)){
       setAuthorError("")
       return false;
     }else{
-      setAuthorError("Starts with a capital letter ")
+      setAuthorError("Starts with a capital letter Ex:Anne")
+      isError = true;
+      return true;
+    }
+  }
+  const patternCheckDiscountPrice= () => {
+    let isError = false;
+    if( isDiscountedPriceValid(discountPrice)){
+      setdiscountPriceError("");
+      return false;
+    }else{
+      setdiscountPriceError(" discounted price should be 2 or 3 digits ")
+      isError = true;
+      return true;
+    }
+  }
+  const patternCheckPrice= () => {
+    let isError = false;
+    if(isPriceValid(price)){
+      setPriceError("");
+      return false;
+    }else{
+      setPriceError(" Price should be numeric");
+      isError = true;
+      return true;
+    }
+  }
+  const patternCheckQuantity= () => {
+    let isError = false;
+    if( isQuantityValid(quantity)){
+      setquantityError("");
+      return false;
+    }else{
+      setquantityError("Quantity should be numeric between 1 to 10 ");
+      isError = true;
+      return true;
+    }
+  }
+  const patternCheckDescription= () => {
+    let isError = false;
+    if(  isDescriptionValid(description)){
+      setdescriptionError("");
+      return false;
+    }else{
+      setdescriptionError("Description should be proper and conatains book info.");
       isError = true;
       return true;
     }
@@ -143,7 +159,11 @@ export default function AdminDashboard(props) {
   const addNewBook = () => {
     patternCheckBookName() 
     patternCheckAuthor()
-    //  e.stopPropagation();
+    patternCheckDescription()
+    patternCheckQuantity()
+    patternCheckPrice()
+    patternCheckDiscountPrice()
+   
     let Details = {
       bookName: bookName,
       author: author,

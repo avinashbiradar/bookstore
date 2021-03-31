@@ -4,6 +4,9 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import Services from "../../Services/userServices";
+import {
+  isemailValid,ispasswordValid,isNameValid,isMobileValid
+} from "../validations/validations";
 const services = new Services();
 
 const useStyles = makeStyles((theme) => ({
@@ -73,52 +76,62 @@ export default function SignUp(props) {
 
   
 
-  const makeInitial = () => {
-    setNameFlag(false);
-    setNameError("");
-    setEmailFlag(false);
-    setEmailError("");
-    setMobileFlag(false);
-    setMobileError("");
-    setPasswordFlag(false);
-    setPasswordError("");
-  };
+  // const makeInitial = () => {
+  //   setNameFlag(false);
+  //   setNameError("");
+  //   setEmailFlag(false);
+  //   setEmailError("");
+  //   setMobileFlag(false);
+  //   setMobileError("");
+  //   setPasswordFlag(false);
+  //   setPasswordError("");
+  // };
 
-  const patternCheck = () => {
-    makeInitial();
-    const namePattern = /^[A-Z]{1}[a-z ]{3,}$/;
-    const emailPattern = /[a-zA-Z0-9._]+[@]{1}[a-zA-Z120-9]*[.]{1}[a-zA-Z]*$/;
-    const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$/;
-    const mobilePattern = /^[6-9]{1}[0-9]{9}$/;
+  // const patternCheck = () => {
+  //   makeInitial();
+  //   const namePattern = /^[A-Z]{1}[a-z ]{3,}$/;
+  //   const emailPattern = /[a-zA-Z0-9._]+[@]{1}[a-zA-Z120-9]*[.]{1}[a-zA-Z]*$/;
+  //   const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$/;
+  //   const mobilePattern = /^[6-9]{1}[0-9]{9}$/;
+  //   let isError = false;
+  //   if (!namePattern.test(name)) {
+  //     setNameFlag(true);
+  //     setNameError("Name is Not Proper");
+  //     isError = true;
+  //   }
+  //   if (!mobilePattern.test(mobile)) {
+  //     setMobileFlag(true);
+  //     setMobileError("Mobile Number is Not Proper");
+  //     isError = true;
+  //   }
+  //   if (!emailPattern.test(email)) {
+  //     setEmailFlag(true);
+  //     setEmailError("Email is Not Proper");
+  //     isError = true;
+  //   }
+  //   if (!passwordPattern.test(password)) {
+  //     setPasswordFlag(true);
+  //     setPasswordError("Please Enter Valid Password");
+  //     isError = true;
+  //   }
+  //   return isError;
+  // };
+
+  const patternCheckName = () => {
     let isError = false;
-    if (!namePattern.test(name)) {
-      setNameFlag(true);
+   
+    if( isNameValid(name)){
+      setNameError("");
+      return false;
+    }else{
       setNameError("Name is Not Proper");
       isError = true;
+      return true;
     }
-    if (!mobilePattern.test(mobile)) {
-      setMobileFlag(true);
-      setMobileError("Mobile Number is Not Proper");
-      isError = true;
-    }
-    if (!emailPattern.test(email)) {
-      setEmailFlag(true);
-      setEmailError("Email is Not Proper");
-      isError = true;
-    }
-    if (!passwordPattern.test(password)) {
-      setPasswordFlag(true);
-      setPasswordError("Please Enter Valid Password");
-      isError = true;
-    }
-    return isError;
   };
 
   const submit = () => {
-    if (patternCheck()) {
-      console.log("Error Occured");
-    } else {
-      console.log("Success");
+    patternCheckName()
       const data = {
         fullName: name,
         email: email,
@@ -153,7 +166,7 @@ export default function SignUp(props) {
                 color="secondary"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                error={nameFlag}
+                error={nameError}
                 helperText={nameError}
                 fullWidth
                 className={classes.input}
@@ -183,8 +196,7 @@ export default function SignUp(props) {
                 color="secondary"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                error={passwordFlag}
-                helperText={passwordError}
+              
                 fullWidth
                 className={classes.input}
                 label="Password"

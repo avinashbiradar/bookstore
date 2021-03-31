@@ -1,4 +1,4 @@
-import React from "react";
+import React ,{Suspense,lazy} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import bookImg from "../assests/Image11.png";
 import Typography from "@material-ui/core/Typography";
@@ -8,6 +8,7 @@ import Select from "@material-ui/core/Select";
 import Pagination from "../Pagination/Pagination";
 import Services from "../../Services/productServices";
 import "./displayBooks.scss";
+const ImageLoading = lazy(()=>import('../assests/Image11.png'))
 const services = new Services();
 
 
@@ -160,6 +161,13 @@ export default function DisplayNotes(props) {
     setCurrentPage(pageNumber);
   };  
 
+  const ImageLoad =()=>{
+    return(
+      <img className="bookImage" src={bookImg} alt="" />
+    
+    )
+  }
+
   const indexOfLastBook = currentPage * postsPerPage;
   const indexOfFirstBook = indexOfLastBook - postsPerPage;
   const currentBooks = props.searchedArray!==null?props.searchedArray:books.slice(indexOfFirstBook, indexOfLastBook);
@@ -197,10 +205,11 @@ export default function DisplayNotes(props) {
                  data.isCart = true;
               }
             })}
-            
+            <Suspense fallback={<div>loading....</div>}>
             <div className="imageContainer">
-              <img className="bookImage" src={bookImg} alt="" />
+            <img className="bookImage" src={bookImg} alt="" />
             </div>
+            </Suspense>
             <div className="infoContainer">
               <Typography className={classes.bookName}>
                 {data.bookName}

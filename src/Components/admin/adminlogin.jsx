@@ -3,7 +3,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
-import Snackbar from "@material-ui/core/Snackbar";
 import SnackbarComponent from "../snackbarComponent/snackbar";
 import Services from "../../Services/userServices";
 import { isemailValid, ispasswordValid } from "../validations/validations";
@@ -63,10 +62,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login(props) {
   const classes = useStyles();
-  const [email2, setEmail2] = React.useState(" ");
+  const [email2, setEmail2] = React.useState("");
   const [emailFlag2, setEmailFlag2] = React.useState(false);
   const [emailError2, setEmailError2] = React.useState("");
-  const [password2, setPassword2] = React.useState(" ");
+  const [password2, setPassword2] = React.useState("");
   const [passwordFlag2, setPasswordFlag2] = React.useState(false);
   const [passwordError2, setPasswordError2] = React.useState("");
   const [snackbaropen, setSnackbaropen] = React.useState(false);
@@ -80,79 +79,62 @@ export default function Login(props) {
     setSnackbaropen(false);
   };
 
-  // const makeInitial = () => {
-  //   setEmailFlag2(false);
-  //   setEmailError2("");
-  //   setPasswordFlag2(false);
-  //   setPasswordError2("");
-  // };
 
-  // const patternCheck = () => {
-  //   makeInitial();
-  //   const emailPattern = /[a-zA-Z0-9._]+[@]{1}[a-zA-Z120-9]*[.]{1}[a-zA-Z]*$/;
-  //   const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$/;
-  //   let isError = false;
-  //   if (!emailPattern.test(email2)) {
-  //     setEmailFlag2(true);
-  //     setEmailError2("Email is Not Proper");
-  //     isError = true;
-  //   }
-  //   if (!passwordPattern.test(password2)) {
-  //     setPasswordFlag2(true);
-  //     setPasswordError2("Please Enter Valid Password");
-  //     isError = true;
-  //   }
-  //   return isError;
-  // };
-
-
-
-  const patternCheck = () => {
+  const EmailCheck = () => {
     let isError = false;
-    
-   if ( isemailValid(email2)&&ispasswordValid(password2)){
-    setEmailError2("");
-    setPasswordError2("");
-      return false ;
-  }
-  else 
-  {
-    setEmailError2("Email is Not Proper");
-    setPasswordError2("Please Enter Valid Password");
-    isError = true;
-     return true
-  }
-  }
 
-  
-  const submit = () => {
-    if (patternCheck()) {
-      console.log("Error Occured");
+    if (isemailValid(email2)) {
+      setEmailError2("");
+      return false;
     } else {
-      console.log("Success");
-      const data = {
-        email: email2,
-        password: password2,
-      };
-      services
-        .SignIn(data)
-        .then((data) => {
-          console.log(
-            "Login successful" + JSON.stringify(data.data.result.accessToken)
-          );
-          localStorage.setItem("StoreToken", data.data.result.accessToken);
-          nextPath("../adminbooks");
-          setSnackbaropen(true);
-          setSnackbarmsg("Logged In");
-        })
-        .catch((err) => {
-          console.log("Login Error" + err);
-          setSnackbaropen(true);
-          setSnackbarmsg("Error");
-        });
+      setEmailError2("Email is Not Proper");
+      isError = true;
+      return true;
+    }
+  };
+  const PasswordCheck = () => {
+    let isError = false;
+    if (ispasswordValid(password2)) {
+      setPasswordError2("");
+      return false;
+    } else {
+      setPasswordError2("Please Enter Valid Password");
+      isError = true;
+      return true;
     }
   };
 
+  const submit = () => {
+    EmailCheck();
+    PasswordCheck();
+    const data = {
+      email: email2,
+      password: password2,
+    };
+    services
+      .SignIn(data)
+      .then((data) => {
+        console.log(
+          "Login successful" + JSON.stringify(data.data.result.accessToken)
+        );
+        localStorage.setItem("StoreToken", data.data.result.accessToken);
+        nextPath("../adminbooks");
+        setSnackbaropen(true);
+        setSnackbarmsg("Logged In");
+      })
+      .catch((err) => {
+        console.log("Login Error" + err);
+        setSnackbaropen(true);
+        setSnackbarmsg("Error");
+      });
+  };
+  const updatestate = (e) => {
+    console.log("email setup",e.target.value)
+    setEmail2(e.target.value);
+  };
+  const updatestateone = (e) => {
+    setPassword2(e.target.value);
+  };
   const LoginBody = () => {
     return (
       <div className={classes.loginMain}>
@@ -168,7 +150,7 @@ export default function Login(props) {
           <div className={classes.inputField}>
             <TextField
               value={email2}
-              onChange={(e) => setEmail2(e.target.value)}
+              onChange={ updatestate}
               error={emailError2}
               helperText={emailError2}
               fullWidth
@@ -180,7 +162,7 @@ export default function Login(props) {
           <div className={classes.inputField}>
             <TextField
               value={password2}
-              onChange={(e) => setPassword2(e.target.value)}
+              onChange={updatestateone}
               error={passwordError2}
               helperText={passwordError2}
               fullWidth

@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should take a snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="App"
+  >
+    <div>
+      <div
+        class="image-content"
+      >
+        <h3>
+          404 - Page Not Found 
+        </h3>
+        <p>
+          This isn't the page you're looking for .
+        </p>
+        <p>
+          Please click on the below link "Go Home..." to continue your surfing 
+        </p>
+        <p />
+      </div>
+      <div
+        class="link-content"
+      >
+        <a
+          href="/login"
+        >
+          <h1>
+            Go to login . . .
+          </h1>
+        </a>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

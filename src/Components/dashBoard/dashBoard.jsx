@@ -93,7 +93,6 @@ export default function Dashboard(props) {
       searchedArray={searchBook}
 
     />
-    <Switch>
       <Route path="/dashboard" exact>
         <Books  search={search} searchedArray={searchBook}  cartBooks={cartBooks} allCartItem={allCartItem}  setBooks={setBooks} />
       </Route>
@@ -109,7 +108,7 @@ export default function Dashboard(props) {
         <ProtectedRoutes path="/dashboard/orderPlaced" exact>
           <PlacedOrder orderPlaced={orderPlaced} nextPath={nextPath} />
         </ProtectedRoutes>
-    </Switch>
+
     <Footer/>
   </div>
   );
