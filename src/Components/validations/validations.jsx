@@ -5,6 +5,7 @@ const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$/;
 const BooknamePattern = /^[A-Z][a-z ]{3,}$/;
 const DescriptionPattern = /^[A-Z a-z ]{3,}$/;
 const DiscountedPrice = /^[0-9]{2}$/;
+
 module.exports = {
 
   isStringValid(bookName) {
@@ -56,7 +57,7 @@ module.exports = {
   },
 
   isemailValid(email) {
-    if (email.trim().length === 0) {
+    if (email.length === 0) {
       return false;
     }
     let regex = new RegExp(emailPattern);

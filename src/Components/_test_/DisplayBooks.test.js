@@ -5,6 +5,8 @@ import Dashboard from "../dashBoard/dashBoard"
 import bookImg from "../assests/Image11.png";
 import {render, cleanup} from '@testing-library/react'
 import DisplayBooks from "../displayBooks/displayBooks"
+
+
 // describe("<DisplayBooks/>", () => {
 //   it("renders an image", () => {
 //     const logo = shallow(<DisplayBooks />);
@@ -13,7 +15,7 @@ import DisplayBooks from "../displayBooks/displayBooks"
 //   });
 // });
 //---------------------------------------------------------------------------------------------------
-// // Mock axios directly
+// Mock axios directly
 // jest.mock('axios')
 
 // describe("MyComponent", () => {
@@ -25,7 +27,7 @@ import DisplayBooks from "../displayBooks/displayBooks"
 //     axios.get.mockResolvedValue(mockData);
 
 //     const { findAllByText } = render(
-//       <Dashboard url={'localhost:3000'} />
+//       <Dashboard url={'localhost:3000/dashboard'} />
 //     );
 
 //     const text= await findAllByText(/foo/);

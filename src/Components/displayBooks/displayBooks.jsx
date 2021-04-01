@@ -207,7 +207,7 @@ export default function DisplayNotes(props) {
             })}
             <Suspense fallback={<div>loading....</div>}>
             <div className="imageContainer">
-            <img className="bookImage" src={bookImg} alt="" />
+            <img id="image-test" className="bookImage" src={bookImg} alt="" />
             </div>
             </Suspense>
             <div className="infoContainer">
