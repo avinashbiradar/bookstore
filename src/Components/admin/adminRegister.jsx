@@ -161,7 +161,7 @@ export default function SignUp(props) {
               />
             </div>
             <div className={classes.inputField}>
-              <TextField
+               <TextField
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 error={emailFlag}
@@ -170,6 +170,7 @@ export default function SignUp(props) {
                 className={classes.input}
                 label="Email"
               />
+              
             </div>
             <div className={classes.inputField}>
               <TextField
@@ -194,6 +195,7 @@ export default function SignUp(props) {
                 label="Mobile"
                 type="number"
               />
+              
             </div>
             <Button
               fullWidth

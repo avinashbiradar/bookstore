@@ -8,7 +8,9 @@ import Select from "@material-ui/core/Select";
 import Pagination from "../Pagination/Pagination";
 import Services from "../../Services/productServices";
 import "./displayBooks.scss";
-const ImageLoading = lazy(()=>import('../assests/Image11.png'))
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
+// const ImageLoading = lazy(()=>import('../assests/Image11.png'))
 const services = new Services();
 
 
@@ -161,12 +163,12 @@ export default function DisplayNotes(props) {
     setCurrentPage(pageNumber);
   };  
 
-  const ImageLoad =()=>{
-    return(
-      <img className="bookImage" src={bookImg} alt="" />
+  // const ImageLoad =()=>{
+  //   return(
+  //     <img className="bookImage" src={ImageLoading} alt="" />
     
-    )
-  }
+  //   )
+  // }
 
   const indexOfLastBook = currentPage * postsPerPage;
   const indexOfFirstBook = indexOfLastBook - postsPerPage;
@@ -205,11 +207,15 @@ export default function DisplayNotes(props) {
                  data.isCart = true;
               }
             })}
-            <Suspense fallback={<div>loading....</div>}>
+            
             <div className="imageContainer">
-            <img id="image-test" className="bookImage" src={bookImg} alt="" />
+            <LazyLoadImage
+            effect="blur"
+            src={bookImg}
+            >
+            </LazyLoadImage>
+            
             </div>
-            </Suspense>
             <div className="infoContainer">
               <Typography className={classes.bookName}>
                 {data.bookName}

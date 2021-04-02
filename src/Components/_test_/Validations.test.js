@@ -1,40 +1,3 @@
-import {
-    emailPattern,
-    isStringValid,
-    isAuthorValid,
-    isDiscountedPriceValid,
-    isPriceValid,
-    isQuantityValid,
-    isNameValid,
-    isDescriptionValid,
-    isemailValid
-} from "../validations/validations";
-
-//   describe('named exports - automatically mocked file with no return values', () => {
-//     it('returns the correct value for Method 1', () => {
-//       expect(isNameValid()).not.toBe('You have called Method 1')
-//       expect(isNameValid()).toBe(undefined)
-//     })
-// })
-
-// jest.mock('../validations/validations', () => jest.fn().mockImplementation(() => 'You have called a mocked method 1!'))
-// describe('default export - module factory with mock implementation mocked file', () => {
-//   it('returns the correct value for Method 1', () => {
-//     expect(isStringValid()).toBe('You have called a mocked method 1!')
-//     expect(isStringValid()).toHaveBeenCalledTimes(1)
-//   })
-// })
-
-// describe('RegExp: URI', function(){
-//     it('should match the expected URI', function(){
-//       // include all the various cases to test the regexp against here
-//       // example:
-//       const emailPatternTest = /[a-zA-Z0-9._]+[@]{1}[a-zA-Z120-9]*[.]{1}[a-zA-Z]*$/;
-//       expect(isemailValid(emailPatternTest).test()).toBe(true);
-//     });
-//   });
-
-
 
 describe('stringMatching in arrayContaining', () => {
     const expectedemail = [
@@ -45,7 +8,15 @@ describe('stringMatching in arrayContaining', () => {
     ];
     const expectedmobile = [
         expect.stringMatching(/^[6-9]{1}[0-9]{9}$/)
+       
     ];
+    const expectedPassword = [
+        expect.stringMatching(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$/)
+    ];
+    const expectedBookDescription = [
+        expect.stringMatching( /^[A-Z a-z ]{3,}$/)
+    ];
+    
     it('matches even if received contains additional elements', () => {
         expect(['biradaravinash123@gmail.com']).toEqual(
             expect.arrayContaining(expectedemail),
@@ -66,8 +37,8 @@ describe('stringMatching in arrayContaining', () => {
             expect.arrayContaining(expectedname),
         );
     });
-
-    it('matches URI', () => {
+ 
+    it('matches mobile number', () => {
         const mobileRegEx = /^[6-9]{1}[0-9]{9}$/;
         const mobilenumber = '9923886906'; 
         expect(mobilenumber).toMatch(mobileRegEx);
@@ -80,5 +51,37 @@ describe('stringMatching in arrayContaining', () => {
         );
     });
   
+    it('matches even if received contains additional elements', () => {
+        expect(['Avinash123@']).toEqual(
+            expect.arrayContaining(expectedPassword),
+        );
+    });
+
+    it('does not match if received does not contain expected elements', () => {
+        expect(['avinash']).not.toEqual(
+            expect.arrayContaining(expectedPassword),
+        );
+    });
+
+    it('matches even if received contains additional elements', () => {
+        expect(['This book is great']).toEqual(
+            expect.arrayContaining(expectedBookDescription),
+        );
+    });
+
+    it('does not match if received does not contain expected elements', () => {
+        expect(['av']).not.toEqual(
+            expect.arrayContaining(expectedBookDescription),
+        );
+    });
+
+    it('matches discounted price', () => {
+        const dpriceRegex = /^[0-9]{2}$/;
+        const correctdprice = '99'; 
+        const dprice = '999'; 
+        expect(dprice).not.toMatch(dpriceRegex);
+        expect(correctdprice).toMatch(dpriceRegex);
+      });
+
 
 });

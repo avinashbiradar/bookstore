@@ -220,9 +220,6 @@ export default function AdminDashboard(props) {
       });
   };
 
-  const HandleLogoutAdmin = () => {
-    localStorage.clear();
-  };
 
   return (
     <div>
@@ -230,14 +227,6 @@ export default function AdminDashboard(props) {
       <div className="addbuttonone">
       <Button variant="contained" color="primary" onClick={handleClickOpen}>
         Add Book
-      </Button>
-  
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={HandleLogoutAdmin}
-      >
-        LogOut Admin
       </Button>
     </div>
         <Dialog

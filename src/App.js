@@ -21,7 +21,6 @@ function App() {
     <Switch>
      <PrivateRoute path="/dashboard" component={Dashboard} />
      <AuthRoute  path="/Login" component={Login} exact/>
-     <PrivateRoute path="/wishlist" component={wishlist} exact/>
      <PrivateRoute path="/cart" component={Cart} exact/>
      <AuthAdminRoute path="/loginadmin" component={AdminLogin} exact/>
      <PrivateAdminRoute path="/adminbooks" component={AdminBooks} exact/>

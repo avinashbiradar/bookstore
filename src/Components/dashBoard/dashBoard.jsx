@@ -9,6 +9,7 @@ import { Switch, Route } from "react-router-dom";
 import ProtectedRoutes from "../../protectedRoutes.js";
 import Typography from "@material-ui/core/Typography";
 import PlacedOrder from "../orderPlaced/orderPlaced";
+import Wishlist from "../wishlist/wishlist"
 const services = new Services();
 const useStyles = makeStyles((theme) => ({
   dashboardMain: {
@@ -18,6 +19,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "space-between",
     backgroundColor: "white",
+  },
+  AppbarAdmin:{
   },
 
 }));
@@ -82,6 +85,7 @@ export default function Dashboard(props) {
   return (
 
     <div className={classes.dashboardMain}>
+    <div className={classes.AppbarAdmin}>
     <AppBar
      totalCartItem={cartBooks.length}
      setSearchClicked={setSearchClicked}
@@ -93,6 +97,8 @@ export default function Dashboard(props) {
       searchedArray={searchBook}
 
     />
+    </div>
+  
       <Route path="/dashboard" exact>
         <Books  search={search} searchedArray={searchBook}  cartBooks={cartBooks} allCartItem={allCartItem}  setBooks={setBooks} />
       </Route>
@@ -108,6 +114,11 @@ export default function Dashboard(props) {
         <ProtectedRoutes path="/dashboard/orderPlaced" exact>
           <PlacedOrder orderPlaced={orderPlaced} nextPath={nextPath} />
         </ProtectedRoutes>
+
+        <ProtectedRoutes path="/dashboard/wishlist" exact>
+          <Wishlist  nextPath={nextPath} />
+        </ProtectedRoutes>
+
 
     <Footer/>
   </div>

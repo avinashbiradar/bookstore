@@ -70,7 +70,8 @@ export default function Login(props) {
   const [passwordError2, setPasswordError2] = React.useState("");
   const [snackbaropen, setSnackbaropen] = React.useState(false);
   const [snackbarmsg, setSnackbarmsg] = React.useState("");
-
+ const [test,setTest]=React.useState("");
+ 
   const nextPath = (path) => {
     props.history.push(path);
   };
@@ -147,18 +148,16 @@ export default function Login(props) {
               Sign Up{" "}
             </Button>
           </div>
-          <div className={classes.inputField}>
-            <TextField
-              value={email2}
-              onChange={ updatestate}
-              error={emailError2}
-              helperText={emailError2}
-              fullWidth
-              className={classes.input}
-              label="Email"
-              name="email"
-            />
-          </div>
+          <TextField
+                value={email2}
+                onChange={updatestate}
+                error={emailError2}
+                helperText={emailError2}
+                fullWidth
+                className={classes.input}
+                label="Email"
+              />
+          
           <div className={classes.inputField}>
             <TextField
               value={password2}

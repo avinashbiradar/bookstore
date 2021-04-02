@@ -106,8 +106,6 @@ export default function CartBooks(props) {
 
   return (
     <div>
-      <AppBar
-      />
       <div className="wishBody">
       <div className="wishContainer">
         <div className="header">
