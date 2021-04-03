@@ -212,6 +212,7 @@ export default function DisplayNotes(props) {
             <LazyLoadImage
             effect="blur"
             src={bookImg}
+            // fallback={<div>Loading...</div>}>
             >
             </LazyLoadImage>
             

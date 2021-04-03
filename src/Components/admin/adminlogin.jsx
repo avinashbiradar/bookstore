@@ -156,6 +156,7 @@ export default function Login(props) {
                 fullWidth
                 className={classes.input}
                 label="Email"
+                id="outlined-email"
               />
           
           <div className={classes.inputField}>
@@ -169,6 +170,7 @@ export default function Login(props) {
               label="Password"
               type="password"
               name="password"
+              id="outlined-pass"
             />
           </div>
           <Button
@@ -197,7 +199,7 @@ export default function Login(props) {
     <>
       {dialogControl ? (
         <Dialog open={true}>
-          <LoginBody />
+          {LoginBody()}
         </Dialog>
       ) : (
         ""

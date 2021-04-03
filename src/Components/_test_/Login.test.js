@@ -21,9 +21,7 @@ describe('Login Component', () => {
      it('renders a password input', () => {
         expect(shallow( <Login/> ).find('#outlined-pass-input').length).toEqual(1)
       })
-      it('should render without throwing an error', () => {
-        expect(shallow(<Login/>).exists()).toBe(true)
-    })
+      
    // testing the email and password input existence by id
     it('renders a email input', () => {
         expect(shallow( <Login/> ).find('#outlined-secondary-name').length).toEqual(1)
