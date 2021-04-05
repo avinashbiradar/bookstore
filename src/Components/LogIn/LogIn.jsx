@@ -59,26 +59,46 @@ export default function Login(props) {
   const EmailCheck = () => {
     let isError = false;
 
-    if (isemailValid(email, email1)) {
-      setEmailError1("");
+    if (isemailValid(email)) {
       setEmailError("");
       return false;
     } else {
-      setEmailError1("Email is Not Proper");
       setEmailError("Email is Not Proper");
+      isError = true;
+      return true;
+    }
+  };
+  const EmailCheckLogin = () => {
+    let isError = false;
+
+    if (isemailValid(email1)) {
+      setEmailError1("");
+
+      return false;
+    } else {
+      setEmailError1("Email is Not Proper");
       isError = true;
       return true;
     }
   };
   const PasswordCheck = () => {
     let isError = false;
-    if (ispasswordValid(password, password1)) {
-      setPasswordError1("");
+    if (ispasswordValid(password)) {
       setPasswordError("");
       return false;
     } else {
-      setPasswordError1("Please Enter Valid Password");
       setPasswordError("Please Enter Valid Password");
+      isError = true;
+      return true;
+    }
+  };
+  const PasswordCheckLogin = () => {
+    let isError = false;
+    if (ispasswordValid(password1)) {
+      setPasswordError1("");
+      return false;
+    } else {
+      setPasswordError1("Please Enter Valid Password");
       isError = true;
       return true;
     }
@@ -143,8 +163,8 @@ export default function Login(props) {
   };
 
   const handleLogin = () => {
-    EmailCheck();
-    PasswordCheck();
+    EmailCheckLogin();
+    PasswordCheckLogin();
     let data = {
       email: email1,
       password: password1,
@@ -230,7 +250,7 @@ export default function Login(props) {
                   }
                 />
               </div>
-              <Button className="btn"  text="test" onClick={handleLogin}>
+              <Button className="btn" text="test" onClick={handleLogin}>
                 Login
               </Button>
             </div>

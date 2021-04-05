@@ -16,8 +16,6 @@ import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Fade from "@material-ui/core/Fade";
-import { Link } from "@material-ui/core";
-import { createHashHistory } from "history";
 
 const StyledBadge = withStyles((theme) => ({
   badge: {
@@ -131,16 +129,9 @@ export default function Appbar(props) {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClickAdmin = (event) => {
-    setAnchorE2(event.currentTarget);
-  };
 
   const handleClose = () => {
     setAnchorEl(null);
-  };
-
-  const handleCloseAdmin = () => {
-    setAnchorE2(null);
   };
 
   const HandleLogout = () => {
@@ -148,11 +139,6 @@ export default function Appbar(props) {
     props.nextPath("../login");
   };
 
-  const history = createHashHistory();
-  const HandleLogoutAdmin = () => {
-    localStorage.clear();
-    history.go("/loginadmin");
-  };
 
   console.log("props", props.search);
   return (
@@ -175,7 +161,6 @@ export default function Appbar(props) {
                 Bookstore
               </Typography>
             </div>
-            {props.user ? (
               <div className={classes.search}>
                 <div className={classes.searchIcon}>
                   <SearchIcon />
@@ -188,11 +173,7 @@ export default function Appbar(props) {
                   classes={{ input: classes.inputInput }}
                 />
               </div>
-            ) : (
-              ""
-            )}
           </div>
-          {props.user ? (
             <div className={classes.rightOptions}>
               <SearchIcon className={classes.buttonSearch} />
               <PermIdentityIcon
@@ -236,28 +217,6 @@ export default function Appbar(props) {
                 </StyledBadge>
               </IconButton>
             </div>
-          ) : (
-            <div className={classes.rightOptions}>
-              <SearchIcon className={classes.buttonSearch} />
-              <PermIdentityIcon
-                className={classes.profileButton}
-                aria-controls="fade-menu"
-                aria-haspopup="true"
-                onClick={handleClickAdmin}
-              ></PermIdentityIcon>
-              <Menu
-                id="fade-menu"
-                anchorEl={anchorE2}
-                keepMounted
-                open={openAdmin}
-                onClose={handleCloseAdmin}
-                TransitionComponent={Fade}
-              >
-                <MenuItem>Hey Admin!!!</MenuItem>
-                <MenuItem onClick={HandleLogoutAdmin}>Logout</MenuItem>
-              </Menu>
-            </div>
-          )}
         </Toolbar>
       </AppBar>
     </React.Fragment>
