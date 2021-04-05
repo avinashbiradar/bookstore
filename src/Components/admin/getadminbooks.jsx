@@ -4,7 +4,7 @@ import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import "../admin/getadminbooks.scss";
-import AppBar from "../AppBar/AppBar";
+import AdminAppBar from "../admin/adminappbar";
 import AddBook from "../admin/admindashboard"
 import SnackbarComponent from "../snackbarComponent/snackbar"
 import Services from "../../Services/productServices";
@@ -78,8 +78,8 @@ const handleShow = () => setShow(true);
   return (
     <div className="booktable">
     <div>
-   <AppBar
-    user={false}
+   <AdminAppBar
+    // user={false}
    />
     </div>
     <div className="addbooks">

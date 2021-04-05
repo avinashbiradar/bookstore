@@ -30,6 +30,12 @@ const useStyles = makeStyles((theme) => ({
       width: "100%",
     },
   },
+  placeButton: {
+    height: "40px",
+    position: "relative",
+    width:"110px",
+    padding:"0px"
+  },
 }));
 
 export default function AdminDashboard(props) {
@@ -225,7 +231,7 @@ export default function AdminDashboard(props) {
     <div>
       <div className="addbutton">
       <div className="addbuttonone">
-      <Button variant="contained" color="primary" onClick={handleClickOpen}>
+      <Button variant="contained" color="primary"  className={classes.placeButton} onClick={handleClickOpen}>
         Add Book
       </Button>
     </div>

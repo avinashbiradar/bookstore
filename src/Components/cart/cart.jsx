@@ -41,10 +41,10 @@ const useStyles = makeStyles((theme) => ({
     width: "5px",
   },
   placeButton: {
-    height: "20px",
+    height: "40px",
     position: "relative",
-    width:"100px",
-    padding:"30px"
+    width:"110px",
+    padding:"0px"
   },
   inputField: {
     border: "1px solid lightgray",
@@ -304,7 +304,7 @@ export default function Cart(props) {
             <Button
               variant="contained"
               color="primary"
-              fullWidth
+              
               className={classes.placeButton}
               onClick={() => setDetailForm(true)}
             >

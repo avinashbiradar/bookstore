@@ -33,7 +33,7 @@
     margin: 15px;
   }
   .cartBookImage {
-    width: 20%;
+    width: 30%;
     height: 70%;
   }
   .countItem {
@@ -69,11 +69,15 @@
   }
   
   @media only screen and (max-width: 900px) {
+    .inlineField {
+      flex-direction: column;
+    }
+  }
+  @media only screen and (max-width: 320px) {
     .cartContainer {
       width: 90%;
     }
   }
-  
   @media only screen and (max-width: 600px) {
     .cartBody {
       width: 100%;
