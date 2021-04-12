@@ -51,8 +51,6 @@ export default function Dashboard(props) {
       .then((data) => {
         console.log("get cart items working ")
         console.log(data.data.result);
-       
-
         const dataArray = data.data.result;
         const datashow = [];
         dataArray.map((data) => {

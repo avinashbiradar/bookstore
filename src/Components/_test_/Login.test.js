@@ -1,9 +1,9 @@
 import React from 'react';
-import {shallow} from 'enzyme';
+import {shallow ,mount} from 'enzyme';
 import Login from "../LogIn/LogIn"
 
 describe('<Login /> with no props', () => {
-  const container = shallow(<Login />);
+  const container = shallow(<Login/>);
   it('should match the snapshot', () => {
     expect(container.html()).toMatchSnapshot();
   });
@@ -23,7 +23,7 @@ describe('Login Component', () => {
       })
       
    // testing the email and password input existence by id
-    it('renders a email input', () => {
+    it('renders a name input', () => {
         expect(shallow( <Login/> ).find('#outlined-secondary-name').length).toEqual(1)
       })
      it('renders a email input', () => {
@@ -32,8 +32,22 @@ describe('Login Component', () => {
       it('renders a password input', () => {
         expect(shallow( <Login/> ).find('#outlined-secondary-password').length).toEqual(1)
       })
-      
+      // it('renders a password input', () => {
+      //   expect(shallow( <Login/> ).find('#outlined-secondary-password').length).toEqual(1)
+      // })
+
+
+    
+  
 })
+// describe('counter testing placeholder ',()=>{
+// test("it renders placeholder text same as passed from props",()=>{
+//       const placeholderProps="test"
+//      const wrapper=shallow(<Login/>)
+// //    console.log("wrapper details",wrapper.debug());
+//    expect(wrapper.find('Textfield').at(0).props().placeholder).toEqual("Email-input ")
+//   })
+// })
 
 describe('counter testing ',()=>{
   //testing for specific text in element 
@@ -66,4 +80,35 @@ describe("Button Component Tests", () => {
         wrapper.find('button').simulate('click');
         expect(mockCallBackClick.mock.calls.length).toEqual(1);
     });
+
+    it('without component', () => {  
+      const ModalWrapperComponent = shallow(<Login />);
+      expect(ModalWrapperComponent).toMatchSnapshot();
+    });
+
+    it('with component', () => {  
+      const props = {
+              component: () => {}
+           },
+           ModalWrapperComponent = shallow(<Login {...props} />);
+       expect(ModalWrapperComponent).toMatchSnapshot();
+   });
+
 })
+
+
+// const user = {
+//   email: "david@gmail.com",
+ 
+// };
+// describe("", () => {
+//   it("accepts user account props", () => {
+//     const wrapper = mount(<Login user={user} />);
+//     expect(wrapper.props().user).toEqual(user);
+//   });
+//   it("contains users account email", () => {
+//     const wrapper = mount(<Login user={user} />);
+//     const value = wrapper.find("d").text();
+//     expect(value).toEqual("david@gmail.com");
+//   });
+// });

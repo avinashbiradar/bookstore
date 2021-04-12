@@ -19,3 +19,4 @@ export default class userServices {
         return axios.Post(`${baseUrl}/admin/login`, data);
     }
 }
+

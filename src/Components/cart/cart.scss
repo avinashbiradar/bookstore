@@ -32,6 +32,18 @@
     padding: 15px;
     margin: 15px;
   }
+.cartContainerone{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  border: 1px lightgray solid;
+  font-weight: bold;
+  font-size: 15px;
+  width: 70%;
+  padding: 15px;
+  margin: 15px;
+}
   .cartBookImage {
     width: 30%;
     height: 70%;
@@ -65,13 +77,24 @@
     align-items: flex-start;
     font-size: 12px;
     margin: 5px;
-    width: 97%;
+    width: 75%;
   }
   
   @media only screen and (max-width: 600px) {
     .inlineField {
       flex-direction: column;
+      position: relative;
+      left: 50px;
     }
+    .inputAdderssField {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      font-size: 12px;
+      margin: 5px;
+      width: 97%;
+    }
+    
   }
   @media only screen and (max-width: 320px) {
     .cartContainer {
@@ -91,8 +114,8 @@
     .cartContainer {
       width: 100%;
       border: none;
-      padding: 5px;
-      margin: 5px;
+      // padding: 5px;
+      // margin: 5px;
       margin-right: 10px;
     }
   }

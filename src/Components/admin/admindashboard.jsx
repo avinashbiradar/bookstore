@@ -33,8 +33,8 @@ const useStyles = makeStyles((theme) => ({
   placeButton: {
     height: "40px",
     position: "relative",
-    width:"110px",
-    padding:"0px"
+    width: "110px",
+    padding: "0px",
   },
 }));
 
@@ -94,82 +94,86 @@ export default function AdminDashboard(props) {
     });
   };
 
+ 
+
   const patternCheckBookName = () => {
     let isError = false;
-   
-    if( isStringValid(bookName)){
+
+    if (isStringValid(bookName)) {
       setBookError("");
       return false;
-    }else{
+    } else {
       setBookError("Bookname is Not Proper Ex:Tenet");
       isError = true;
       return true;
     }
   };
-  const patternCheckAuthor= () => {
-    let isError = false;  
-    if( isAuthorValid(author)){
-      setAuthorError("")
+  const patternCheckAuthor = () => {
+    let isError = false;
+    if (isAuthorValid(author)) {
+      setAuthorError("");
       return false;
-    }else{
-      setAuthorError("Starts with a capital letter Ex:Anne")
+    } else {
+      setAuthorError("Starts with a capital letter Ex:Anne");
       isError = true;
       return true;
     }
-  }
-  const patternCheckDiscountPrice= () => {
+  };
+  const patternCheckDiscountPrice = () => {
     let isError = false;
-    if( isDiscountedPriceValid(discountPrice)){
+    if (isDiscountedPriceValid(discountPrice)) {
       setdiscountPriceError("");
       return false;
-    }else{
-      setdiscountPriceError(" discounted price should be 2 or 3 digits ")
+    } else {
+      setdiscountPriceError(" discounted price should be 2 or 3 digits ");
       isError = true;
       return true;
     }
-  }
-  const patternCheckPrice= () => {
+  };
+  const patternCheckPrice = () => {
     let isError = false;
-    if(isPriceValid(price)){
+    if (isPriceValid(price)) {
       setPriceError("");
       return false;
-    }else{
+    } else {
       setPriceError(" Price should be numeric");
       isError = true;
       return true;
     }
-  }
-  const patternCheckQuantity= () => {
+  };
+  const patternCheckQuantity = () => {
     let isError = false;
-    if( isQuantityValid(quantity)){
+    if (isQuantityValid(quantity)) {
       setquantityError("");
       return false;
-    }else{
+    } else {
       setquantityError("Quantity should be numeric between 1 to 10 ");
       isError = true;
       return true;
     }
-  }
-  const patternCheckDescription= () => {
+  };
+  const patternCheckDescription = () => {
     let isError = false;
-    if(  isDescriptionValid(description)){
+    if (isDescriptionValid(description)) {
       setdescriptionError("");
       return false;
-    }else{
-      setdescriptionError("Description should be proper and conatains book info.");
+    } else {
+      setdescriptionError(
+        "Description should be proper and conatains book info."
+      );
       isError = true;
       return true;
     }
-  }
+  };
 
   const addNewBook = () => {
-    patternCheckBookName() 
-    patternCheckAuthor()
-    patternCheckDescription()
-    patternCheckQuantity()
-    patternCheckPrice()
-    patternCheckDiscountPrice()
-   
+    patternCheckBookName();
+    patternCheckAuthor();
+    patternCheckDescription();
+    patternCheckQuantity();
+    patternCheckPrice();
+    patternCheckDiscountPrice();
+
     let Details = {
       bookName: bookName,
       author: author,
@@ -226,20 +230,26 @@ export default function AdminDashboard(props) {
       });
   };
 
-
   return (
     <div>
       <div className="addbutton">
-      <div className="addbuttonone">
-      <Button variant="contained" color="primary"  className={classes.placeButton} onClick={handleClickOpen}>
-        Add Book
-      </Button>
-    </div>
+        <div className="addbuttonone">
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.placeButton}
+            onClick={handleClickOpen}
+          >
+            Add Book
+          </Button>
+        </div>
+       
         <Dialog
           open={counter.dialog}
           onClose={handleClose}
           aria-labelledby="form-dialog-title"
         >
+       
           <DialogTitle id="form-dialog-title">
             {counter.bookDetails ? (
               <h3> update book to the Bookstore </h3>
@@ -251,8 +261,9 @@ export default function AdminDashboard(props) {
             <div className="inputs">
               <DialogContentText>
                 <div className={classes.inputField}>
+                <div>
                   <TextField
-                    id="standard-basic"
+                  id="outlined-bookname-input"
                     fullWidth
                     label="bookName"
                     value={bookName}
@@ -263,7 +274,7 @@ export default function AdminDashboard(props) {
                 </div>
                 <div>
                   <TextField
-                    id="standard-basic"
+                  id="outlined-author-input"
                     fullWidth
                     label="author"
                     value={author}
@@ -274,7 +285,7 @@ export default function AdminDashboard(props) {
                 </div>
                 <div>
                   <TextField
-                    id="standard-basic"
+                  id="outlined-description-input"
                     fullWidth
                     label="description"
                     value={description}
@@ -285,7 +296,7 @@ export default function AdminDashboard(props) {
                 </div>
                 <div>
                   <TextField
-                    id="standard-basic"
+                  id="outlined-quantity-input"
                     fullWidth
                     label="quantity"
                     value={quantity}
@@ -296,7 +307,7 @@ export default function AdminDashboard(props) {
                 </div>
                 <div>
                   <TextField
-                    id="standard-basic"
+                  id="outlined-price-input"
                     fullWidth
                     label="price"
                     value={price}
@@ -307,7 +318,7 @@ export default function AdminDashboard(props) {
                 </div>
                 <div>
                   <TextField
-                    id="standard-basic"
+                    id="outlined-discount-input"
                     fullWidth
                     label="discountPrice"
                     value={discountPrice}
@@ -316,9 +327,11 @@ export default function AdminDashboard(props) {
                     onChange={(e) => setDiscountPrice(e.target.value)}
                   />
                 </div>
+                </div>
               </DialogContentText>
             </div>
           </DialogContent>
+         
           <DialogActions>
             <Button onClick={handleClose} color="primary">
               Cancel
@@ -335,7 +348,11 @@ export default function AdminDashboard(props) {
           </DialogActions>
         </Dialog>
       </div>
-      <SnackbarComponent open={snackbaropen} message={snackbarmsg} />
+      <SnackbarComponent
+        // autoHideDuration={3000}
+        open={snackbaropen}
+        message={snackbarmsg}
+      />
     </div>
   );
 }

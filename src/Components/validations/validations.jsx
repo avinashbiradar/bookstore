@@ -57,17 +57,17 @@ module.exports = {
   },
 
   isemailValid(email) {
-    if (email.length === 0) {
-      return false;
-    }
+    // if (email.length === 0) {
+    //   return false;
+    // }
     let regex = new RegExp(emailPattern);
     return regex.test(email);
   },
 
   ispasswordValid(password) {
-    if (password.trim().length === 0) {
-      return false;
-    }
+    // if (password.trim().length === 0) {
+    //   return false;
+    // }
     let regex = new RegExp(passwordPattern);
     return regex.test(password);
   },

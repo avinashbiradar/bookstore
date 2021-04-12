@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down("xs")]: {
       width: "100%",
     },
+    
   },
   Title: {
     width: "100%",
@@ -34,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
   SignUpBody: {
     padding: "30px",
+    height: "420px",
   },
   header: {
     display: "flex",
@@ -144,7 +146,7 @@ export default function SignUp(props) {
         .AdminSignUp(data)
         .then((data) => {
           console.log("registration successful" + data);
-          nextPath("../adminlogin");
+          nextPath("../loginadmin");
         })
         .catch((err) => {
           console.log("Registration Error" + err);
@@ -164,22 +166,24 @@ export default function SignUp(props) {
               <TextField
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                error={nameFlag}
+                error={nameError}
                 helperText={nameError}
                 fullWidth
                 className={classes.input}
                 label="Full Name"
+                id="outlined-name-input"
               />
             </div>
             <div className={classes.inputField}>
                <TextField
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                error={emailFlag}
+                error={emailError}
                 helperText={emailError}
                 fullWidth
                 className={classes.input}
                 label="Email"
+                id="outlined-email-input"
               />
               
             </div>
@@ -187,24 +191,26 @@ export default function SignUp(props) {
               <TextField
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                error={passwordFlag}
+                error={passwordError}
                 helperText={passwordError}
                 fullWidth
                 className={classes.input}
                 label="Password"
                 type="password"
+                id="outlined-pass-input"
               />
             </div>
             <div className={classes.inputField}>
               <TextField
                 value={mobile}
                 onChange={(e) => setMobile(e.target.value)}
-                error={mobileFlag}
+                error={mobileError}
                 helperText={mobileError}
                 fullWidth
                 className={classes.input}
                 label="Mobile"
                 type="number"
+                id="outlined-mobile-input"
               />
               
             </div>
@@ -213,6 +219,7 @@ export default function SignUp(props) {
               className={classes.regButton}
               onClick={submit}
               variant="contained"
+              text="test"
             >
              Admin Sign Up
             </Button>

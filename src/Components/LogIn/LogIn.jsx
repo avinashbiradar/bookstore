@@ -2,6 +2,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import Services from "../../Services/userServices";
 import React from "react";
 import Button from "react-bootstrap/Button";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
 import TextField from "@material-ui/core/TextField";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import Visibility from "@material-ui/icons/Visibility";
@@ -15,8 +16,8 @@ import {
   isMobileValid,
 } from "../validations/validations";
 import "../LogIn/login.scss";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { makeStyles } from '@material-ui/core/styles';
+
 const services = new Services();
 
 export default function Login(props) {
@@ -142,6 +143,8 @@ export default function Login(props) {
     services
       .SignUp(data)
       .then((data) => {
+        setSnackbaropen(true);
+        setSnackbarmsg("Registration successfull");
         console.log("registration successful" + data);
         nextPath("../Login");
         console.log(
@@ -155,6 +158,8 @@ export default function Login(props) {
       })
       .catch((err) => {
         console.log("Registration Error" + err);
+        setSnackbaropen(true);
+        setSnackbarmsg("Error");
       });
   };
 
@@ -225,6 +230,7 @@ export default function Login(props) {
                   helperText={emailError1}
                   label="Email"
                   fullWidth
+                  placeholder="Email-input "
                 />
               </div>
               <br />

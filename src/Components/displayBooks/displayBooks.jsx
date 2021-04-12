@@ -1,4 +1,4 @@
-import React ,{Suspense,lazy} from "react";
+import React, { Suspense, lazy } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import bookImg from "../assests/Image11.png";
 import Typography from "@material-ui/core/Typography";
@@ -8,12 +8,12 @@ import Select from "@material-ui/core/Select";
 import Pagination from "../Pagination/Pagination";
 import Services from "../../Services/productServices";
 import "./displayBooks.scss";
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import 'react-lazy-load-image-component/src/effects/blur.css';
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
+import SnackbarComponent from "../snackbarComponent/snackbar";
+
 // const ImageLoading = lazy(()=>import('../assests/Image11.png'))
 const services = new Services();
-
-
 
 const useStyles = makeStyles((theme) => ({
   bookName: {
@@ -68,27 +68,30 @@ export default function DisplayNotes(props) {
   const [data, setData] = React.useState(0);
   const [postsPerPage] = React.useState(4);
   const [currentPage, setCurrentPage] = React.useState(1);
- 
+  const [snackbaropen, setSnackbaropen] = React.useState(false);
+  const [snackbarmsg, setSnackbarmsg] = React.useState("");
 
   React.useEffect(() => {
     getAllBooks();
   }, []);
 
+
+
   const getAllBooks = () => {
     services
       .getBooks()
       .then((data) => {
-        console.log("in the get all books ",data)
+        console.log("in the get all books ", data);
         const dataArray = data.data.result;
         const datashow = [];
         dataArray.map((data) => {
-          if (data.product_id!== null) {
+          if (data.product_id !== null) {
             datashow.push(data);
           }
         });
         console.log(datashow);
         setBooks(datashow);
-        props.setBooks(data.data.result)
+        props.setBooks(data.data.result);
         setData(data.data.result);
         books.map((data) => (data.isCart = false));
       })
@@ -121,7 +124,7 @@ export default function DisplayNotes(props) {
         setBooks(books.reverse());
         break;
       default:
-          break;
+        break;
     }
   };
 
@@ -134,7 +137,7 @@ export default function DisplayNotes(props) {
       .then((data) => {
         console.log("add to cart function working ");
         console.log(data);
-         getAllBooks();
+        getAllBooks();
         props.allCartItem();
       })
       .catch((err) => {
@@ -144,39 +147,46 @@ export default function DisplayNotes(props) {
 
   const addedToWishList = (e, data) => {
     e.stopPropagation();
-    console.log(data)
+    console.log(data);
     const id = data._id;
     data.isCart = true;
     services
       .addToWishList(id)
       .then((data) => {
+        setSnackbaropen(true);
+        setSnackbarmsg("Added to wishlist");
         console.log("add to wishlist function working ");
         console.log(data);
-         getAllBooks();
+        getAllBooks();
         props.allCartItem();
       })
       .catch((err) => {
+        setSnackbaropen(true);
+        setSnackbarmsg("Error");
         console.log(err);
       });
   };
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
-  };  
+  };
 
   // const ImageLoad =()=>{
   //   return(
   //     <img className="bookImage" src={ImageLoading} alt="" />
-    
+
   //   )
   // }
 
   const indexOfLastBook = currentPage * postsPerPage;
   const indexOfFirstBook = indexOfLastBook - postsPerPage;
-  const currentBooks = props.searchedArray!==null?props.searchedArray:books.slice(indexOfFirstBook, indexOfLastBook);
+  const currentBooks =
+    props.searchedArray !== null
+      ? props.searchedArray
+      : books.slice(indexOfFirstBook, indexOfLastBook);
   return (
     <div className="displayBook">
       <span className="topContent">
-        <div >
+        <div>
           Books <font className="bookSize"> ({books.length} items) </font>{" "}
         </div>
         <div>
@@ -185,7 +195,7 @@ export default function DisplayNotes(props) {
               className={classes.optionSelect}
               value={sort.type}
               onChange={handleChange}
-              native 
+              native
               inputProps={{
                 name: "type",
               }}
@@ -203,19 +213,17 @@ export default function DisplayNotes(props) {
         {currentBooks.map((data) => (
           <div className="bookContainer">
             {props.cartBooks.map((cart) => {
-              if (cart.product_id._id=== data._id) {
-                 data.isCart = true;
+              if (cart.product_id._id === data._id) {
+                data.isCart = true;
               }
             })}
-            
+
             <div className="imageContainer">
-            <LazyLoadImage
-            effect="blur"
-            src={bookImg}
-            // fallback={<div>Loading...</div>}>
-            >
-            </LazyLoadImage>
-            
+              <LazyLoadImage
+                effect="blur"
+                src={bookImg}
+                // fallback={<div>Loading...</div>}>
+              ></LazyLoadImage>
             </div>
             <div className="infoContainer">
               <Typography className={classes.bookName}>
@@ -232,7 +240,7 @@ export default function DisplayNotes(props) {
               </Typography>
             </div>
 
-            {data.isCart? (
+            {data.isCart ? (
               <Button variant="contained" className={classes.addedBagButton}>
                 Added To Bag
               </Button>
@@ -245,10 +253,14 @@ export default function DisplayNotes(props) {
                 >
                   Add To Bag
                 </Button>
-                <Button variant="outlined" className={classes.wishListButton} onClick={(e) => addedToWishList(e, data)}>
+                <Button
+                  variant="outlined"
+                  className={classes.wishListButton}
+                  onClick={(e) => addedToWishList(e, data)}
+                >
                   WishList
                 </Button>
-            </div>
+              </div>
             )}
           </div>
         ))}
@@ -257,6 +269,11 @@ export default function DisplayNotes(props) {
           totalPosts={books.length}
           paginate={paginate}
         ></Pagination>
+        <SnackbarComponent
+          open={snackbaropen}
+          message={snackbarmsg}
+         
+        />
       </div>
     </div>
   );

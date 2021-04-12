@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
   SignUpBody: {
     padding: "30px",
+    height: "373px",
   },
   header: {
     display: "flex",

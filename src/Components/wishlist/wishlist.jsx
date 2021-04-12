@@ -98,7 +98,6 @@ export default function CartBooks(props) {
         console.log("Error while removing" + err);
       });
   };
-  
 
   const indexOfLastBook = currentPage * postsPerPage;
   const indexOfFirstBook = indexOfLastBook - postsPerPage;
@@ -107,47 +106,44 @@ export default function CartBooks(props) {
   return (
     <div>
       <div className="wishBody">
-      <div className="wishContainer">
-        <div className="header">
-          WishList Books{" "}
-          <font className="booksize"> ({books.length} items) </font>{" "}
-        </div>
-        {currentBooks.map((data) => (
-          <div className="wishItem">
-            <div className="wishBookItem">
-              <img className="wishBookImage" src={bookImg} alt="" />
-              <div className="wishinfoContainer">
-                <Typography className={classes.bookName}>
-                  {data.product_id.bookName}
-                </Typography>
-                <Typography className={classes.bookAuthor}>
-                  {data.product_id.author}
-                </Typography>
-                <Typography className={classes.bookAuthor}>
-                  {data.product_id.price}
-                </Typography>
-                <Typography className={classes.bookAuthor}>
-                  {data.product_id.quantity}
-                </Typography>
-                <Typography className={classes.bookPrize}>
-                  Rs.{data.product_id.price}
-                </Typography>
-              </div>
-            
-            </div>
-            <div className="deleteicon">
-            <DeleteIcon
-              onClick={(e) => {
-                removeFromWishList(e, data);
-              }}
-            />
+        <div className="wishContainer">
+          <div className="header">
+            WishList Books{" "}
+            <font className="booksize"> ({books.length} items) </font>{" "}
           </div>
-          </div> 
-        ))}
+          {currentBooks.map((data) => (
+            <div className="wishItem">
+              <div className="wishBookItem">
+                <img className="wishBookImage" src={bookImg} alt="" />
+                <div className="wishinfoContainer">
+                  <Typography className={classes.bookName}>
+                    {data.product_id.bookName}
+                  </Typography>
+                  <Typography className={classes.bookAuthor}>
+                    {data.product_id.author}
+                  </Typography>
+                  <Typography className={classes.bookAuthor}>
+                    {data.product_id.price}
+                  </Typography>
+                  <Typography className={classes.bookAuthor}>
+                    {data.product_id.quantity}
+                  </Typography>
+                  <Typography className={classes.bookPrize}>
+                    Rs.{data.product_id.price}
+                  </Typography>
+                  <div className="deleteicon">
+                    <DeleteIcon
+                      onClick={(e) => {
+                        removeFromWishList(e, data);
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
     </div>
   );
 }
-
-

@@ -52,10 +52,12 @@ const useStyles = makeStyles((theme) => ({
     padding: "5px",
   },
   inputAdderss: {
-    border: "1px solid lightgray",
-    borderRadius: "5px",
-    padding: "5px",
-    minHeight: "43px",
+      border: "1px solid lightgray",
+      borderRadius: "5px",
+      padding: "5px",
+      minHeight: "80px",
+      minWidth: "200px",
+    
   },
   radioGroup: {
     display: "flex",
@@ -225,6 +227,9 @@ export default function Cart(props) {
               <Typography className={classes.bookAuthor}>
                 {data.product_id.author}
               </Typography>
+              <Typography className={classes.bookAuthor}>
+                {data.product_id.price}
+              </Typography>
               <Typography className={classes.bookPrize}>
               {data.product_id.quantity}
             </Typography>
@@ -313,7 +318,7 @@ export default function Cart(props) {
           </div>
         )}
       </div>
-      <div className="cartContainer">
+      <div className="cartContainerone">
         Customer Details
         {detailForm ? (
           <>
@@ -328,6 +333,7 @@ export default function Cart(props) {
                   helperText={nameError}
                   fullWidth
                   className={classes.input}
+                  id="outlined-fullname-input"
                 />
               </div>
               <div className="inputField">
@@ -341,6 +347,7 @@ export default function Cart(props) {
                   fullWidth
                   className={classes.input}
                   type="number"
+                  id="outlined-mobile-input"
                 />
               </div>
             </span>
@@ -356,6 +363,7 @@ export default function Cart(props) {
                   fullWidth
                   multiline
                   className={classes.inputAddress}
+                  id="outlined-address-input"
                 />
               </div>
             </span>
@@ -370,6 +378,7 @@ export default function Cart(props) {
                   helperText={cityError}
                   fullWidth
                   className={classes.input}
+                  id="outlined-city-input"
                 />
               </div>
               <div className="inputField">
@@ -382,6 +391,7 @@ export default function Cart(props) {
                   helperText={stateError}
                   fullWidth
                   className={classes.input}
+                  id="outlined-state-input"
                 />
               </div>
             </span>

@@ -140,7 +140,7 @@ export default function Appbar(props) {
   };
 
 
-  console.log("props", props.search);
+  // console.log("props", props.search);
   return (
     <React.Fragment>
       <CssBaseline />
@@ -212,6 +212,7 @@ export default function Appbar(props) {
                 <StyledBadge
                   badgeContent={props.totalCartItem}
                   className={classes.badge}
+                  id="badge-cart"
                 >
                   <ShoppingCartOutlinedIcon />
                 </StyledBadge>
