@@ -57,6 +57,18 @@ export default function Login(props) {
     console.log(index);
     setToggleState(index);
   };
+
+   
+  const opensnackbar=()=>{
+    setSnackbaropen(true);
+    setTimeout(() => {
+      setSnackbaropen(false)
+
+    }, 6000);
+  }
+
+
+
   const EmailCheck = () => {
     let isError = false;
 
@@ -143,7 +155,7 @@ export default function Login(props) {
     services
       .SignUp(data)
       .then((data) => {
-        setSnackbaropen(true);
+        opensnackbar()
         setSnackbarmsg("Registration successfull");
         console.log("registration successful" + data);
         nextPath("../Login");
@@ -158,7 +170,7 @@ export default function Login(props) {
       })
       .catch((err) => {
         console.log("Registration Error" + err);
-        setSnackbaropen(true);
+        opensnackbar()
         setSnackbarmsg("Error");
       });
   };
@@ -167,6 +179,7 @@ export default function Login(props) {
     nextPath("../loginadmin");
   };
 
+ 
   const handleLogin = () => {
     EmailCheckLogin();
     PasswordCheckLogin();
@@ -178,7 +191,7 @@ export default function Login(props) {
       .SignIn(data)
       .then((data) => {
         console.log(data);
-        setSnackbaropen(true);
+        opensnackbar()
         setSnackbarmsg("Logged In");
         console.log(
           "Login successful" + JSON.stringify(data.data.result.accessToken)
@@ -188,7 +201,7 @@ export default function Login(props) {
       })
       .catch((err) => {
         console.log("Error", err);
-        setSnackbaropen(true);
+        opensnackbar()
         setSnackbarmsg("Error");
       });
   };

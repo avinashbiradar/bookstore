@@ -166,6 +166,14 @@ export default function AdminDashboard(props) {
     }
   };
 
+  const opensnackbar=()=>{
+    setSnackbaropen(true);
+    setTimeout(() => {
+      setSnackbaropen(false)
+
+    }, 6000);
+  }
+
   const addNewBook = () => {
     patternCheckBookName();
     patternCheckAuthor();
@@ -182,14 +190,14 @@ export default function AdminDashboard(props) {
       price: price,
       discountPrice: discountPrice,
     };
-
+    
     services
       .addNewBookToSystem(Details)
       .then((data) => {
         console.log(Details);
         console.log(data);
         console.log("Successfully added book " + data);
-        setSnackbaropen(true);
+        opensnackbar()
         setSnackbarmsg("Book Added Successfully");
         console.log(
           "Login successful" + JSON.stringify(data.data.result.accessToken)
@@ -198,7 +206,7 @@ export default function AdminDashboard(props) {
       })
       .catch((err) => {
         console.log("Error while adding the book" + err);
-        setSnackbaropen(true);
+        opensnackbar()
         setSnackbarmsg("Error");
       });
   };
@@ -220,12 +228,12 @@ export default function AdminDashboard(props) {
       .UpdateBookInfo(Details, counter.bookDetails._id)
       .then((data) => {
         console.log("Successfully updated book " + data);
-        setSnackbaropen(true);
+        opensnackbar()
         setSnackbarmsg("Book updated Successfully");
       })
       .catch((err) => {
         console.log("Error while updating the book " + err);
-        setSnackbaropen(true);
+        opensnackbar()
         setSnackbarmsg("Error");
       });
   };

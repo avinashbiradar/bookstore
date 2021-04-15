@@ -11,11 +11,19 @@ import "./displayBooks.scss";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import SnackbarComponent from "../snackbarComponent/snackbar";
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 
 // const ImageLoading = lazy(()=>import('../assests/Image11.png'))
 const services = new Services();
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    '& > * + *': {
+      marginLeft: theme.spacing(2),
+    },
+  },
   bookName: {
     fontSize: "13px",
     fontWeight: "bold",
@@ -70,6 +78,7 @@ export default function DisplayNotes(props) {
   const [currentPage, setCurrentPage] = React.useState(1);
   const [snackbaropen, setSnackbaropen] = React.useState(false);
   const [snackbarmsg, setSnackbarmsg] = React.useState("");
+  const [loading , setLoading]=React.useState(false)
 
   React.useEffect(() => {
     getAllBooks();
@@ -94,6 +103,7 @@ export default function DisplayNotes(props) {
         props.setBooks(data.data.result);
         setData(data.data.result);
         books.map((data) => (data.isCart = false));
+        setLoading(true)
       })
       .catch((err) => {
         console.log(err);
@@ -145,6 +155,14 @@ export default function DisplayNotes(props) {
       });
   };
 
+  const opensnackbar=()=>{
+    setSnackbaropen(true);
+    setTimeout(() => {
+      setSnackbaropen(false)
+
+    }, 6000);
+  }
+
   const addedToWishList = (e, data) => {
     e.stopPropagation();
     console.log(data);
@@ -153,7 +171,7 @@ export default function DisplayNotes(props) {
     services
       .addToWishList(id)
       .then((data) => {
-        setSnackbaropen(true);
+        opensnackbar()
         setSnackbarmsg("Added to wishlist");
         console.log("add to wishlist function working ");
         console.log(data);
@@ -161,7 +179,7 @@ export default function DisplayNotes(props) {
         props.allCartItem();
       })
       .catch((err) => {
-        setSnackbaropen(true);
+        opensnackbar()
         setSnackbarmsg("Error");
         console.log(err);
       });
@@ -169,13 +187,6 @@ export default function DisplayNotes(props) {
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-
-  // const ImageLoad =()=>{
-  //   return(
-  //     <img className="bookImage" src={ImageLoading} alt="" />
-
-  //   )
-  // }
 
   const indexOfLastBook = currentPage * postsPerPage;
   const indexOfFirstBook = indexOfLastBook - postsPerPage;
@@ -185,6 +196,7 @@ export default function DisplayNotes(props) {
       : books.slice(indexOfFirstBook, indexOfLastBook);
   return (
     <div className="displayBook">
+   
       <span className="topContent">
         <div>
           Books <font className="bookSize"> ({books.length} items) </font>{" "}
@@ -209,8 +221,11 @@ export default function DisplayNotes(props) {
         </div>
       </span>
 
+
+      {loading?
       <div className="allBooks">
         {currentBooks.map((data) => (
+         
           <div className="bookContainer">
             {props.cartBooks.map((cart) => {
               if (cart.product_id._id === data._id) {
@@ -218,6 +233,7 @@ export default function DisplayNotes(props) {
               }
             })}
 
+           
             <div className="imageContainer">
               <LazyLoadImage
                 effect="blur"
@@ -225,6 +241,9 @@ export default function DisplayNotes(props) {
                 // fallback={<div>Loading...</div>}>
               ></LazyLoadImage>
             </div>
+           
+
+
             <div className="infoContainer">
               <Typography className={classes.bookName}>
                 {data.bookName}
@@ -264,6 +283,7 @@ export default function DisplayNotes(props) {
             )}
           </div>
         ))}
+       
         <Pagination
           postsPerPage={postsPerPage}
           totalPosts={books.length}
@@ -274,7 +294,10 @@ export default function DisplayNotes(props) {
           message={snackbarmsg}
          
         />
-      </div>
+      </div> :
+      <CircularProgress color="secondary"  />}
+          
     </div>
+    
   );
 }

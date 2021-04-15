@@ -106,6 +106,15 @@ export default function Login(props) {
     }
   };
 
+  const opensnackbar=()=>{
+    setSnackbaropen(true);
+    setTimeout(() => {
+      setSnackbaropen(false)
+
+    }, 6000);
+  }
+
+
   const submit = () => {
     EmailCheck();
     PasswordCheck();
@@ -121,12 +130,12 @@ export default function Login(props) {
         );
         localStorage.setItem("StoreToken", data.data.result.accessToken);
         nextPath("../adminbooks");
-        setSnackbaropen(true);
+        opensnackbar()
         setSnackbarmsg("Logged In");
       })
       .catch((err) => {
         console.log("Login Error" + err);
-        setSnackbaropen(true);
+        opensnackbar()
         setSnackbarmsg("Error");
       });
   };

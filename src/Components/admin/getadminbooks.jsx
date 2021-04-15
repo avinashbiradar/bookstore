@@ -11,6 +11,7 @@ import Services from "../../Services/productServices";
 import ServicesOne from "../../Services/adminService";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import CircularProgress from '@material-ui/core/CircularProgress';
 const services = new Services();
 const servicesone = new ServicesOne();
 
@@ -24,7 +25,9 @@ export default function BooksTable(props) {
   const [snackbaropen, setSnackbaropen] = React.useState(false);
   const [snackbarmsg, setSnackbarmsg] = React.useState(""); 
   const [isuser , setisuser] = React.useState(true);
+  const [loading , setLoading]=React.useState(false)
 
+  
 const handleShow = () => setShow(true);
   React.useEffect(() => {
     getAllBooks();
@@ -42,6 +45,7 @@ const handleShow = () => setShow(true);
         setBooks(data.data.result);
         setData(data.data.result);
         books.map((data) => (data.isCart = false));
+        setLoading(true)
       })
       .catch((err) => {
         console.log(err);
@@ -85,6 +89,7 @@ const handleShow = () => setShow(true);
     <div className="addbooks">
     <AddBook/>
     </div>
+    {loading?
       <Table>
         <Thead>
           <Tr>
@@ -118,6 +123,8 @@ const handleShow = () => setShow(true);
           </Tbody>
         ))}
       </Table>
+      :
+      <CircularProgress color="secondary"  />}
       <SnackbarComponent
       open={snackbaropen}
       message={snackbarmsg}
