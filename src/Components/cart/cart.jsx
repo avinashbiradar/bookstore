@@ -71,7 +71,6 @@ export default function Cart(props) {
   const [detailForm, setDetailForm] = React.useState(false);
   const [summaryField, setSummaryField] = React.useState(false);
   const [value, setValue] = React.useState("Home");
-
   const [name, setName] = React.useState();
   const [nameFlag, setNameFlag] = React.useState(false);
   const [nameError, setNameError] = React.useState("");
@@ -88,8 +87,7 @@ export default function Cart(props) {
   const [stateFlag, setStateFlag] = React.useState(false);
   const [stateError, setStateError] = React.useState("");
   const [count, setCount] = useState(1);
-
-
+  
   const makeInitial = () => {
     setNameFlag(false);
     setNameError("");

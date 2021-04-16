@@ -11,8 +11,8 @@ import "./displayBooks.scss";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import SnackbarComponent from "../snackbarComponent/snackbar";
-import CircularProgress from '@material-ui/core/CircularProgress';
-
+import Loader from "../loader/loader"
+import Placeholder from "../placeholder/placeholder"
 
 // const ImageLoading = lazy(()=>import('../assests/Image11.png'))
 const services = new Services();
@@ -79,7 +79,9 @@ export default function DisplayNotes(props) {
   const [snackbaropen, setSnackbaropen] = React.useState(false);
   const [snackbarmsg, setSnackbarmsg] = React.useState("");
   const [loading , setLoading]=React.useState(false)
-
+  const [error, setError]=React.useState(false)
+  const [wishlist , setwishlist]=React.useState(false)
+  
   React.useEffect(() => {
     getAllBooks();
   }, []);
@@ -90,6 +92,8 @@ export default function DisplayNotes(props) {
     services
       .getBooks()
       .then((data) => {
+        opensnackbar()
+        setSnackbarmsg("display books ");
         console.log("in the get all books ", data);
         const dataArray = data.data.result;
         const datashow = [];
@@ -104,8 +108,14 @@ export default function DisplayNotes(props) {
         setData(data.data.result);
         books.map((data) => (data.isCart = false));
         setLoading(true)
+        setError(true)
+        console.log("loading",loading)
+        console.log("error",error)
       })
       .catch((err) => {
+        setLoading(true)
+        opensnackbar()
+        setSnackbarmsg("Error");
         console.log(err);
       });
   };
@@ -159,7 +169,7 @@ export default function DisplayNotes(props) {
     setSnackbaropen(true);
     setTimeout(() => {
       setSnackbaropen(false)
-
+      setSnackbarmsg("");
     }, 6000);
   }
 
@@ -167,16 +177,17 @@ export default function DisplayNotes(props) {
     e.stopPropagation();
     console.log(data);
     const id = data._id;
-    data.isCart = true;
+    data.iswishlist=true;
     services
       .addToWishList(id)
       .then((data) => {
-        opensnackbar()
-        setSnackbarmsg("Added to wishlist");
         console.log("add to wishlist function working ");
+        setwishlist(true)
         console.log(data);
         getAllBooks();
         props.allCartItem();
+         opensnackbar()
+        setSnackbarmsg("Added to wishlist");
       })
       .catch((err) => {
         opensnackbar()
@@ -222,7 +233,8 @@ export default function DisplayNotes(props) {
       </span>
 
 
-      {loading?
+      {loading? error?
+
       <div className="allBooks">
         {currentBooks.map((data) => (
          
@@ -263,7 +275,12 @@ export default function DisplayNotes(props) {
               <Button variant="contained" className={classes.addedBagButton}>
                 Added To Bag
               </Button>
-            ) : (
+            ) :data.iswishlist?( 
+              <Button variant="contained" className={classes.addedBagButton}>
+                Added To wishlist
+              </Button>
+              ): (
+
               <div className="buttonContainer">
                 <Button
                   variant="contained"
@@ -272,6 +289,8 @@ export default function DisplayNotes(props) {
                 >
                   Add To Bag
                 </Button>
+
+
                 <Button
                   variant="outlined"
                   className={classes.wishListButton}
@@ -294,8 +313,8 @@ export default function DisplayNotes(props) {
           message={snackbarmsg}
          
         />
-      </div> :
-      <CircularProgress color="secondary"  />}
+      </div> :<Placeholder reload={getAllBooks}/>:
+      <Loader/>}
           
     </div>
     

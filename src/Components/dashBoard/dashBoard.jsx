@@ -10,6 +10,7 @@ import ProtectedRoutes from "../../protectedRoutes.js";
 import Typography from "@material-ui/core/Typography";
 import PlacedOrder from "../orderPlaced/orderPlaced";
 import Wishlist from "../wishlist/wishlist"
+import Loader from "../loader/loader"
 const services = new Services();
 const useStyles = makeStyles((theme) => ({
   dashboardMain: {
@@ -35,7 +36,7 @@ export default function Dashboard(props) {
   const [searchClicked, setSearchClicked] = React.useState(false);
   const [books , setBooks] =React.useState("");
   const[searchBook , setsearchBook]=React.useState(null)
-
+  const [loading , setLoading]=React.useState(false)
   React.useEffect(() => {
     allCartItem();
   }, []); 
@@ -60,9 +61,11 @@ export default function Dashboard(props) {
         });
         console.log(datashow);
         setCartBooks(datashow);
+        setLoading(true)
       })
       .catch((err) => {
         console.log(err);
+        setLoading(true)
       });
   };
  
@@ -101,6 +104,7 @@ export default function Dashboard(props) {
         <Books  search={search} searchedArray={searchBook}  cartBooks={cartBooks} allCartItem={allCartItem}  setBooks={setBooks} />
       </Route>
        <ProtectedRoutes path="/dashboard/cart" exact>
+       {loading?
         <Cart
           allCartItem={allCartItem}
           nextPath={nextPath}
@@ -108,6 +112,8 @@ export default function Dashboard(props) {
           setOrderPlaced={setOrderPlaced}
          
         />
+        :
+      <Loader/>}
       </ProtectedRoutes>
         <ProtectedRoutes path="/dashboard/orderPlaced" exact>
           <PlacedOrder orderPlaced={orderPlaced} nextPath={nextPath} />

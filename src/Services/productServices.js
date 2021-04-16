@@ -71,9 +71,6 @@ export default class productServices {
   };
   addQuantity = (data,cartItem_id) => {
     const user = localStorage.getItem("bookStoreToken")
-    console.log(data);
-    console.log(user)
-    console.log(cartItem_id);
     return axios.Put(`${baseUrl}/cart_item_quantity/${cartItem_id}`,data,{
         headers: {
           "x-access-token": `${user}`,
