@@ -275,11 +275,7 @@ export default function DisplayNotes(props) {
               <Button variant="contained" className={classes.addedBagButton}>
                 Added To Bag
               </Button>
-            ) :data.iswishlist?( 
-              <Button variant="contained" className={classes.addedBagButton}>
-                Added To wishlist
-              </Button>
-              ): (
+            ) : (
 
               <div className="buttonContainer">
                 <Button
